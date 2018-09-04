@@ -7,4 +7,7 @@ week 1 8/24/2018 - 8/30/2018
 week 2 8/31/2018 - 9/6/2018
 ===========================
 
-* Attended lecture on 8/31/2018
+* 8/31/2018 - Attended lecture (course administrative tasks) 
+* 8/31/2018 - Downloaded eReader to be able to access and view the epub
+* 9/3/2018 - Filled out google form to verify completion of Plagiarism Certificate
+* 9/4/2018 - Set up futuresystems account (username: ahilgenk)
