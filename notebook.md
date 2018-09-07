@@ -11,3 +11,8 @@ week 2 8/31/2018 - 9/6/2018
 * 8/31/2018 - Downloaded eReader to be able to access and view the epub
 * 9/3/2018 - Filled out google form to verify completion of Plagiarism Certificate
 * 9/4/2018 - Set up futuresystems account (username: ahilgenk)
+
+week 3 9/1/2018 - 9/13/2018
+===========================
+
+* 9/7/2018 - Attended lecture: discussion of some big data technologies and review of the chapter assignment.
