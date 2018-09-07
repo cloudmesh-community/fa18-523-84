@@ -1,4 +1,4 @@
-** Week of 9/7/18 **
+**Week of 9/7/18**
 
 * Lecture Notes
 
