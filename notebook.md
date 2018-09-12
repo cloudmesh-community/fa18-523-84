@@ -17,3 +17,5 @@ week 3 9/1/2018 - 9/13/2018
 
 * 9/7/2018 - Attended lecture: discussion of some big data technologies and review of the chapter assignment.
 * 9/11/2018 - Researched Ubuntu MaaS for technology summaries.
+* 9/11/2018 - Joined the futuresystems project for the course
+
