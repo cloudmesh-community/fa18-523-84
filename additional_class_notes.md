@@ -4,7 +4,7 @@
   * Cloud technologies avaliable in the ebook
   * Reviewed and discussed cloud techonolgies
 
-* ToDo / Assignments
+ToDo / Assignments
  - [ ] Work on technology summary assignments
  - [ ] Find a partner to review article / page submissions
  - [ ] Reveiw main project
