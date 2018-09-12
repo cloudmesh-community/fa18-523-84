@@ -5,7 +5,13 @@
   * Reviewed and discussed cloud techonolgies
 
 * ToDo / Assignments
-  * Work on article assignments
-  * Find a partner to review article / page submissions
-  * Reveiw main project
-  * Find a potential partner for the main project
+  [ ] Work on technology summary assignments
+  [ ] Find a partner to review article / page submissions
+  [ ] Reveiw main project
+  [ ] Find a potential partner for the main project
+
+**Notes for technology summaries** 
+
+Ubuntu MaaS
+ * Stackexchange explaination: https://askubuntu.com/questions/486701/what-is-maas-exactly
+ * MaaS website: https://maas.io/
