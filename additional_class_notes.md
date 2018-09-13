@@ -15,3 +15,9 @@ ToDo / Assignments
 Ubuntu MaaS
  * Stackexchange explaination: https://askubuntu.com/questions/486701/what-is-maas-exactly
  * MaaS website: https://maas.io/
+
+MLbase
+ * Video on MLbase: https://www.youtube.com/watch?v=W-WPclNo8v0
+
+Wink
+ * Is it the platform to connect smart home devices or something different...?
