@@ -1,10 +1,10 @@
-week 1 8/24/2018 - 8/30/2018
+Week 1 8/24/2018 - 8/30/2018
 ============================
 
 * Installed Virtual Box and ubuntu linux on 8/25/2018
 * Submitted formal bio on Piazza 8/26/2018
 
-week 2 8/31/2018 - 9/6/2018
+Week 2 8/31/2018 - 9/6/2018
 ===========================
 
 * 8/31/2018 - Attended lecture (course administrative tasks) 
@@ -12,7 +12,7 @@ week 2 8/31/2018 - 9/6/2018
 * 9/3/2018 - Filled out google form to verify completion of Plagiarism Certificate
 * 9/4/2018 - Set up futuresystems account (username: ahilgenk)
 
-week 3 9/1/2018 - 9/13/2018
+Week 3 9/1/2018 - 9/13/2018
 ===========================
 
 * 9/7/2018 - Attended lecture: discussion of some big data technologies and review of the chapter assignment.
@@ -20,4 +20,7 @@ week 3 9/1/2018 - 9/13/2018
 * 9/11/2018 - Joined the futuresystems project for the course.
 * 9/13/2018 - Researched MLbase for technology summaries.
 * 9/13/2018 - Installed jabref
+
+Week 4 9/14/2018 - 9/20/2018
+============================
 
