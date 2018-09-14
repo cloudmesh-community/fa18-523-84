@@ -19,4 +19,5 @@ week 3 9/1/2018 - 9/13/2018
 * 9/11/2018 - Researched Ubuntu MaaS for technology summaries.
 * 9/11/2018 - Joined the futuresystems project for the course.
 * 9/13/2018 - Researched MLbase for technology summaries.
+* 9/13/2018 - Installed jabref
 
