@@ -24,3 +24,9 @@ Week 3 9/1/2018 - 9/13/2018
 Week 4 9/14/2018 - 9/20/2018
 ============================
 
+* 9/14/2018 - Attended lecture: discussion of bibtex and review of the technology summaries
+
+Week 5 9/21/2018 - 9/27/2018
+============================
+
+* 9/21/2018 - Attended lecture:  Review of plagiarism rules, overiew of main project and chapter project.
