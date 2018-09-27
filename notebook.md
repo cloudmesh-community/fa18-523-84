@@ -31,4 +31,5 @@ Week 5 9/21/2018 - 9/27/2018
 
 * 9/21/2018 - Attended lecture:  Review of plagiarism rules, overiew of main project and chapter project.
 * 9/27/2018 - Worked on draft of Ubuntu MaaS technology summary
+* 9/27/2018 - Researched Azure Data Factory for the technology summaries.
 
