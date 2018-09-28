@@ -33,3 +33,8 @@ Week 5 9/21/2018 - 9/27/2018
 * 9/27/2018 - Worked on draft of Ubuntu MaaS technology summary
 * 9/27/2018 - Researched Azure Data Factory for the technology summaries.
 
+Week 6 9/28/2018 - 10/4/2018
+============================
+
+* 9/28/2018 - Confirmed that all technology summarys have been claimed with the hand emoji and HID
+* 9/28/2018 - Attended lecture: 
