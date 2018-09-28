@@ -35,3 +35,6 @@ Azure Data Factory
   * Combine weather forecast data to help predict what the temperature should be set at
   * Look at how expenses have improved as a result.  Graph savings and energy usage.
   * Create an interface to look at this data.
+  
+  Resources
+   * Thermostats: https://dzone.com/articles/how-to-build-your-own-arduino-thermostat
