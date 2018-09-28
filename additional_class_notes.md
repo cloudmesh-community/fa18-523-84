@@ -6,9 +6,8 @@
 
 ToDo / Assignments
  - [ ] Work on technology summary assignments
- - [ ] Find a partner to review article / page submissions
- - [ ] Reveiw main project
- - [ ] Find a potential partner for the main project
+ - [ ] Start work on the paper - Einstein Analytics
+ - [ ] Get materials for the project
 
 **Notes for technology summaries** 
 
