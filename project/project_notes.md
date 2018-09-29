@@ -9,6 +9,13 @@ Notes for the class project
   * Look at how expenses have improved as a result. Graph savings and energy usage.
   * Create an interface to look at this data.
 
+**Project Status**
+
+ * [x] Order sensors for raspberry pi thermostat (temperature, motion, etc)
+ * [ ] Set up raspberry pi to run python code
+ * [ ] Set up sensor array
+ * [ ] Python code to get weather forecast and store in a database
+
 **Resources**
 
  * Thermostats: https://dzone.com/articles/how-to-build-your-own-arduino-thermostat
