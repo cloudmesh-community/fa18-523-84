@@ -21,6 +21,11 @@ Python code
 
  * [x] Python code to get weather forecast
  * [ ] Set up cassandra data base to store data from weather and sensors
+ 
+Raspberry Pi cluster
+ 
+ * [ ] Set up OS on each pi in the cluster
+ * [ ] Code to configure the nodes?
 
 **Resources**
 
