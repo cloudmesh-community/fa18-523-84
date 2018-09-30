@@ -37,4 +37,6 @@ Week 6 9/28/2018 - 10/4/2018
 ============================
 
 * 9/28/2018 - Confirmed that all technology summarys have been claimed with the hand emoji and HID
-* 9/28/2018 - Attended lecture: 
+* 9/28/2018 - Attended lecture: Discussion about assingments and what is required.
+* 9/29/2018 - Set up first raspberry pi which will be used to collect data and manage the thermostat
+* 9/29/2018 - Started to write code to determine how to adjust temperature.  Finished the code to get the current temp.
