@@ -15,7 +15,7 @@ Raspberry Pi used for thermostat
 
  * [x] Order sensors for raspberry pi thermostat (temperature, motion, etc)
  * [x] Set up raspberry pi
- * [ ] Set up sensor array
+ * [x] Set up temperature sensor
 
 Python code
 
