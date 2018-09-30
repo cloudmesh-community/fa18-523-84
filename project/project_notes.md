@@ -11,10 +11,16 @@ Notes for the class project
 
 **Project Status**
 
+Raspberry Pi used for thermostat
+
  * [x] Order sensors for raspberry pi thermostat (temperature, motion, etc)
- * [ ] Set up raspberry pi to run python code
+ * [x] Set up raspberry pi
  * [ ] Set up sensor array
- * [ ] Python code to get weather forecast and store in a database
+
+Python code
+
+ * [x] Python code to get weather forecast
+ * [ ] Set up cassandra data base to store data from weather and sensors
 
 **Resources**
 
