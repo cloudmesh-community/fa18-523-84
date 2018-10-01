@@ -33,3 +33,4 @@ Raspberry Pi cluster
  * How to set up a raspberry pi temperature sensor: http://www.circuitbasics.com/raspberry-pi-ds18b20-temperature-sensor-tutorial/
  * Python weather API: https://pypi.org/project/weather-api/
  * Python geolocation API: https://geocoder.readthedocs.io/
+ * Keep process alive after closing ssh session: https://askubuntu.com/questions/8653/how-to-keep-processes-running-after-ending-ssh-session
