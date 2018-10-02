@@ -12,7 +12,7 @@ Thermostat
   * DS18B20 Temperature Sensor
   * Small breadboard & connector wires
   * 4.7k ohm resistor
-  * Raspbeery Pi
+  * Raspberry Pi
 
 Cloud Cluster
 
