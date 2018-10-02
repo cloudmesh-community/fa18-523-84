@@ -34,3 +34,6 @@ Raspberry Pi cluster
  * Python weather API: https://pypi.org/project/weather-api/
  * Python geolocation API: https://geocoder.readthedocs.io/
  * Keep process alive after closing ssh session: https://askubuntu.com/questions/8653/how-to-keep-processes-running-after-ending-ssh-session
+ * Node-RED: https://nodered.org/
+ * Node-RED MQTT Setup: https://cookbook.nodered.org/basic/
+ 
