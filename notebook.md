@@ -41,3 +41,4 @@ Week 6 9/28/2018 - 10/4/2018
 * 9/29/2018 - Set up first raspberry pi which will be used to collect data and manage the thermostat
 * 9/29/2018 - Started to write code to determine how to adjust temperature.  Finished the code to get the current outside temp.
 * 9/30/2018 - Set up temperature sensor for raspberry pi.
+* 10/01/2018 - Set up single node Cassandra database to test code. 
