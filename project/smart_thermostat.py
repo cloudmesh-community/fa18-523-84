@@ -96,21 +96,22 @@ def cassandra_query(keyspace, query, params=(), return_data=False, contact_point
 # Output
 ######################
 
-timeStampVal = get_current_weather()[0] - datetime.timedelta(hours=4) #convert to EST: Need to find a method to define this dynamically based on lon lat
-#timeStampVal = timeStampVal.strftime('%m-%d-%Y %H:%M:%S')
+now = datetime.datetime.utcnow() - datetime.timedelta(hours=4)
+timeStampVal = get_current_weather()[0] - datetime.timedelta(hours=4) #convert to EST: Need to find a way to convert dynamically
 condition = get_current_weather()[1]
 out_temp_f = get_current_weather()[2]
-in_temp_f = 72.0 
+in_temp_f = 71.2 
 #in_temp_c, in_temp_f = read_temp()
 
 insert_data = '''
-            INSERT INTO Temp_Data (timeStampVal,condition,out_temp_f,in_temp_f)
-            VALUES (%s,%s,%s,%s)
+            INSERT INTO temp_data (indoor_time, outdoor_time, out_condition, out_temp_f, in_temp_f)
+            VALUES (%s,%s,%s,%s,%s)
             ''' 
 
-params = (str(timeStampVal),condition,out_temp_f,in_temp_f)
+params = (now,str(timeStampVal),condition,out_temp_f,in_temp_f)
 
 print(cassandra_query('environment_data', insert_data, params))
+
 
 #print(read_temp())
 
