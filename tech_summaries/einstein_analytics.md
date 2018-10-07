@@ -5,5 +5,5 @@
 | -------- | ------------------------------- |
 | title    | Salesforce - Einstein Analytics | 
 | status   | 10                              |
-| section  | DevOps                          |
-| keywords | DevOps                          |
+| section  | Application and Analytics       |
+| keywords | Application and Analytics       |
