@@ -1,5 +1,5 @@
-Enterprise Visualization Tools for Big Data
-===========================================
+Enterprise Visualization Tools for Big Data - *Draft*
+=====================================================
 
 Adam Hilgenkamp  
 Indiana University - Bloomington  
