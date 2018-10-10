@@ -42,3 +42,14 @@ Week 6 9/28/2018 - 10/4/2018
 * 9/29/2018 - Started to write code to determine how to adjust temperature.  Finished the code to get the current outside temp.
 * 9/30/2018 - Set up temperature sensor for raspberry pi.
 * 10/01/2018 - Set up single node Cassandra database to test code. 
+
+Week 6 10/5/2018 - 10/11/2018
+=============================
+
+* 10/6/2018 - Fixed program bugs for IOT smart thermostat project (currently at ~13k observations)
+* 10/7/2018 - Completed technology summary for Azure Data Factory
+* 10/7/2018 - Completed technology summary for MLbase
+* 10/9/2018 - Wrote abstract for chapter paper
+* 10/9/2018 - Wrote abstract for project paper
+
+
