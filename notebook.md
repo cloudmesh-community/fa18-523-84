@@ -49,7 +49,7 @@ Week 7 10/5/2018 - 10/11/2018
 * 10/6/2018 - Fixed program bugs for IOT smart thermostat project (currently at ~13k observations)
 * 10/7/2018 - Completed technology summary for Azure Data Factory
 * 10/7/2018 - Completed technology summary for MLbase
-* 10/9/2018 - Wrote abstract for chapter paper
-* 10/9/2018 - Wrote abstract for project paper
+* 10/9/2018 - Wrote abstract & rough outline for chapter paper
+* 10/9/2018 - Wrote abstract & rough outline for project paper
 
 
