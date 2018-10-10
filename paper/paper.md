@@ -12,7 +12,23 @@ Many data analysis tasks today have outgrown the use of Microsoft Excel.  To mee
 
 ## Introduction
 
+How has business analytics evolved?  Why are visualizations important to decision making?
 
+## Traditional Data Visualization
+
+Excel and traditional charts.
+
+## Data Visualization Today
+
+Looking at the latest trends and tools used to visualize data
+
+## Example of Business Analytics with Einstein Analytics
+
+Using Einstein Analytics as an example of how cloud based tools can improve data visualization.  Mobile access, data storage, speed, pricing model, etc...
+
+## Conclusion
+
+Wrap up
 
 ## Raw Sources (will be put into bibtex format later)
 
