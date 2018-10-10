@@ -43,7 +43,7 @@ Week 6 9/28/2018 - 10/4/2018
 * 9/30/2018 - Set up temperature sensor for raspberry pi.
 * 10/01/2018 - Set up single node Cassandra database to test code. 
 
-Week 6 10/5/2018 - 10/11/2018
+Week 7 10/5/2018 - 10/11/2018
 =============================
 
 * 10/6/2018 - Fixed program bugs for IOT smart thermostat project (currently at ~13k observations)
