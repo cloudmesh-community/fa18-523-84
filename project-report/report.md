@@ -1,5 +1,5 @@
-An Exploration of the Internet of Things - Building a Smart Thermostat
-======================================================================
+An Exploration of the Internet of Things - *Draft*
+==================================================
 
 Adam Hilgenkamp  
 Indiana University - Bloomington  
