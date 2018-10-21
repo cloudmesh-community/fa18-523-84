@@ -1,9 +1,6 @@
-#Enterprise Visualization Tools for Big Data - *Draft* :hand: fa18-523-84
+# Enterprise Visualization Tools for Big Data - *Draft* :hand: fa18-523-84
 
-| Adam Hilgenkamp  
-| ahilgenk@iu.edu
-| Indiana University - Bloomington  
-| hid: fa18-523-84
+| Adam Hilgenkamp | ahilgenk@iu.edu | Indiana University - Bloomington | hid: fa18-523-84
 
 ---
 
