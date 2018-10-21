@@ -15,7 +15,7 @@ cluster = Cluster()
 session = cluster.connect()
 session = cluster.connect('environment_data')
 
-session.execute('DROP TABLE temp_data')
+#session.execute('DROP TABLE temp_data')
 
 session.execute(create_user_table)
 
