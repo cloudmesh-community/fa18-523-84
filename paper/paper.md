@@ -1,9 +1,15 @@
-Enterprise Visualization Tools for Big Data - *Draft*
-=====================================================
+#Enterprise Visualization Tools for Big Data - *Draft* :hand: fa18-523-84
 
-Adam Hilgenkamp  
-Indiana University - Bloomington  
-October 9th, 2018 
+| Adam Hilgenkamp  
+| ahilgenk@iu.edu
+| Indiana University - Bloomington  
+| hid: fa18-523-84
+
+---
+
+Keywords: Enterprise, Visualization, Big Data, Einstein Analytics, Salesforce, Tableau
+
+---
 
 ## Abstract
 
