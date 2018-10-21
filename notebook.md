@@ -52,4 +52,16 @@ Week 7 10/5/2018 - 10/11/2018
 * 10/9/2018 - Wrote abstract & rough outline for chapter paper
 * 10/9/2018 - Wrote abstract & rough outline for project paper
 
+Week 8 10/12/2018 - 10/18/2018
+==============================
+
+* Minimal progress due to travel for work.
+
+Week 9 10/19/2018 - 10/25/2018
+==============================
+
+* 10/20/2018 - Fixed issue with LCD display on smart thermostat.
+* 10/20/2018 - Caught up on missed Piazza posts.
+* 10/21/2018 - Updated README.yaml to include the requested details for tech summaries, paper and project.
+* 10/21/2018 - Watched videos and read about how to use git in the linux shell.
 
