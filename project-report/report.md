@@ -1,9 +1,17 @@
-An Exploration of the Internet of Things - *Draft*
-==================================================
+# An Exploration of the Internet of Things :hand: fa18-523-84
 
-Adam Hilgenkamp  
-Indiana University - Bloomington  
-October 9th, 2018  
+| Adam Hilgenkamp 
+| ahilgenk@iu.edu 
+| Indiana University - Bloomington 
+| hid: fa18-523-84 
+| github: [:cloud:](https://github.com/cloudmesh-community/fa18-523-84/edit/master/project-report/report.md)
+| code: [:cloud:](https://github.com/cloudmesh-community/fa18-523-84/tree/master/project-code)
+
+---
+
+Keywords: IoT, Nest, Thermostat
+
+---
 
 ## Abstract
 
