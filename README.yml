@@ -4,3 +4,19 @@ owner:
   lastname: "Hilgenkamp"
   hid: "fa18-523-84"
   community: "i523"
+  semester: "fa18"
+technologies:
+  - url: https://github.com/cloudmesh/technologies/blob/master/chapters/tech/azure-data-factory.md
+  - url: https://github.com/cloudmesh/technologies/blob/master/chapters/tech/mlbase.md
+  - url: https://github.com/cloudmesh/technologies/blob/master/chapters/tech/ubuntu-maas.md
+  - url: https://github.com/cloudmesh/technologies/blob/master/chapters/tech/wink.md
+  - url: https://github.com/cloudmesh-community/fa18-523-84/blob/master/tech_summaries/einstein_analytics.md
+paper:
+  - keyword: Visualization
+    title: Enterprise Visualization Tools for Big Data - Draft
+    url: https://github.com/cloudmesh-community/fa18-523-84/tree/master/paper
+project:
+  - keyword: IoT
+    title: An Exploration of the Internet of Things - Draft
+    url: https://github.com/cloudmesh-community/fa18-523-84/tree/master/project-report
+    code: https://github.com/cloudmesh-community/fa18-523-84/tree/master/project-code
