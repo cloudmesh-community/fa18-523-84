@@ -4,7 +4,7 @@ import os
 import yaml
 
 file_path = os.getcwd() 
-with open(file_path+"README.yaml", 'r') as file:
+with open(file_path+"/README.yml", 'r') as file:
     try:
         print(yaml.load(file))
     except yaml.YAMLError as exception:
