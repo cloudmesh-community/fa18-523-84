@@ -31,6 +31,8 @@ Raspberry Pi cluster
 
 *Look into particle for IoT: https://www.particle.io/*
 
+ * Video on how to use Docker: https://www.youtube.com/watch?v=wCTTHhehJbU
+
  * Thermostats: https://dzone.com/articles/how-to-build-your-own-arduino-thermostat
  * How to set up a raspberry pi temperature sensor: http://www.circuitbasics.com/raspberry-pi-ds18b20-temperature-sensor-tutorial/
  * Python weather API: https://pypi.org/project/weather-api/
