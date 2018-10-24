@@ -3,13 +3,17 @@
 
 |          |                        |
 | -------- | ---------------------- |
-| title    | Pivotal HDB/Hawq        | 
+| title    | Pivotal HDB/Hawq       | 
 | status   | 90                     |
 | section  | High level Programming |
 | keywords | High level Programming |
 
 
-END OF LIFE
+
+
+**Sources:**
+
+END OF LIFE PDF: https://d1fto35gcfffzn.cloudfront.net/support/PivotalLifecycleMatrix.pdf
 
 
 Pivotal HDB is the Apache Hadoop native SQL database powered by Apache
