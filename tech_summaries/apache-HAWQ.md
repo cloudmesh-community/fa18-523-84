@@ -14,10 +14,4 @@ Apache HAWQ is a Hadoop SQL database built for massively parallel processing.  T
 Apache HAWQ is native to Hadoop which allows for easy scaling of nodes to handle capacity or performance requirements [01]. The tool also provides easy integration of Apache MADlib machine learning libraries that can be used to work with data in Apache HAWQ.  As of Aug 15, 2018 Apache HAWK was approved as a top level project for the Apache Software Foundation [01].  As momentum increases new features and bug fixes are planned to be implemented in order to improve the tool.
 
 The project is continuing to move forward but in February of 2018 the organization Pivotal decided to end the availability of HAWQ (Pivotal HDB) [02].  In the early design of HAWQ Pivotal was a key player in the development through the creation of the Pivotal Greenplum enterprise database [01].  Now the project will continue as an open source project.
-
-
-**Sources:**
-
-  * 01 - Main Site Home Page: http://hawq.apache.org/
-  * 02 - END OF LIFE PDF: https://d1fto35gcfffzn.cloudfront.net/support/PivotalLifecycleMatrix.pdf
-  
+ 
