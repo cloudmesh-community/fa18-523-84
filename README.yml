@@ -9,7 +9,7 @@ technologies:
   - url: https://github.com/cloudmesh/technologies/blob/master/chapters/tech/azure-data-factory.md
   - url: https://github.com/cloudmesh/technologies/blob/master/chapters/tech/mlbase.md
   - url: https://github.com/cloudmesh/technologies/blob/master/chapters/tech/ubuntu-maas.md
-  - url: https://github.com/ahilgenkamp/technologies/blob/master/chapters/tech/apache-hawq.md
+  - url: https://github.com/cloudmesh/technologies/blob/master/chapters/tech/apache-hawq.md
   - url: https://github.com/cloudmesh/technologies/blob/master/chapters/tech/wink.md
   - url: https://github.com/cloudmesh-community/fa18-523-84/blob/master/tech_summaries/einstein_analytics.md
 paper:
