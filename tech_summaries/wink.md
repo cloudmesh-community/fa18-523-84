@@ -8,7 +8,13 @@
 | section  | Technologies To Be Integrated |
 | keywords | Technologies To Be Integrated |
 
+Apache Wink was a Java based framework which allowed a user to develop and work with RESTful web services [01].  This tool was built by implementing the JAX-RS framework; the Java API which provides support for creating web services [02].
 
+
+**Sources:**
+
+  * 01 - Wink Site: https://svn.apache.org/repos/infra/websites/production/wink/content/index.html
+  * 02 - Web Services: https://en.wikipedia.org/wiki/Java_API_for_RESTful_Web_Services
 
 Apache wink [@www-apache-wink] provides a framework to develop and
 use RESTful web services. It implements using JAX-RS v1.1
