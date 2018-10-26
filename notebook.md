@@ -64,4 +64,14 @@ Week 9 10/19/2018 - 10/25/2018
 * 10/20/2018 - Caught up on missed Piazza posts.
 * 10/21/2018 - Updated README.yaml to include the requested details for tech summaries, paper and project.
 * 10/21/2018 - Watched videos and read about how to use git in the linux shell.
+* 10/23/2018 - Completed technology summary for Ubuntu MaaS
+* 10/24/2018 - Completed technology summary for Apache HAWQ
+* 10/25/2018 - Updated references
+* 10/25/2018 - Created pull request for all updates
+
+Week 10 10/26/2018 - 11/1/2018
+==============================
+
+  * 10/26/2018 - Attended lecture: reviewed technologies epub and talked about the paper / project
+  
 
