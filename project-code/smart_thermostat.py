@@ -10,6 +10,8 @@ import pyowm
 import geocoder
 import pandas as pd
 import datetime
+import sys
+import Adafruit_DHT
 #import pytz
 #from tzwhere import tzwhere
 from cassandra.cluster import Cluster
@@ -37,38 +39,24 @@ def get_current_weather(g):
 ######################
 # functions to get temperature data and LCD setup
 # Sources for this section:
-#   code in this section copied from:  http://www.circuitbasics.com/raspberry-pi-ds18b20-temperature-sensor-tutorial/ 
+#   code in this section copied from:  http://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-the-raspberry-pi/ 
 ######################
 
 GPIO.setwarnings(False)
+
 lcd = CharLCD(cols=16,rows=2,pin_rs=37,pin_e=35,pins_data=[33,31,29,23],numbering_mode=GPIO.BOARD)
-
-def read_temp_raw():
-	os.system('modprobe w1-gpio')
-	os.system('modprobe w1-therm')
-	base_dir = '/sys/bus/w1/devices/'
-	device_folder = glob.glob(base_dir + '28*')[0]
-	device_file = device_folder + '/w1_slave'
-	f = open(device_file, 'r')
-	lines = f.readlines()
-	f.close()
-	return lines
+sensor = Adafruit_DHT.DHT11
+pin = 4
 
 
-def read_temp():
+def read_temp_humid():
 	try:
-		lines = read_temp_raw()
-		while lines[0].strip()[-3:] != 'YES':
-			time.sleep(0.2)
-			lines = read_temp_raw()
-		equals_pos = lines[1].find('t=')
-		if equals_pos != -1:
-			temp_string = lines[1][equals_pos+2:]
-			temp_c = float(temp_string) / 1000.0
-			temp_f = temp_c * 9.0 / 5.0 + 32.0
-		return temp_c, temp_f
+		humid, temp_c = Adafruit_DHT.read_retry(sensor, pin)
+		temp_f = temp_c * 9.0 / 5.0 + 32.0
+		return humid, temp_f
 	except:
-		return 0, 0
+		return 0,0
+
 
 
 ######################
@@ -110,6 +98,7 @@ def cassandra_query(keyspace, query, params=(), return_data=False, contact_point
 
 while True:
 	delay = 40
+	display_num = 1
 	while delay > 0:
 
 		try:
@@ -119,8 +108,7 @@ while True:
 			timeStampVal = curr_weather[0] - datetime.timedelta(hours=4) #convert to EST: Need to find a way to convert dynamically
 			condition = curr_weather[1]
 			out_temp_f = curr_weather[2]
-			#in_temp_f = 71.2
-			in_temp_c, in_temp_f = read_temp()
+			in_humid, in_temp_f = read_temp_humid()
 
 			insert_data = '''
 		            INSERT INTO temp_data (indoor_time, outdoor_time, out_condition, out_temp_f, in_temp_f)
@@ -131,13 +119,22 @@ while True:
 
 			cassandra_query('environment_data', insert_data, params)
 
-			lcd.cursor_pos = (0,0)
-			lcd.write_string('Indoor: ' + str(round(in_temp_f,1)) + 'F')
-			lcd.cursor_pos = (1,0)
-			lcd.write_string('Outdoor: ' + str(round(out_temp_f,1)) + 'F')
+			if display_num == 1:
+				lcd.cursor_pos = (0,0)
+				lcd.write_string('In Temp: ' + str(round(in_temp_f,1)) + 'F')
+				lcd.cursor_pos = (1,0)
+				lcd.write_string('Out Temp: ' + str(round(out_temp_f,1)) + 'F')
+				display_num = 0
+			else:
+				lcd.cursor_pos = (0,0)
+				lcd.write_string('In Humid: ' + str(in_humid) + '%')
+				lcd.cursor_pos = (1,0)
+				lcd.write_string('Out Temp: ' + str(round(out_temp_f,1)) + 'F')
+				display_num = 1
 
 			time.sleep(15)
 			delay = delay - 1
+
 		except:
 			print('Error, no data loaded. Time: '+str(datetime.datetime.utcnow()-datetime.timedelta(hours=4)))
 	print(str(now)+' | '+str(in_temp_f)+' | '+str(out_temp_f)+' | '+str(timeStampVal))
