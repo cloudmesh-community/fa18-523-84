@@ -8,6 +8,7 @@ create_user_table = ''' CREATE TABLE temp_data (
             out_condition text,
             out_temp_f double,
             in_temp_f double,
+            humidity double,
             PRIMARY KEY (indoor_time))
         '''
 
@@ -26,7 +27,8 @@ session.execute(create_user_table)
 
 cluster.shutdown()
 
+query1 = 'SELECT count(*) FROM environment_data.temp_data'
 
-query1 = 'SELECT max(indoor_time), in_temp_f, out_condition, out_temp_f, outdoor_time FROM environment_data.temp_data'
+query2 = 'SELECT * FROM environment_data.temp_data limit 10'
 
-query2 = 'SELECT * FROM environment_data.temp_data'
+query3 = 'SELECT * FROM environment_data.temp_data where indoor_time >= \'2018-10-27 12:00:00\' limit 10 ALLOW FILTERING'
