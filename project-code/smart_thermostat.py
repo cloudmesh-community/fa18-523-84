@@ -111,11 +111,11 @@ while True:
 			in_humid, in_temp_f = read_temp_humid()
 
 			insert_data = '''
-		            INSERT INTO temp_data (indoor_time, outdoor_time, out_condition, out_temp_f, in_temp_f)
-	        	    VALUES (%s,%s,%s,%s,%s)
+		            INSERT INTO temp_data (indoor_time, outdoor_time, out_condition, out_temp_f, in_temp_f, humidity)
+	        	    VALUES (%s,%s,%s,%s,%s,%s)
 		            '''
 
-			params = (now,str(timeStampVal),condition,out_temp_f,in_temp_f)
+			params = (now,str(timeStampVal),condition,out_temp_f,in_temp_f,in_humid)
 
 			cassandra_query('environment_data', insert_data, params)
 
