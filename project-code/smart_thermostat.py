@@ -120,12 +120,14 @@ while True:
 			cassandra_query('environment_data', insert_data, params)
 
 			if display_num == 1:
+				lcd.clear
 				lcd.cursor_pos = (0,0)
 				lcd.write_string('In Temp: ' + str(round(in_temp_f,1)) + 'F')
 				lcd.cursor_pos = (1,0)
 				lcd.write_string('Out Temp: ' + str(round(out_temp_f,1)) + 'F')
 				display_num = 0
 			else:
+				lcd.clear
 				lcd.cursor_pos = (0,0)
 				lcd.write_string('In Humid: ' + str(in_humid) + '%')
 				lcd.cursor_pos = (1,0)
