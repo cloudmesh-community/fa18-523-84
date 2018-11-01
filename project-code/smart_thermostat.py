@@ -12,8 +12,8 @@ import pandas as pd
 import datetime
 import sys
 import Adafruit_DHT
-#import pytz
-#from tzwhere import tzwhere
+import pytz
+import timezonefinder
 from cassandra.cluster import Cluster
 from RPLCD import CharLCD
 from RPi import GPIO
@@ -104,8 +104,15 @@ while True:
 		try:
 			curr_weather = get_current_weather(g)
 
-			now = datetime.datetime.utcnow() - datetime.timedelta(hours=4)
-			timeStampVal = curr_weather[0] - datetime.timedelta(hours=4) #convert to EST: Need to find a way to convert dynamically
+			# Automatic timezone adjustment code modified from: https://stackoverflow.com/questions/15742045/getting-time-zone-from-lat-long-coordinates
+			tf = timezonefinder.TimezoneFinder()
+			timezone_str = tf.certain_timezone_at(lat=g.latlng[0], lng=g.latlng[1])
+			timezone = pytz.timezone(timezone_str)
+			dt = datetime.datetime.utcnow()
+			now = datetime.datetime.utcnow() + timezone.utcoffset(dt)
+			timeStampVal = curr_weather[0] + timezone.utcoffset(dt) 
+			
+			# Environment data variables
 			condition = curr_weather[1]
 			out_temp_f = curr_weather[2]
 			in_humid, in_temp_f = read_temp_humid()
