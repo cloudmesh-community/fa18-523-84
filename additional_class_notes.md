@@ -5,9 +5,13 @@
   * Reviewed and discussed cloud techonolgies
 
 ToDo / Assignments
- - [ ] Work on technology summary assignments
+ - [x] Work on technology summary assignments
+ - [x] Get materials for the project
  - [ ] Start work on the paper - Einstein Analytics
- - [ ] Get materials for the project
+ - [ ] Update references to ensure consistancy - https://piazza.com/class/jl6rxey6w413gi?cid=241
+ - [ ] Figure out if contributing to Raspberry Pi epub counts as a 2 page paper
+
+
 
 **Notes for technology summaries** 
 
