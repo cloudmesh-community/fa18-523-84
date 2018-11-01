@@ -73,5 +73,7 @@ Week 10 10/26/2018 - 11/1/2018
 ==============================
 
   * 10/26/2018 - Attended lecture: reviewed technologies epub and talked about the paper / project
+  * 10/30/2018 - Completed technology summary for Apache Wink and submitted pull request
+  * 11/1/2018 - 
   
 
