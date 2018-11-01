@@ -13,6 +13,9 @@ sudo python setup.py install
 sudo apt-get python3-pandas
 pip3 install pyowm
 pip3 install geocoder
+pip3 install RPi
+pip3 install RPLCD
+sudo easy_install3 timezonefinder
 sudo easy_install3 cassandra-driver
 echo "All python dependencies have been successfully installed."
 
