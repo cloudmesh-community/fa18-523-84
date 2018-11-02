@@ -72,8 +72,25 @@ Week 9 10/19/2018 - 10/25/2018
 Week 10 10/26/2018 - 11/1/2018
 ==============================
 
-  * 10/26/2018 - Attended lecture: reviewed technologies epub and talked about the paper / project
-  * 10/30/2018 - Completed technology summary for Apache Wink and submitted pull request
-  * 11/1/2018 - 
+ * 10/26/2018 - Attended lecture: reviewed technologies epub and talked about the paper / project
+ * 10/30/2018 - Completed technology summary for Apache Wink and submitted pull request
+ * 11/1/2018 - Created an outline for Smart Home IoT Sensors - will be contributing to the Pi epub rather than paper
+  
+Week 11 11/2/2018 - 11/8/2018
+=============================
+
+ * 11/2/2018 - Attended lecture - fixing technology summaries, project updates, long term backup plan and virtual directories
+ * 11/2/2018 - Made recommended fixes to MLbase technology summary
+ 
+ 
+# TODO
+
+ - [ ] fix bibtex references (change main website reference keys to be www-technology)
+ - [ ] **figure out where to place my contribution to the raspberry pi epub**
+  - [ ] the first is setting up IoT sensors for smart thermostat
+  - [ ] the second is setting up raspberry pi cluster and running cassandra and an application on the cluster
+ - [ ] **TODO on project programming**
+  - [ ] Set up raspberry pi cluster
+  - [ ] write code to do something with the data
   
 
