@@ -3,10 +3,10 @@
 :o: format incorrect
 
 | Adam Hilgenkamp  
-| ahilgenk@iu.edu
-| Indiana University - Bloomington
-| hid: fa18-523-84
-| github: [:cloud:]()
+| ahilgenk@iu.edu  
+| Indiana University - Bloomington  
+| hid: fa18-523-84  
+| github: [:cloud:]()  
 
 
 ---
