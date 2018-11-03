@@ -6,7 +6,7 @@
 | ahilgenk@iu.edu  
 | Indiana University - Bloomington  
 | hid: fa18-523-84  
-| github: [:cloud:]()  
+| github: [:cloud:](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/paper.md)  
 
 
 ---
