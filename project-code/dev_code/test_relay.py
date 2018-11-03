@@ -1,3 +1,5 @@
+# Code modified from source: https://tutorials-raspberrypi.com/raspberry-pi-control-relay-switch-via-gpio/
+
 import RPi.GPIO as GPIO
 import time
 
