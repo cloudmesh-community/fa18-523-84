@@ -1,4 +1,4 @@
-#Source: Insert stackexchange link
+#Source: http://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-the-raspberry-pi/
 
 import sys
 import Adafruit_DHT
