@@ -39,10 +39,18 @@ def get_current_weather(g):
 ######################
 # functions to get temperature data and LCD setup
 # Sources for this section:
-#   code in this section copied from:  http://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-the-raspberry-pi/ 
+#   LCD + DHT11:  http://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-the-raspberry-pi/ 
+#   GPIO: https://tutorials-raspberrypi.com/raspberry-pi-control-relay-switch-via-gpio/
 ######################
 
 GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+
+RELAY_GPIO_1 = 16
+RELAY_GPIO_2 = 18
+
+GPIO.setup(RELAY_GPIO_1, GPIO.OUT)
+GPIO.setup(RELAY_GPIO_2, GPIO.OUT)
 
 lcd = CharLCD(cols=16,rows=2,pin_rs=37,pin_e=35,pins_data=[33,31,29,23],numbering_mode=GPIO.BOARD)
 sensor = Adafruit_DHT.DHT11
@@ -88,7 +96,54 @@ def cassandra_query(keyspace, query, params=(), return_data=False, contact_point
 	except:
 		print('Data not loaded. Check for Error')
 
+		
+######################
+# functions to adjust the temperature
+# Sources for this section:
+#   timezone offset: https://stackoverflow.com/questions/15742045/getting-time-zone-from-lat-long-coordinates
+######################
 
+def active_time(start='08:00:00', end='23:59:00'):
+	start = datetime.datetime.strptime(start, '%H:%M:%S')
+	end = datetime.datetime.strptime(end, '%H:%M:%S')
+	tf = timezonefinder.TimezoneFinder()
+	timezone_str = tf.certain_timezone_at(lat=g.latlng[0], lng=g.latlng[1])
+	timezone = pytz.timezone(timezone_str)
+	dt = datetime.datetime.utcnow()
+	now = datetime.datetime.utcnow() + timezone.utcoffset(dt)
+	if now > start and now < end:
+		return False
+	else:
+		return True
+
+
+def thermostat_adjust(indoor_temp, outdoor_temp, active_time, desired_temp=69, sys_off=False, fan_on=False, tolarance=2):
+	if sys_off == True:
+		GPIO.output(RELAY_GPIO_1, GPIO.HIGH)
+		GPIO.output(RELAY_GPIO_2, GPIO.HIGH)
+		return 'ALL OFF'
+	elif sys_off == False and fan_on == True:
+		if indoor_temp > desired_temp + tolarance and indoor_temp < outdoor_temp and active_time == True:
+			GPIO.output(RELAY_GPIO_2, GPIO.LOW)
+			return 'AC ON'
+		elif indoor_temp < desired_temp - tolarance and indoor_temp > outdoor_temp and active_time == True:
+			GPIO.output(RELAY_GPIO_1, GPIO.LOW)
+			return 'HEAT ON'
+		else:
+			return 'FAN ON'
+	else:
+		if indoor_temp > desired_temp + tolarance and indoor_temp < outdoor_temp and active_time == True:
+			GPIO.output(RELAY_GPIO_2, GPIO.LOW)
+			return 'AC ON'
+		elif indoor_temp < desired_temp - tolarance and indoor_temp > outdoor_temp and active_time == True:
+			GPIO.output(RELAY_GPIO_1, GPIO.LOW)
+			return 'HEAT ON'
+		else:
+			GPIO.output(RELAY_GPIO_1, GPIO.HIGH)
+			GPIO.output(RELAY_GPIO_2, GPIO.HIGH)
+			return 'SYS OFF'
+		
+		
 ######################
 # Output
 ######################
@@ -116,6 +171,13 @@ while True:
 		out_temp_f = curr_weather[2]
 		in_humid, in_temp_f = read_temp_humid()
 
+		# Adjust thermostat based on variables
+		if in_temp_f is not None or out_temp_f is not None:
+			thermostat_adjust(in_temp_f,out_temp_f,active_time())
+		else:
+			pass
+		
+		# Record data in database
 		insert_data = '''
 	            INSERT INTO temp_data (indoor_time, outdoor_time, out_condition, out_temp_f, in_temp_f, humidity)
         	    VALUES (%s,%s,%s,%s,%s,%s)
