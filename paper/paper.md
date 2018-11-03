@@ -1,5 +1,10 @@
 # Smart Home IoT Sensors for Raspberry Pi :hand: fa18-523-84
- 
+
+:o: format incorrect
+
+| github: [:cloud:](https://github.com/cloudmesh-community/fa18-523-84/edit/master/paper/paper.md)
+
+
 ## Outline
 
  * Learning Objectives:  Understand how different IoT sensors work.  Integrate sensors into an application.
