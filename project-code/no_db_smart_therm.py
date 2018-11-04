@@ -1,4 +1,3 @@
-
 # I523 Course Project
 # Smart Thermostat
 
@@ -47,29 +46,31 @@ def get_current_weather(g):
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 
+#################
+# HARD CODE PINS FOR SENSORS
 RELAY_PIN_1 = 16
 RELAY_PIN_2 = 18
 TOUCH_PIN = 13
+LIGHT_PIN = 11
+TEMP_HUMID_PIN = 4
+#################
 
 GPIO.setup(RELAY_PIN_1, GPIO.OUT)
 GPIO.setup(RELAY_PIN_2, GPIO.OUT)
-
+GPIO.setup(LIGHT_PIN, GPIO.IN)
 GPIO.setup(TOUCH_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-
 lcd = CharLCD(cols=16,rows=2,pin_rs=37,pin_e=35,pins_data=[33,31,29,23],numbering_mode=GPIO.BOARD)
-sensor = Adafruit_DHT.DHT11
-pin = 4
+
 display_num = 1 # Sets the starting display.  Number will change with button press
 
 def read_temp_humid():
 	try:
-		humid, temp_c = Adafruit_DHT.read_retry(sensor, pin)
+		humid, temp_c = Adafruit_DHT.read_retry(Adafruit_DHT.DHT11, TEMP_HUMID_PIN)
 		temp_f = temp_c * 9.0 / 5.0 + 32.0
 		return humid, temp_f
 	except:
 		return 0,0
-
 
 def touch_callback(channel):
 	global display_num
@@ -125,40 +126,46 @@ def cassandra_query(keyspace, query, params=(), return_data=False, contact_point
 #   timezone offset: https://stackoverflow.com/questions/15742045/getting-time-zone-from-lat-long-coordinates
 ######################
 
-def active_time(start='08:00:00', end='23:59:00'):
+def set_tolarance(start='08:00:00', end='22:30:00', main=1, secondary=5):
 	start = datetime.datetime.strptime(start, '%H:%M:%S')
 	end = datetime.datetime.strptime(end, '%H:%M:%S')
+	#Adjust timezone
 	tf = timezonefinder.TimezoneFinder()
 	timezone_str = tf.certain_timezone_at(lat=g.latlng[0], lng=g.latlng[1])
 	timezone = pytz.timezone(timezone_str)
 	dt = datetime.datetime.utcnow()
 	timezone.localize(dt)
 	now = datetime.datetime.utcnow() + timezone.utcoffset(dt)
+
+	# compare current time to start and end points
 	if now > start and now < end:
-		return False
+		if GPIO.input(LIGHT_PIN) == 0:  # Check if the lights are on.  Indicates if someone is active.
+			return main
+		else:
+			return secondary
 	else:
-		return True
+		return main
 
 
-def thermostat_adjust(indoor_temp, outdoor_temp, active_time, desired_temp=69, sys_off=False, fan_on=False, tolarance=2):
+def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp=69, sys_off=False, fan_on=False, tolarance=2):
 	if sys_off == True:
 		GPIO.output(RELAY_PIN_1, GPIO.HIGH)
 		GPIO.output(RELAY_PIN_2, GPIO.HIGH)
 		return 'ALL OFF'
 	elif sys_off == False and fan_on == True:
-		if indoor_temp > desired_temp + tolarance and indoor_temp < outdoor_temp and active_time == True:
+		if indoor_temp > desired_temp + tolarance and indoor_temp < outdoor_temp:
 			GPIO.output(RELAY_PIN_2, GPIO.LOW)
 			return 'AC ON'
-		elif indoor_temp < desired_temp - tolarance and indoor_temp > outdoor_temp and active_time == True:
+		elif indoor_temp < desired_temp - tolarance and indoor_temp > outdoor_temp:
 			GPIO.output(RELAY_PIN_1, GPIO.LOW)
 			return 'HEAT ON'
 		else:
 			return 'FAN ON'
 	else:
-		if indoor_temp > desired_temp + tolarance and indoor_temp < outdoor_temp and active_time == True:
+		if indoor_temp > desired_temp + tolarance and indoor_temp < outdoor_temp:
 			GPIO.output(RELAY_PIN_2, GPIO.LOW)
 			return 'AC ON'
-		elif indoor_temp < desired_temp - tolarance and indoor_temp > outdoor_temp and active_time == True:
+		elif indoor_temp < desired_temp - tolarance and indoor_temp > outdoor_temp:
 			GPIO.output(RELAY_PIN_1, GPIO.LOW)
 			return 'HEAT ON'
 		else:
@@ -196,8 +203,8 @@ while True:
 
 		# Adjust thermostat based on variables
 		if in_temp_f is not None or out_temp_f is not None:
-			output = thermostat_adjust(in_temp_f,out_temp_f,active_time(),desired_temp=69.0)
-			print(output)
+			output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=69.0,tolarance=set_tolarance())
+			#print(output)
 		else:
 			pass
 
