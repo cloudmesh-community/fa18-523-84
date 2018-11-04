@@ -17,7 +17,7 @@ def touch_callback(channel):
 		else:
 			display_num = 1
 	else:
-        	if GPIO.input(TOUCH_PIN) == 1:
+		if GPIO.input(TOUCH_PIN) == 1:
 			display_num = 1
 		else:
 			display_num = 0
