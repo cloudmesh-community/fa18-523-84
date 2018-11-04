@@ -11,6 +11,7 @@ GPIO.setup(TOUCH_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 display_num = 1
 
 def touch_callback(channel):
+	global display_num
 	if display_num == 1:
 		if GPIO.input(TOUCH_PIN) == 1:
 			display_num = 0
