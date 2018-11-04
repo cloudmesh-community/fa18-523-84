@@ -39,7 +39,7 @@ def get_current_weather(g):
 ######################
 # functions to get temperature data and LCD setup
 # Sources for this section:
-#   LCD + DHT11:  http://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-the-raspberry-pi/ 
+#   LCD + DHT11:  http://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-the-raspberry-pi/
 #   GPIO: https://tutorials-raspberrypi.com/raspberry-pi-control-relay-switch-via-gpio/
 ######################
 
@@ -96,7 +96,7 @@ def cassandra_query(keyspace, query, params=(), return_data=False, contact_point
 	except:
 		print('Data not loaded. Check for Error')
 
-		
+
 ######################
 # functions to adjust the temperature
 # Sources for this section:
@@ -110,6 +110,7 @@ def active_time(start='08:00:00', end='23:59:00'):
 	timezone_str = tf.certain_timezone_at(lat=g.latlng[0], lng=g.latlng[1])
 	timezone = pytz.timezone(timezone_str)
 	dt = datetime.datetime.utcnow()
+	timezone.localize(dt)
 	now = datetime.datetime.utcnow() + timezone.utcoffset(dt)
 	if now > start and now < end:
 		return False
@@ -142,8 +143,8 @@ def thermostat_adjust(indoor_temp, outdoor_temp, active_time, desired_temp=69, s
 			GPIO.output(RELAY_GPIO_1, GPIO.HIGH)
 			GPIO.output(RELAY_GPIO_2, GPIO.HIGH)
 			return 'SYS OFF'
-		
-		
+
+
 ######################
 # Output
 ######################
@@ -163,6 +164,7 @@ while True:
 		timezone_str = tf.certain_timezone_at(lat=g.latlng[0], lng=g.latlng[1])
 		timezone = pytz.timezone(timezone_str)
 		dt = datetime.datetime.utcnow()
+		timezone.localize(dt)
 		now = datetime.datetime.utcnow() + timezone.utcoffset(dt)
 		timeStampVal = curr_weather[0] + timezone.utcoffset(dt)
 
@@ -173,10 +175,11 @@ while True:
 
 		# Adjust thermostat based on variables
 		if in_temp_f is not None or out_temp_f is not None:
-			thermostat_adjust(in_temp_f,out_temp_f,active_time())
+			output = thermostat_adjust(in_temp_f,out_temp_f,active_time(),desired_temp=69.0)
+			print(output)
 		else:
 			pass
-		
+
 		# Record data in database
 		insert_data = '''
 	            INSERT INTO temp_data (indoor_time, outdoor_time, out_condition, out_temp_f, in_temp_f, humidity)
