@@ -1,4 +1,5 @@
-# Source: www.instructables.com/id/Sound-Sensor-Raspberry-Pi/
+# Source: https://sourceforge.net/p/raspberry-gpio-python/wiki/Inputs/
+# Source2: https://stackoverflow.com/questions/16143842/raspberry-pi-gpio-events-in-python
 
 import RPi.GPIO as GPIO
 import time
