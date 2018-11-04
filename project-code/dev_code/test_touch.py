@@ -8,14 +8,22 @@ TOUCH_PIN = 13
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(TOUCH_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+display_num = 1
 
 def touch_callback(channel):
-	print('Hey!')
+	if GPIO.input(TOUCH_PIN) == 1:
+		if display_num == 1:
+			display_num = 0
+		else:
+			display_num = 1
+	else:
+        	pass
 
 GPIO.add_event_detect(TOUCH_PIN, GPIO.RISING, callback=touch_callback)
 
 while True:
-	time.sleep(1)
+	time.sleep(5)
+	print(display_num)
 
 '''
 while True:
