@@ -41,21 +41,26 @@ def get_current_weather(g):
 # Sources for this section:
 #   LCD + DHT11:  http://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-the-raspberry-pi/
 #   GPIO: https://tutorials-raspberrypi.com/raspberry-pi-control-relay-switch-via-gpio/
+#   Touch_Callback: https://sourceforge.net/p/raspberry-gpio-python/wiki/Inputs/
 ######################
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 
-RELAY_GPIO_1 = 16
-RELAY_GPIO_2 = 18
+RELAY_PIN_1 = 16
+RELAY_PIN_2 = 18
+TOUCH_PIN = 13
 
-GPIO.setup(RELAY_GPIO_1, GPIO.OUT)
-GPIO.setup(RELAY_GPIO_2, GPIO.OUT)
+GPIO.setup(RELAY_PIN_1, GPIO.OUT)
+GPIO.setup(RELAY_PIN_2, GPIO.OUT)
+
+GPIO.setup(TOUCH_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
 
 lcd = CharLCD(cols=16,rows=2,pin_rs=37,pin_e=35,pins_data=[33,31,29,23],numbering_mode=GPIO.BOARD)
 sensor = Adafruit_DHT.DHT11
 pin = 4
-
+display_num = 1 # Sets the starting display.  Number will change with button press
 
 def read_temp_humid():
 	try:
@@ -64,6 +69,23 @@ def read_temp_humid():
 		return humid, temp_f
 	except:
 		return 0,0
+
+
+def touch_callback(channel):
+	global display_num
+	if display_num == 1:
+		if GPIO.input(TOUCH_PIN) == 1:
+			display_num = 0
+		else:
+			display_num = 1
+	else:
+		if GPIO.input(TOUCH_PIN) == 1:
+			display_num = 1
+		else:
+			display_num = 0
+
+GPIO.add_event_detect(TOUCH_PIN, GPIO.RISING, callback=touch_callback)
+
 
 
 
@@ -120,28 +142,28 @@ def active_time(start='08:00:00', end='23:59:00'):
 
 def thermostat_adjust(indoor_temp, outdoor_temp, active_time, desired_temp=69, sys_off=False, fan_on=False, tolarance=2):
 	if sys_off == True:
-		GPIO.output(RELAY_GPIO_1, GPIO.HIGH)
-		GPIO.output(RELAY_GPIO_2, GPIO.HIGH)
+		GPIO.output(RELAY_PIN_1, GPIO.HIGH)
+		GPIO.output(RELAY_PIN_2, GPIO.HIGH)
 		return 'ALL OFF'
 	elif sys_off == False and fan_on == True:
 		if indoor_temp > desired_temp + tolarance and indoor_temp < outdoor_temp and active_time == True:
-			GPIO.output(RELAY_GPIO_2, GPIO.LOW)
+			GPIO.output(RELAY_PIN_2, GPIO.LOW)
 			return 'AC ON'
 		elif indoor_temp < desired_temp - tolarance and indoor_temp > outdoor_temp and active_time == True:
-			GPIO.output(RELAY_GPIO_1, GPIO.LOW)
+			GPIO.output(RELAY_PIN_1, GPIO.LOW)
 			return 'HEAT ON'
 		else:
 			return 'FAN ON'
 	else:
 		if indoor_temp > desired_temp + tolarance and indoor_temp < outdoor_temp and active_time == True:
-			GPIO.output(RELAY_GPIO_2, GPIO.LOW)
+			GPIO.output(RELAY_PIN_2, GPIO.LOW)
 			return 'AC ON'
 		elif indoor_temp < desired_temp - tolarance and indoor_temp > outdoor_temp and active_time == True:
-			GPIO.output(RELAY_GPIO_1, GPIO.LOW)
+			GPIO.output(RELAY_PIN_1, GPIO.LOW)
 			return 'HEAT ON'
 		else:
-			GPIO.output(RELAY_GPIO_1, GPIO.HIGH)
-			GPIO.output(RELAY_GPIO_2, GPIO.HIGH)
+			GPIO.output(RELAY_PIN_1, GPIO.HIGH)
+			GPIO.output(RELAY_PIN_2, GPIO.HIGH)
 			return 'SYS OFF'
 
 
@@ -154,7 +176,6 @@ def thermostat_adjust(indoor_temp, outdoor_temp, active_time, desired_temp=69, s
 
 while True:
 	delay = 40
-	display_num = 1
 	while delay > 0:
 
 		curr_weather = get_current_weather(g)
@@ -195,15 +216,13 @@ while True:
 			lcd.cursor_pos = (0,0)
 			lcd.write_string('In Temp: ' + str(round(in_temp_f,1)) + 'F')
 			lcd.cursor_pos = (1,0)
-			lcd.write_string('Out Temp: ' + str(round(out_temp_f,1)) + 'F')
-			display_num = 0
+			lcd.write_string('In Humid: ' + str(in_humid) + '%')
 		else:
 			lcd.clear()
 			lcd.cursor_pos = (0,0)
-			lcd.write_string('In Humid: ' + str(in_humid) + '%')
-			lcd.cursor_pos = (1,0)
 			lcd.write_string('Out Temp: ' + str(round(out_temp_f,1)) + 'F')
-			display_num = 1
+			lcd.cursor_pos = (1,0)
+			lcd.write_string(str(condition[0:15]))
 
 		time.sleep(15)
 		delay = delay - 1
