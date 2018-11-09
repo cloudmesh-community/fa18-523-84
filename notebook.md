@@ -81,7 +81,9 @@ Week 11 11/2/2018 - 11/8/2018
 
  * 11/2/2018 - Attended lecture - fixing technology summaries, project updates, long term backup plan and virtual directories
  * 11/2/2018 - Made recommended fixes to MLbase technology summary
- 
+ * 11/3/2018 - Set up relay switches to be able to control the HVAC system
+ * 11/4/2018 - Set up light sensor and integrated into thermostat code
+ * 11/4/2018 - Set up touch switch to change what is displayed on the LCD
  
 # TODO
 
