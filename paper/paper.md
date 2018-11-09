@@ -28,12 +28,13 @@ As an alternative to a formal paper I am contributing to the Raspberry Pi epub. 
   * DS18B20 Temperature Sensor
   * DHT11 Humidity Sensor
   * 5v Relay Module
+  * Light Sensor
+  * Touch Sensor
   * LCD Screen  
  
 **TODO**  
 
   * Motion Sensor
-  * Light Sensor
   * Sound Sensor
   * *Maybe sync to Alexa?*
  
