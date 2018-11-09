@@ -5,6 +5,7 @@ owner:
   hid: "fa18-523-84"
   community: "i523"
   semester: "fa18"
+  profile: https://github.com/ahilgenkamp
 technologies:
   - url: https://github.com/cloudmesh/technologies/blob/master/chapters/tech/azure-data-factory.md
   - url: https://github.com/cloudmesh/technologies/blob/master/chapters/tech/mlbase.md
