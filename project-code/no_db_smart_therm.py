@@ -52,7 +52,7 @@ RELAY_PIN_1 = 16
 RELAY_PIN_2 = 18
 TOUCH_PIN = 13
 LIGHT_PIN = 11
-TEMP_HUMID_PIN = 4
+TEMP_HUMID_PIN = 4 #This is the GPIO pin. Other pins set using BOARD
 #################
 
 GPIO.setup(RELAY_PIN_1, GPIO.OUT)
