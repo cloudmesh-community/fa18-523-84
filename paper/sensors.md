@@ -12,9 +12,14 @@ example for such a class can be found at:
 Temperature and Humidity Sensor Module
 --------------------------------------
 
+
+![DHT11 Setup](images/DHT11_setup.png){#fig:dht11_setup}
+
 ```
-# Demonstrate class used for DHT11 temp and humididy sensor.
-# Code modified from source: http://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-the-raspberry-pi/
+# example of a class used for DHT11 temp and humididy sensor.
+# Sources: 
+#	http://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-the-raspberry-pi/
+#	https://github.com/adafruit/Adafruit_Python_DHT
 # Adafruit_DHT is a dependency of this class
 
 
