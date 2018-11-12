@@ -7,7 +7,7 @@
 
 class READ_DHT11(object):
 
-	def __init__(self, pin=4):
+	def __init__(self, pin=4):  # pin uses GPIO numbers and defaults to GPIO 4
 		try:
 			import sys
 			import Adafruit_DHT
