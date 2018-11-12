@@ -12,6 +12,7 @@ example for such a class can be found at:
 Temperature and Humidity Sensor Module
 --------------------------------------
 
+The temperature and humidity sensor used in this example is the DHT11 sensor which can be purchased as a part of the [Kookye Smart Home Sensor kit](https://www.amazon.com/gp/product/B01J9GD3DG/ref=oh_aui_detailpage_o03_s01?ie=UTF8&psc=1) or the [Elegoo Uno Kit.](https://www.amazon.com/ELEGOO-Project-Starter-Tutorial-Arduino/dp/B01D8KOZF4/ref=sr_1_6?s=electronics&ie=UTF8&qid=1542065611&sr=1-6&keywords=dht11+temperature+and+humidity+module) 
 
 ![DHT11 Setup](images/DHT11_setup.png){#fig:dht11_setup}
 
