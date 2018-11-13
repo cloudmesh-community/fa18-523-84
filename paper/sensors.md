@@ -18,6 +18,7 @@ The DS18B20 is a thermoresistive temperature sensor and can be found in many of 
 
 The code needed to read the temperature from the DS18B20 can be found [here.](https://github.com/cloudmesh-community/fa18-523-84/tree/master/paper/code)
 
+
 Temperature and Humidity Sensor Module
 --------------------------------------
 
@@ -40,6 +41,28 @@ sudo python setup.py install
 ```
 
 
+Photosensetive Light Sensor Module
+----------------------------------
+
+![Light Sensor Setup](images/light_setup.png){#fig:light_setup}
+
+
+Capacitive Touch Sensor Module
+------------------------------
+
+![Touch Sensor Setup](images/touch_setup.png){#fig:touch_setup}
+
+
+2 Channel Relay Module
+----------------------
+
+![Relay Module Setup](images/relay_setup.png){#fig:relay_setup}
+
+
+16 x 2 LCD Screen
+-----------------
+
+![LCD Setup](images/lcd_setup.png){#fig:lcd_setup}
 
 
 Compass
