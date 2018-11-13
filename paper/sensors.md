@@ -14,6 +14,8 @@ DS18B20 Temperature Sensor
 
 The DS18B20 is a thermoresistive temperature sensor and can be found in many of the sensor kits available for purchase.  To set up the DS18B20 connect the jumper wires as shown in +@fig:ds18b20_setup.  
 
+*Update image to show use of 4.7k ohm resistor.  needed due to the way the sensor operates.  Source: https://arduino.stackexchange.com/questions/30822/the-use-of-4-7kohm-resistor-with-ds18b20-temperature-sensor
+
 ![DS18B20 Setup](images/DS18B20_setup.png){#fig:ds18b20_setup}
 
 The code needed to read the temperature from the DS18B20 can be found [here.](https://github.com/cloudmesh-community/fa18-523-84/tree/master/paper/code)
