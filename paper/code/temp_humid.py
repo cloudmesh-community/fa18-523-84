@@ -4,15 +4,15 @@
 #	https://github.com/adafruit/Adafruit_Python_DHT
 # Adafruit_DHT is a dependency of this class
 
+try:
+	import sys
+	import Adafruit_DHT
+except:
+	print('Dependency error: Ensure Adafruit_DHT is installed. https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/thermostat_setup.sh')
 
 class READ_DHT11(object):
 
-	def __init__(self, pin=4):  # pin uses GPIO numbers and defaults to GPIO 4
-		try:
-			import sys as self.sys
-			import Adafruit_DHT as self.Adafruit_DHT
-		except:
-			print('Dependency error: Ensure Adafruit_DHT is installed. https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/thermostat_setup.sh') 
+	def __init__(self, pin=4):  # pin uses GPIO numbers and defaults to GPIO 4 
 		self.pin = pin
 		self.sensor = Adafruit_DHT.DHT11
 
