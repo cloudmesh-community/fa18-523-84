@@ -31,8 +31,10 @@ class touch_sensor(object):
 				self.display_num = 1
 			else:
 				self.display_num = 0
+		
+	def return_state(self):
 		return self.display_num
 
 while True:
 	time.sleep(1)
-	print(touch_sensor(pin=13))
+	print(touch_sensor(pin=13).return_state())
