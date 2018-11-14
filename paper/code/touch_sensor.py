@@ -16,7 +16,7 @@ class touch_sensor(object):
 		GPIO.setwarnings(False)
 		GPIO.setup(self.pin,GPIO.IN)
 		GPIO.remove_event_detect(self.pin)
-		GPIO.add_event_detect(self.pin, GPIO.RISING, callback=self.touch_callback)
+		GPIO.add_event_detect(self.pin, GPIO.RISING, callback=touch_callback)
 		global display_num
 		self.display_num = 1
 		
