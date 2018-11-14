@@ -17,9 +17,9 @@ class READ_DHT11(object):
 
 	def return_data(self, temp_measure='celcius'):
 		humid, temp = Adafruit_DHT.read_retry(self.sensor, self.pin)
-		if humid is not None and temp is not None and measure == 'celcius':
+		if humid is not None and temp is not None and temp_measure == 'celcius':
 			return humid, temp
-		elif humid is not None and temp is not None and measure == 'farenhiet':
+		elif humid is not None and temp is not None and temp_measure == 'farenhiet':
 			temp = temp * 9.0 / 5.0 + 32.0
 			return humid, temp
 		else:
