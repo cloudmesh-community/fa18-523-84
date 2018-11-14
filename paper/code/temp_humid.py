@@ -36,9 +36,9 @@ class READ_DHT11(object):
 
 	def print_reading(self, measure='celcius'):
 		if measure == 'celcius':
-			return 'Temp: '+str(return_temp(measure=measure))+'C  Humidity:'+str(return_humid())+'%'
+			return 'Temp: '+str(self.return_temp(measure=measure))+'C  Humidity:'+str(self.return_humid())+'%'
 		elif measure == 'farenhiet':
-			return 'Temp: '+str(return_temp(measure=measure))+'F  Humidity:'+str(return_humid())+'%'
+			return 'Temp: '+str(self.return_temp(measure=measure))+'F  Humidity:'+str(self.return_humid())+'%'
 		else:
 			print('Error: no reading detected')
 			return
