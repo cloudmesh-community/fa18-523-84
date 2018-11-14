@@ -1,3 +1,4 @@
+# Python3
 # Source: www.uugear.com/portfolio/using-light-sensor-module-with-raspberry-pi/
 
 import RPi.GPIO as GPIO
@@ -16,4 +17,4 @@ class READ_LIGHT_SENSOR(object):
 
 while True:
 	print(READ_LIGHT_SENSOR(pin=17))
-  time.sleep(1)
+	time.sleep(1)
