@@ -7,8 +7,9 @@ import time
 
 class touch_sensor(object):
 	"""docstring for touch_sensor"""
-	def __init__(self, pin=7, pin_setup='BOARD'):
+	def __init__(self, pin=7, pin_setup='BOARD', text=''):
 		self.pin = pin
+		self.text = text
 		if pin_setup == 'BCM':
 			GPIO.setmode(GPIO.BCM)
 		else:
@@ -20,11 +21,11 @@ class touch_sensor(object):
 		
 	def touch_callback(self, channel):
 		if GPIO.input(self.pin) == 1:
-			print('Hey!')
+			print(self.text)
 		else:
 			pass
 		
 
 while True:
 	time.sleep(1)
-	touch_sensor(pin=13)
+	touch_sensor(pin=13, text='Hey!')
