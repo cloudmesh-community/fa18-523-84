@@ -15,7 +15,7 @@ class READ_LIGHT_SENSOR(object):
 		GPIO.setwarnings(False)
 		GPIO.setup(self.pin,GPIO.IN)
 			
-	def return_data(self, pin):
+	def return_data(self):
 		return GPIO.input(self.pin)
 
 while True:
