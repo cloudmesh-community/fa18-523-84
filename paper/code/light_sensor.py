@@ -19,5 +19,5 @@ class READ_LIGHT_SENSOR(object):
 		return GPIO.input(self.pin)
 
 while True:
-	print(READ_LIGHT_SENSOR(pin=11))
+	print(READ_LIGHT_SENSOR(pin=11).return_data())
 	time.sleep(1)
