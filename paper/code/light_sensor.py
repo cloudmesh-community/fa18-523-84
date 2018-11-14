@@ -7,7 +7,10 @@ import time
 class READ_LIGHT_SENSOR(object):
 	"""Pin numbers for READ_LIGHT_SENSOR are based on BOARD numbers by default"""
 	def __init__(self, pin=7, pin_setup='BOARD'):
-		GPIO.setmode(GPIO.pin_Setup)
+		if pin_setup == 'BCM':
+			GPIO.setmode(GPIO.BCM)
+		else:
+			GPIO.setmode(GPIO.BOARD)
 		GPIO.setwarnings(False)
 		GPIO.setup(pin,GPIO.IN)
 		self.pin = pin
