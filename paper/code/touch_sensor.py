@@ -4,28 +4,34 @@
 import RPi.GPIO as GPIO
 import time
 
-TOUCH_PIN = 13
 
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(TOUCH_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-display_num = 1
-
-def touch_callback(channel):
-	global display_num
-	if display_num == 1:
-		if GPIO.input(TOUCH_PIN) == 1:
-			display_num = 0
+class touch_sensor(object):
+	"""docstring for touch_sensor"""
+	def __init__(self, pin=7, pin_setup='BOARD'):
+		self.pin = pin
+		if pin_setup == 'BCM':
+			GPIO.setmode(GPIO.BCM)
 		else:
-			display_num = 1
-	else:
-		if GPIO.input(TOUCH_PIN) == 1:
-			display_num = 1
+			GPIO.setmode(GPIO.BOARD)
+		GPIO.setwarnings(False)
+		GPIO.setup(self.pin,GPIO.IN)		
+		GPIO.add_event_detect(self.pin, GPIO.RISING, callback=self.touch_callback)
+		display_num = 1
+		global display_num
+		
+	def touch_callback(self.channel):
+		if display_num == 1:
+			if GPIO.input(self.pin) == 1:
+				display_num = 0
+			else:
+				display_num = 1
 		else:
-			display_num = 0
-
-GPIO.add_event_detect(TOUCH_PIN, GPIO.RISING, callback=touch_callback)
+			if GPIO.input(self.pin) == 1:
+				display_num = 1
+			else:
+				display_num = 0
+		return display_num
 
 while True:
-	time.sleep(5)
-	print(display_num)
+	time.sleep(1)
+	print(touch_sensor())
