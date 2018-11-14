@@ -5,7 +5,9 @@ import RPi.GPIO as GPIO
 import time
 
 class READ_LIGHT_SENSOR(object):
-	"""Pin numbers for READ_LIGHT_SENSOR are based on BOARD numbers by default"""
+	"""Pin numbers for READ_LIGHT_SENSOR are based on BOARD numbers by default.
+	The number 1 will be returned if the light sensor is off and 0 if the sensor is activated.
+	"""
 	def __init__(self, pin=7, pin_setup='BOARD'):
 		self.pin = pin
 		if pin_setup == 'BCM':
