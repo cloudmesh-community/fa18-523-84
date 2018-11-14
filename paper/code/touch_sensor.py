@@ -34,4 +34,4 @@ class touch_sensor(object):
 
 while True:
 	time.sleep(1)
-	print(touch_sensor())
+	print(touch_sensor(pin=13))
