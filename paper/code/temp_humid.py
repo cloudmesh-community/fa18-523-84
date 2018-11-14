@@ -2,14 +2,12 @@
 # Sources: 
 #	http://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-the-raspberry-pi/
 #	https://github.com/adafruit/Adafruit_Python_DHT
-# Adafruit_DHT is a dependency of this class
+# Adafruit_DHT is a dependency of this class.  The code to download Adafruit_DHT can be found at the link below:
+#  https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/thermostat_setup.sh
 
-try:
-	import sys
-	import Adafruit_DHT
-except:
-	print('Dependency error: Ensure Adafruit_DHT is installed. https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/thermostat_setup.sh')
-
+import sys
+import time
+import Adafruit_DHT
 
 class READ_DHT11(object):
 
@@ -17,29 +15,13 @@ class READ_DHT11(object):
 		self.pin = pin
 		self.sensor = Adafruit_DHT.DHT11
 
-	def return_temp(self, measure='celcius'):
+	def return_data(self, temp_measure='celcius'):
 		humid, temp = Adafruit_DHT.read_retry(self.sensor, self.pin)
-		if temp is not None and measure == 'celcius':
-			return temp
-		elif temp is not None and measure == 'farenhiet':
-			return temp * 9.0 / 5.0 + 32.0
-		else:
-			print('Error: no reading detected')
-			return
-
-	def return_humid(self):
-		humid, temp = Adafruit_DHT.read_retry(self.sensor, self.pin)
-		if humid is not None:
-			return humid
-		else:
-			print('Error: no reading detected')
-			return
-
-	def print_reading(self, measure='celcius'):
-		if measure == 'celcius':
-			return 'Temp: '+str(self.return_temp(measure=measure))+'C  Humidity:'+str(self.return_humid())+'%'
-		elif measure == 'farenhiet':
-			return 'Temp: '+str(self.return_temp(measure=measure))+'F  Humidity:'+str(self.return_humid())+'%'
+		if humid is not None and temp is not None and measure == 'celcius':
+			return humid, temp
+		elif humid is not None and temp is not None and measure == 'farenhiet':
+			temp = temp * 9.0 / 5.0 + 32.0
+			return humid, temp
 		else:
 			print('Error: no reading detected')
 			return
@@ -47,8 +29,7 @@ class READ_DHT11(object):
 
 # loop to read temp and humidity
 
-import time
-
 while True:
-	print(READ_DHT11(pin=4).print_reading(measure='farenhiet'))
+	humid, temp = READ_DHT11(pin=4).return_data(measure='farenhiet')
+	print('Temp: '+str(temp)+'F  Humidity:'+str(humid)+'%')
 	time.sleep(1)
