@@ -17,7 +17,7 @@ class READ_DHT11(object):
 		self.sensor = Adafruit_DHT.DHT11
 
 	def return_temp(self, measure='celcius'):
-		humid, temp = Adafruit_DHT.read_retry(sensor, pin)
+		humid, temp = self.Adafruit_DHT.read_retry(sensor, pin)
 		if temp is not None and measure == 'celcius':
 			return temp
 		elif temp is not None and measure == 'farenhiet':
@@ -27,7 +27,7 @@ class READ_DHT11(object):
 			return
 
 	def return_humid(self):
-		humid, temp = Adafruit_DHT.read_retry(sensor, pin)
+		humid, temp = self.Adafruit_DHT.read_retry(sensor, pin)
 		if humid is not None:
 			return humid
 		else:
