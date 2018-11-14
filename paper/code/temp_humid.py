@@ -31,5 +31,5 @@ class READ_DHT11(object):
 
 while True:
 	humid, temp = READ_DHT11(pin=4).return_data(temp_measure='farenhiet')
-	print('Temp: '+str(temp)+'F  Humidity:'+str(humid)+'%')
+	print('Temp: '+str(temp)+u'\u00b0'+'F  Humidity:'+str(humid)+'%')
 	time.sleep(1)
