@@ -19,7 +19,7 @@ class touch_sensor(object):
 		display_num = 1
 		global display_num
 		
-	def touch_callback(self.channel):
+	def touch_callback(self, channel):
 		if display_num == 1:
 			if GPIO.input(self.pin) == 1:
 				display_num = 0
