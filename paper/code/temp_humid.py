@@ -10,6 +10,7 @@ try:
 except:
 	print('Dependency error: Ensure Adafruit_DHT is installed. https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/thermostat_setup.sh')
 
+
 class READ_DHT11(object):
 
 	def __init__(self, pin=4):  # pin uses GPIO numbers and defaults to GPIO 4 
@@ -17,7 +18,7 @@ class READ_DHT11(object):
 		self.sensor = Adafruit_DHT.DHT11
 
 	def return_temp(self, measure='celcius'):
-		humid, temp = Adafruit_DHT.read_retry(sensor, pin)
+		humid, temp = Adafruit_DHT.read_retry(self.sensor, self.pin)
 		if temp is not None and measure == 'celcius':
 			return temp
 		elif temp is not None and measure == 'farenhiet':
@@ -27,7 +28,7 @@ class READ_DHT11(object):
 			return
 
 	def return_humid(self):
-		humid, temp = Adafruit_DHT.read_retry(sensor, pin)
+		humid, temp = Adafruit_DHT.read_retry(self.sensor, self.pin)
 		if humid is not None:
 			return humid
 		else:
