@@ -17,23 +17,14 @@ class touch_sensor(object):
 		GPIO.setup(self.pin,GPIO.IN)
 		GPIO.remove_event_detect(self.pin)
 		GPIO.add_event_detect(self.pin, GPIO.RISING, callback=self.touch_callback)
-		self.display_num = 1
 		
 	def touch_callback(self, channel):
-		if self.display_num == 1:
-			if GPIO.input(self.pin) == 1:
-				self.display_num = 0
-			else:
-				self.display_num = 1
+		if GPIO.input(self.pin) == 1:
+			print('Hey!')
 		else:
-			if GPIO.input(self.pin) == 1:
-				self.display_num = 1
-			else:
-				self.display_num = 0
+			pass
 		
-	def return_state(self):
-		return self.display_num
 
 while True:
 	time.sleep(1)
-	print(touch_sensor(pin=13).return_state())
+	touch_sensor(pin=13)
