@@ -9,7 +9,7 @@ class relay_switch(object):
 	"""docstring for relay_switch
 	currently set up for a 2 channel relay
 	"""
-	def __init__(self, pin=8, pin2=None, pin_setup='BOARD'):
+	def __init__(self, pin=8, pin2=10, pin_setup='BOARD'):
 		self.pin = pin
 		self.pin2 = pin2
 		if pin_setup == 'BCM':
@@ -50,6 +50,6 @@ while True:
 		time.sleep(0.5)
 		relay_switch(pin=16).relay_off(relay_num=1)
 		time.sleep(0.5)
-		relay_switch(pin=16).relay_off(relay_num=2)
+		relay_switch(pin=18).relay_off(relay_num=2)
 		time.sleep(0.5)
 		counter -= 1
