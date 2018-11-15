@@ -9,7 +9,7 @@ class relay_switch(object):
 	"""docstring for relay_switch
 	currently set up for a 2 channel relay
 	"""
-	def __init__(self, pin=8, pin2=0, pin_setup='BOARD'):
+	def __init__(self, pin=8, pin2=None, pin_setup='BOARD'):
 		self.pin = pin
 		self.pin2 = pin2
 		if pin_setup == 'BCM':
@@ -18,7 +18,7 @@ class relay_switch(object):
 			GPIO.setmode(GPIO.BOARD)
 		GPIO.setwarnings(False)
 		GPIO.setup(self.pin, GPIO.OUT)
-		if self.pin2 != 0:
+		if self.pin2 is not None:
 			GPIO.setup(self.pin2, GPIO.OUT)
 		else:
 			pass
@@ -39,17 +39,16 @@ class relay_switch(object):
 		else:
 			return
 
-
-while True:
-	time.sleep(5)
-	counter = 10
-	while counter > 0:
-		relay_switch(pin=16).relay_on(relay_num=1)
-		time.sleep(0.5)
-		relay_switch(pin=18).relay_on(relay_num=2)
-		time.sleep(0.5)
-		relay_switch(pin=16).relay_off(relay_num=1)
-		time.sleep(0.5)
-		relay_switch(pin=18).relay_off(relay_num=2)
-		time.sleep(0.5)
-		counter -= 1
+# Create loop to flash LEDs
+relay = relay_switch(pin=16, pin2=18)
+counter = 15
+while counter > 0:
+	relay.relay_on(relay_num=1)
+	time.sleep(0.5)
+	relay.relay_on(relay_num=2)
+	time.sleep(0.5)
+	relay.relay_off(relay_num=1)
+	time.sleep(0.5)
+	relay.relay_off(relay_num=2)
+	time.sleep(0.5)
+	counter -= 1
