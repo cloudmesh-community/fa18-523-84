@@ -9,7 +9,7 @@ class relay_switch(object):
 	"""docstring for relay_switch
 	currently set up for a 2 channel relay
 	"""
-	def __init__(self, pin=8, pin2=10, pin_setup='BOARD'):
+	def __init__(self, pin=8, pin2=0, pin_setup='BOARD'):
 		self.pin = pin
 		self.pin2 = pin2
 		if pin_setup == 'BCM':
@@ -18,7 +18,7 @@ class relay_switch(object):
 			GPIO.setmode(GPIO.BOARD)
 		GPIO.setwarnings(False)
 		GPIO.setup(self.pin, GPIO.OUT)
-		if self.pin2 is not None:
+		if self.pin2 != 0:
 			GPIO.setup(self.pin2, GPIO.OUT)
 		else:
 			pass
