@@ -44,7 +44,12 @@ while True:
 	time.sleep(5)
 	counter = 10
 	while counter > 0:
-		relay_switch(pin=16).relay_on()
+		relay_switch(pin=16).relay_on(relay_num=1)
 		time.sleep(0.5)
-		relay_switch(pin=16).relay_off()
+		relay_switch(pin=18).relay_on(relay_num=2)
 		time.sleep(0.5)
+		relay_switch(pin=16).relay_off(relay_num=1)
+		time.sleep(0.5)
+		relay_switch(pin=16).relay_off(relay_num=2)
+		time.sleep(0.5)
+		counter -= 1
