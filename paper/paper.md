@@ -1,7 +1,5 @@
 # Smart Home IoT Sensors for Raspberry Pi :hand: fa18-523-84
 
-:o: format incorrect
-
 | Adam Hilgenkamp  
 | ahilgenk@iu.edu  
 | Indiana University - Bloomington  
@@ -19,7 +17,7 @@ Keywords: IoT Sensors, Raspberry Pi, Thermostat, Smart Home
 
 As an alternative to a formal paper I am contributing to the Raspberry Pi epub.  A link to the contribution can be found below.  
 
-[Sensor Contributions]()
+[Sensor Contributions](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/sensors.md)
 
 ## Outline
 
