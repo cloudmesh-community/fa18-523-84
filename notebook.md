@@ -85,6 +85,21 @@ Week 11 11/2/2018 - 11/8/2018
  * 11/4/2018 - Set up light sensor and integrated into thermostat code
  * 11/4/2018 - Set up touch switch to change what is displayed on the LCD
  
+Week 12 11/9/2018 - 11/15/2018
+==============================
+
+  * 11/9/2018 - Attended lecture: review of projects and papers.  Formatting and progress.
+  * 11/11/2018 - Created fritzing diagrams for all sensors and overall project.
+  * 11/13/2018 - Added sensor.md file and started to write sections for each sensor.
+  * 11/14/2018 - Updated python classes for sensors to include in the summary
+
+Week 13 11/16/2018 - 11/22/2018
+===============================
+
+  * 11/16/2018 - Attended lecture:  Review progress on paper and project
+  * 11/16/2018 - 
+ 
+ 
 # TODO
 
  - [ ] fix bibtex references (change main website reference keys to be www-technology)
