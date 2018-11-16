@@ -14,11 +14,11 @@ technologies:
   - url: https://github.com/cloudmesh/technologies/blob/master/chapters/tech/wink.md
   - url: https://github.com/cloudmesh-community/fa18-523-84/blob/master/tech_summaries/einstein_analytics.md
 paper:
-  - keyword: Visualization
-    title: Enterprise Visualization Tools for Big Data
+  - keyword: IoT Sensors
+    title: Raspberry Pi IoT Sensors
     url: https://github.com/cloudmesh-community/fa18-523-84/tree/master/paper/paper.md
 project:
-  - keyword: IoT
-    title: An Exploration of the Internet of Things
+  - keyword: Cassandra
+    title: Cassandra on a Raspberry Pi Cluster
     url: https://github.com/cloudmesh-community/fa18-523-84/tree/master/project-report/report.md
     code: https://github.com/cloudmesh-community/fa18-523-84/tree/master/project-code
