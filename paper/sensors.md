@@ -12,14 +12,22 @@ example for such a class can be found at:
 DS18B20 Temperature Sensor
 --------------------------
 
-The DS18B20 is a thermoresistive temperature sensor and can be found in many of the sensor kits available for purchase.  To set up the DS18B20 connect the jumper wires as shown in +@fig:ds18b20_setup.  
+The DS18B20 is a thermoresistive temperature sensor and can be found in many of the sensor kits referenced in this book.  To set up the DS18B20 connect the jumper wires as shown in +@fig:ds18b20_setup.  If you have an individual sensor instead of a sensor module you will need to use a 4.7k ohm resistor as shown in the diagram.  The resistor allows the device to work properly and should be used to avoid damage to the component.  If you have a DS18B20 module some may already include a resistor.  Be sure to check before setting up your sensor. 
 
 *Update image to show use of 4.7k ohm resistor.  needed due to the way the sensor operates.  Source: https://arduino.stackexchange.com/questions/30822/the-use-of-4-7kohm-resistor-with-ds18b20-temperature-sensor
 
 ![DS18B20 Setup](images/DS18B20_setup.png){#fig:ds18b20_setup}
 
-The code needed to read the temperature from the DS18B20 can be found [here.](https://github.com/cloudmesh-community/fa18-523-84/tree/master/paper/code)
+Once you have set up the wiring of the DS18B20 you will need to set up the one wire interface.  This can be done with the following steps.  
 
+1. In a terminal enter:  ``` sudo nano /boot/config.txt ```
+2. Scroll to the bottom of this text file and enter ``` dtoverlay=w1–gpio ```
+
+Source: http://www.circuitbasics.com/raspberry-pi-ds18b20-temperature-sensor-tutorial/
+
+
+
+[DS18B20 Code](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/ds18b20.py)
 
 Temperature and Humidity Sensor Module
 --------------------------------------
@@ -28,13 +36,13 @@ The temperature and humidity sensor used in this example is the DHT11 sensor whi
 
 To set up the DHT11 sensor connect jumper wires to the Raspberry Pi as shown in +@fig:dht11_setup.  Ensure that the ground wire of the DHT11 is connected to the ground rail of the breadboard or a ground pin on the Raspberry Pi.  The VCC wire of the DHT11 should be connected to 3.3v from the Raspberry Pi.  To recieve data the middle pin should be connected to one of the GPIO pins on the Raspberry Pi.  In this example and associated code we connect the data wire to GPIO 4 on the Raspberry Pi as shown in +@fig:dht11_setup.
 
-![DHT11 Setup](images/DHT11_setup.png){#fig:dht11_setup}
+![DHT11 Setup](images/DHT11_setup.png){#fig:dht11_setup}  
 
-The code needed to read the temperature, humidity or print both can be found [here.](https://github.com/cloudmesh-community/fa18-523-84/tree/master/paper/code)  The sample code provides a class that utilizes the Adafruit_DHT module which can be set up by executing the following code in a terminal on your Raspberry Pi.
+Once you have checked that the DHT11 is set up correctly you will need to set up the Adafruit_DHT module for python.  The sample python class utilizes the Adafruit_DHT module which can be set up by executing the following code in a terminal on your Raspberry Pi.  
 
-```
-# code for humidity sensor on git hub
-# Source: https://stackoverflow.com/questions/28913592/python-gpio-code-for-dht-11-temperature-sensor-fails-in-pi-2
+Source: https://stackoverflow.com/questions/28913592/python-gpio-code-for-dht-11-temperature-sensor-fails-in-pi-2
+
+```bash
 git clone https://github.com/adafruit/Adafruit_Python_DHT.git
 cd Adafruit_Python_DHT
 sudo apt-get update
@@ -42,6 +50,9 @@ sudo apt-get install build-essential python-dev
 sudo python setup.py install
 ```
 
+Once you have set up the Adafruit_DHT module you can run the python code to display the temperature and humidity reading to the terminal.  
+
+[Temperature & Humididy Sensor Code](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/temp_humid.py)
 
 Photosensetive Light Sensor Module
 ----------------------------------
