@@ -8,7 +8,7 @@ class ds18b20(object):
 	"""docstring for ds18b20
 		DS18B20 sensor should be plugged into GPIO4
 	"""
-	def __init__(self, arg):
+	def __init__(self):
 		os.system('modprobe w1-gpio')
 		os.system('modprobe w1-therm')
 		self.base_dir = '/sys/bus/w1/devices/'
