@@ -10,6 +10,7 @@ class LCD_Display(object):
 			self.lcd = CharLCD(cols=cols, rows=rows, pin_rs=rs, pin_e=e, pins_data=data_pins, numbering_mode=GPIO.BCM)
 		else:
 			self.lcd = CharLCD(cols=cols, rows=rows, pin_rs=rs, pin_e=e, pins_data=data_pins, numbering_mode=GPIO.BOARD)
+		GPIO.setwarnings(False)
 
 
 	def display_string(self, string=u'Hello World!', clear='N'):
