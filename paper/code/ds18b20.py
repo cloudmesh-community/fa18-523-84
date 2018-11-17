@@ -35,5 +35,5 @@ class ds18b20(object):
 	        return temp_c, temp_f
   
 while True:
-  print(ds18b20.read_temp())  
+  print(ds18b20().read_temp())  
   time.sleep(1)
