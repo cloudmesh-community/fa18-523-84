@@ -5,3 +5,5 @@ sudo apt-get install nmap
 
 #install python packages
 sudo apt-get install python3-pip
+sudo apt-get python3-pandas
+sudo easy_install3 cassandra-driver
