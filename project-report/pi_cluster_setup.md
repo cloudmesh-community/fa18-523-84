@@ -33,9 +33,13 @@ Another great resource for the initial set is a [youtube video](https://www.yout
 
 ### Step 2: Setting up the nodes
 
-  * Plug monitor and keyboard into first node.  We will set up wifi which will allow us to SSH to the parent node.  Also configure other settings and change hostname and password.  Lastly we will need to download the needed software for the node.
-  * Find the IP addresses for each of the worker nodes.  ```arp -a```  if that command does not work we will need to plug the monitor in to view the IP address.
-  * Once we have the IP addresses we can finish setting up the nodes using the fabric code.  (need to finish writing the script for this.)
+setup for the first node
+ * git setup: https://www.atlassian.com/git/tutorials/install-git
+ * run shell script to load python packages needed
+ * pull repository for code
+ * Plug monitor and keyboard into first node.  We will set up wifi which will allow us to SSH to the parent node.  Also configure other settings and change hostname and password.  Lastly we will need to download the needed software for the node.
+ * Find the IP addresses for each of the worker nodes.  ```arp -a```  if that command does not work we will need to plug the monitor in to view the IP address.
+ * Once we have the IP addresses we can finish setting up the nodes using the fabric code.  (need to finish writing the script for this.)
 
 ## Sources (will be integrated in jabref)
 
