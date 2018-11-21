@@ -13,6 +13,6 @@ Keywords: IoT, Nest, Thermostat
 
 ---
 
-Working on Raspberry Pi cluster that will be integrate in the Pi book.
+Working on Raspberry Pi cluster that will be integrated in the Pi book.
 
 https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-report/pi_cluster_setup.md
