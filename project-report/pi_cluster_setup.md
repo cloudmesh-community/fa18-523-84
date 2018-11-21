@@ -34,6 +34,7 @@ Another great resource for the initial set is a [youtube video](https://www.yout
 ### Step 2: Setting up the nodes
 
 setup for the first node
+ * Install git ```sudo apt-get update and sudo apt-get install git```
  * git setup: https://www.atlassian.com/git/tutorials/install-git
  * run shell script to load python packages needed
  * pull repository for code
