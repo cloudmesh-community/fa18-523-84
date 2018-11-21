@@ -97,7 +97,10 @@ Week 13 11/16/2018 - 11/22/2018
 ===============================
 
   * 11/16/2018 - Attended lecture:  Review progress on paper and project
-  * 11/16/2018 - 
+  * 11/17/2018 - Burned SD cards needed for RPi cluster.
+  * 11/18/2018 - Tried to figure out the networking for RPi cluster but ran into issues
+  * 11/21/2018 - Figured out the networking for the RPi cluster and started on code to manage the cluster using fabric
+  * 11/21/2018 - Started to write my contribution to the Pi book.  Making updates to the cluster setup section so that it works correctly.
  
  
 # TODO
