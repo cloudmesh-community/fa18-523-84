@@ -110,7 +110,7 @@ Week 13 11/16/2018 - 11/22/2018
   - [ ] the first is setting up IoT sensors for smart thermostat
   - [ ] the second is setting up raspberry pi cluster and running cassandra and an application on the cluster
  - [ ] **TODO on project programming**
-  - [ ] Set up raspberry pi cluster
+  - [x] Set up raspberry pi cluster
   - [ ] write code to do something with the data
   
 
