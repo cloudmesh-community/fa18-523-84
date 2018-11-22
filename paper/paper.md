@@ -6,7 +6,7 @@
 | hid: fa18-523-84  
 | github: [:cloud:](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/paper.md)  
 
-:o: complete
+:o: incomplete
 
 ---
 
