@@ -1,4 +1,4 @@
-# Cassandra on a Raspberry Pi Cluster :hand: fa18-523-84
+# Raspberry Pi Cassandra Cluster :hand: fa18-523-84
 
 TODO: See where this fits into the Pi book...
 
