@@ -54,7 +54,9 @@ To get started we need to set up the parent node.  This node can be connected to
 
 **Connect to WiFi:**
 
-First we need to connect the parent node to WiFi (you may need to connect a monitor and keyboard for this step).  You may have been able to do a headless setup of the WiFi in step 1, but if not you can set up WiFi by using the ```sudo raspi-config``` command.  Before connecting we will want to ensure that the password is changed.  This can be done by selecting the change password option.  Once the password is updated navigate to "Network Options" and then select "Wi-fi" and enter the ssid and password of the WiFi network you want to connect to.  It is also a good idea to change the hostname so that it is easy to determine which node we are connected to.  You can also do this in the "Network Options" section by selecting "Hostname".  In this example we rename our parent node to **PiCluster001**.
+First we need to connect the parent node to WiFi (you may need to connect a monitor and keyboard for this step).  You may have been able to do a headless setup of the WiFi in step 1, but if not you can set up WiFi by using the ```sudo raspi-config``` command.  Before connecting we will want to ensure that the password is changed.  This can be done by selecting the change password option.  Once the password is updated navigate to "Network Options" and then select "Wi-fi" and enter the ssid and password of the WiFi network you want to connect to.  It is also a good idea to change the hostname so that it is easy to determine which node we are connected to.  You can also do this in the "Network Options" section by selecting "Hostname" +@fig:raspi-config.  In this example we rename our parent node to **PiCluster001**.
+
+![raspi-config](images/raspi-config.png){#fig:raspi-config}
 
 Once you are connected to WiFi ensure you are able to SSH to the parent node.  Use ```ifconfig``` in the terminal to get the IP address for the parent node and you can use a tool such as [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) to connect.
 
