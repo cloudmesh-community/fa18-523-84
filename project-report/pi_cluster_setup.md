@@ -21,11 +21,11 @@ The first step in setting up the raspberry pi cluster is to burn the OS image to
 
 Once you have the required software and OS image file we can set up each SD card.  In order to ensure the SD card is formatted correctly we will want to run the SD Card Formatter tool.  Ensure that you don't have any other drives connected to you computer and carefully select the drive that corresponds to your SD card.  Then select overwrite format and click format.  This step can take a few minutes but it is good practice to ensure the correct formatting.
 
-![SD Card Formatter](images/SD_format.png)
+![SD Card Formatter](images/SD_format.png){#fig:sd_format}
 
 While the SD card is formatting you will want to extract the Raspbian Lite image from the zipfle it was downloaded in.  Extract this to your desktop so that it can be used in the next step.  Once the SD card is formatted you can open Etcher.  Select the Raspbian Lite image we saved to the desktop and then check to make sure the correct SD drive is selected by Etcher.  Then click "Flash!".  Once this is done you should have the Raspbian Lite image burned to the SD card.
 
-![Etcher](images/etcher.png)
+![Etcher](images/etcher.png){#fig:etcher}
 
 Before pluging the SD card into the Raspberry Pi we will want to add a file to the boot partition.  Open notepad or another editor and save a blank file as "ssh" with no file extension.  When the raspberry pi boots up it will see this file and enable SSH connections.  At this point we will also edit the **config.txt** file.  In the file we need to uncomment this line: ```hdmi_force_hotplug=1```.  This will ensure that your monitor will work correctly should you need to plug it in to trouble shoot during the next step.
 
@@ -63,21 +63,27 @@ Once you are connected to WiFi ensure you are able to SSH to the parent node.  U
 **Install git:**
 
  1. To install git run the following command: ```sudo apt-get update and sudo apt-get install git```
- 2. Once git is finished installing you will need to configure the tool:
+ 2. Once you have configured git you will need to clone the following repository in order to use the setup scripts and application code.
+  * First create a directory to store git repositories: ```mkdir git-repos```
+  * Then run ```git clone https://github.com/cloudmesh-community/fa18-523-84.git``` to clone the repository.
+ 3. **Optional:** Set up git to link with your account
   * Run ```git config --global user.email "you@example.com"``` to add your user email.
   * Run ```git config --global user.name "Your Name"``` to add your username.
- 3. Once you have configured git you will need to clone the following repository in order to use the setup scripts and application code.
-  * First create a directory to store git repositories: ```mkdir git-repos```
-  * ```git clone https://github.com/cloudmesh-community/fa18-523-84.git```
  
 **Final Setup Steps:**
- * run shell script to load python packages needed.
+ * Run the shell script to set up the necessary dependancies for the parent node.  
+ ```
+ cd ~/git-repos/fa18-523-84/project-code
+ chmod u+x parent_node.sh
+ ./parent_node.sh
+ ```
  
- * Plug monitor and keyboard into first node.  We will set up wifi which will allow us to SSH to the parent node.  Also configure other settings and change hostname and password.  Lastly we will need to download the needed software for the node.
- * 
+ ### Step 3: Setting up the worker nodes
  
  Find the IP addresses for each of the worker nodes.  ```arp -a```  if that command does not work we will need to plug the monitor in to view the IP address.
  * Once we have the IP addresses we can finish setting up the nodes using the fabric code.  (need to finish writing the script for this.)
+
+
 
 ## Sources (will be integrated in jabref)
 
