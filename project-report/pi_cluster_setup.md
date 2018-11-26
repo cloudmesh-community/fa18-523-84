@@ -71,7 +71,7 @@ Once you are connected to WiFi ensure you are able to SSH to the parent node.  U
   * Run ```git config --global user.name "Your Name"``` to add your username.
  
 **Final Setup Steps:**
- * Run the shell script to set up the necessary dependancies for the parent node.  
+ * Run the shell script to set up the necessary dependancies for the parent node (running this step can take some time).  
  ```
  cd ~/git-repos/fa18-523-84/project-code
  chmod u+x parent_node.sh
