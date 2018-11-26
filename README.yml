@@ -19,6 +19,6 @@ paper:
     url: https://github.com/cloudmesh-community/fa18-523-84/tree/master/paper/paper.md
 project:
   - keyword: Cassandra
-    title: Cassandra on a Raspberry Pi Cluster
+    title: Raspberry Pi Cassandra Cluster
     url: https://github.com/cloudmesh-community/fa18-523-84/tree/master/project-report/report.md
     code: https://github.com/cloudmesh-community/fa18-523-84/tree/master/project-code
