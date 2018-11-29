@@ -17,9 +17,19 @@ class READ_LIGHT_SENSOR(object):
 		GPIO.setwarnings(False)
 		GPIO.setup(self.pin,GPIO.IN)
 			
-	def return_data(self):
+	def get(self):
 		return GPIO.input(self.pin)
 
-while True:
-	print(READ_LIGHT_SENSOR(pin=11).return_data())
-	time.sleep(1)
+
+if __name__ == '__main__':
+	try:
+		light = READ_LIGHT_SENSOR(pin=11)
+		while True:
+			print(light.get())
+			time.sleep(1)
+	except KeyboardInterrupt:
+		print('\n\n *** Stopping Program ***')
+		try:
+			sys.exit(0)
+		except SystemExit:
+			os._exit(0)
