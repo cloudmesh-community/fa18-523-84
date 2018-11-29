@@ -1,10 +1,10 @@
-Sensors
+Sensors :hand: fa18-523-84
 =======
 
 DS18B20 Temperature Sensor
 --------------------------
 
-The DS18B20 is a thermoresistive temperature sensor and can be found in many of the sensor kits referenced in this book.  To set up the DS18B20 connect the jumper wires as shown in +@fig:ds18b20_setup.  If you have an individual sensor instead of a sensor module you will need to use a 4.7k ohm resistor as shown in the diagram.  The resistor allows the device to work properly and should be used to avoid damage to the component [@DS18B20_resistor].  If you have a DS18B20 module it may already include a resistor and you will not need to add another.  Be sure to check before setting up your sensor. 
+The DS18B20 is a thermoresistive temperature sensor and can be found in many of the sensor kits referenced in this book.  To set up the DS18B20 connect the jumper wires as shown in +@fig:ds18b20_setup.  If you have an individual sensor instead of a sensor module you will need to use a 4.7k ohm resistor as shown in the diagram.  The resistor allows the one wire interface to work properly and should be used to avoid damage to the sensor [@DS18B20_resistor].  If you have a DS18B20 module it may already include a resistor and you will not need to add another.  Be sure to check before setting up your sensor. 
 
 ![DS18B20 Setup](images/DS18B20_setup.png){#fig:ds18b20_setup}
 
@@ -15,7 +15,7 @@ Once you have set up the wiring of the DS18B20 you will need to set up the one w
 
 Once the set up is complete you can use the DS18B20 code provided to output the temperature to the terminal.
 
-[DS18B20 Code](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/ds18b20.py)
+[DS18B20 Class](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/ds18b20.py)
 
 Temperature and Humidity Sensor Module
 --------------------------------------
@@ -36,36 +36,56 @@ sudo apt-get install build-essential python-dev
 sudo python setup.py install
 ```
 
-Once you have set up the Adafruit_DHT module you can run the python code to display the temperature and humidity reading to the terminal.  
+Once you have set up the Adafruit_DHT module you can use the python class to display the temperature and humidity reading to the terminal.  
 
-[Temperature & Humididy Sensor Code](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/temp_humid.py)
+[Temperature & Humididy Sensor Class](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/temp_humid.py)
 
 Photosensetive Light Sensor Module
 ----------------------------------
 
+The light sensor used in this example can be purchased [individually](https://www.amazon.com/Gowoops-Digital-Intensity-Detection-Photosensitive/dp/B01N1FKS4L/ref=sr_1_3?ie=UTF8&qid=1543528066&sr=8-3&keywords=arduino+light+sensor+module) or as part of a sensor kit.  To set up the light sensor module connect the wires to the Raspberry Pi as shown in +@fig:light_setup.  The sensor shown in this example has three pins.  However, some sensor modules may have four pins.  In most cases the extra pin is not necessary.
+
 ![Light Sensor Setup](images/light_setup.png){#fig:light_setup}
 
+Once you have set up the light sensor you can use the light_sensor class to retrieve data from the light sensor.  The light sensor will return "1" if light is not detected and a "0" if the sensor detects light.  Some sensor modules also include a potentiometer which can be adjusted to change the sensitivity of the light sensor.
+
+[Light Sensor Class](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/light_sensor.py)
 
 Capacitive Touch Sensor Module
 ------------------------------
 
+In this example we are using a [momentary capacitive touch sensor](https://www.adafruit.com/product/1374).  The sensor kits mentioned in this book will also contain this sensor.  To set up the touch sensor connect the wires to the Raspberrry Pi as shown in +@fig:touch_setup.  
+
 ![Touch Sensor Setup](images/touch_setup.png){#fig:touch_setup}
 
+Once you have set up the sensor you can use the touch_sensor class to execute another function when the sensor is touched.
 
-2 Channel Relay Module
+[Touch Sensor Class](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/touch_sensor.py)
+
+Relay Module
 ----------------------
+
+The relay module can be used as a switch to complete a circut.  The module can be purchased as an individual component or may be included on a board with 2, 4 or more relay switches.  In this example we will be using a two channel relay module. To set up the relay module connect the wires to the Raspberrry Pi as shown in +@fig:relay_setup.  
 
 ![Relay Module Setup](images/relay_setup.png){#fig:relay_setup}
 
+Once the module is set up you can use the relay_switch class to turn the relays on and off.
+
+[Relay Class](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/relay_switch.py)
 
 16 x 2 LCD Screen
 -----------------
 
+The 16x2 LCD screen can be used as a display for the Raspberry Pi.  To set up the LCD screen connect the wires as shown in +@fig:relay_setup.  You will also need two potentiometers in order to adjust the contrast and the brightness.
+
 ![LCD Setup](images/lcd_setup.png){#fig:lcd_setup}
 
+Once everything is correctly wired up the LCD class can be used to print text to the LCD display.
 
-Compass
--------
+[LCD Class](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/LCD.py)
+
+Compass :o:
+-----------
 
 TODO: which compass sensor
 
@@ -83,6 +103,8 @@ Wire.begin(int sda, int scl);
 
 
 ## Sources for this section:
+
+need to integrate into https://github.com/cloudmesh-community/book/blob/master/chapters/SECTION/SECTION-REFERENCES.md
 
   * DS18B20_resistor: https://arduino.stackexchange.com/questions/30822/the-use-of-4-7kohm-resistor-with-ds18b20-temperature-sensor
   * DS18B20_code_setup: http://www.circuitbasics.com/raspberry-pi-ds18b20-temperature-sensor-tutorial/
