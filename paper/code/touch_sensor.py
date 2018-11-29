@@ -8,7 +8,7 @@ import os
 
 class touch_sensor(object):
 	"""docstring for touch_sensor"""
-	def __init__(self, function, *args, **kwargs, pin=7, pin_setup='BOARD'):
+	def __init__(self, function, *args, pin=7, pin_setup='BOARD', **kwargs):
 		self.pin = pin
 		if pin_setup == 'BCM':
 			GPIO.setmode(GPIO.BCM)
