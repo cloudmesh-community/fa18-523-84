@@ -1,7 +1,7 @@
 Sensors :hand: fa18-523-84
 =======
 
-This section contains the wiring diagrams and associated classes for sensors that can be used with the Raspberry Pi.  In addition to the individual sensors an example project is also included.
+This section contains the wiring diagrams and associated classes for sensors that can be used with the Raspberry Pi.  In addition to the individual sensors an example project is also included.  Before getting started with sensors for the Raspberry Pi you will need to ensure that the Pi is set up with python3 and has the latest version of Raspbian installed.  Instructions for setting up the Raspberry Pi can be found [here.](https://github.com/cloudmesh-community/book/blob/master/chapters/iot/pi.md)  
 
 DS18B20 Temperature Sensor
 --------------------------
@@ -78,7 +78,7 @@ Once the module is set up you can use the relay_switch class to turn the relays 
 16 x 2 LCD Screen
 -----------------
 
-The 16x2 LCD screen can be used as a display for the Raspberry Pi.  To set up the LCD screen connect the wires as shown in +@fig:relay_setup.  You will also need two potentiometers in order to adjust the contrast and the brightness.
+The 16x2 LCD screen can be used as a display for the Raspberry Pi.  To set up the LCD screen connect the wires as shown in +@fig:LCD_setup.  You will also need two potentiometers in order to adjust the contrast and the brightness.
 
 ![LCD Setup](images/lcd_setup.png){#fig:lcd_setup}
 
@@ -107,7 +107,22 @@ Wire.begin(int sda, int scl);
 Project: Smart Thermostat :o:
 -----------------------------
 
-As an example we will combine some of the sensors discussed in this section to create a smart thermostat.  
+In this example we will combine some of the sensors discussed in this section to create a smart thermostat.
+
+Prerequsites:
+
+ * Raspberry Pi 3 with Raspbian installed
+ * DHT11 Temperature and Humidity Sensor
+ * Photosensetive Light Sensor
+ * Capacitive Touch Sensor
+ * 2 Channel Relay Module
+ * 16x2 LCD display
+
+Once you have the necessary components you will need to connect the wires as shown in +@fig:smart_therm.  The LED lights in this example represent the connections to the actual thermostat.  Each HVAC system is different so be sure to do some research on how your specific system works.  Generally there will be a power wire that you can connect to the relay switch and then connect the other wires to the appropreate terminals [@Smart_therm_example].  Based on the readings from the other sensors the code will determine which relay to turn on which will complete the circut sending a signal to the HVAC system.
+
+![Smart_Thermostat Setup](images/smart_therm_diagram.png){#fig:smart_therm}
+
+[Smart Thermostat Code](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/smart_therm_not_connected.py)
 
 ## Sources for this section:
 
@@ -117,4 +132,5 @@ need to integrate into https://github.com/cloudmesh-community/book/blob/master/c
   * DS18B20_code_setup: http://www.circuitbasics.com/raspberry-pi-ds18b20-temperature-sensor-tutorial/
   * Adafruit_setup: https://stackoverflow.com/questions/28913592/python-gpio-code-for-dht-11-temperature-sensor-fails-in-pi-2
   * How_DHT11_Works: https://howtomechatronics.com/tutorials/arduino/dht11-dht22-sensors-temperature-and-humidity-tutorial-using-arduino/
+  * Smart_therm_example: https://dzone.com/articles/how-to-build-your-own-arduino-thermostat
 
