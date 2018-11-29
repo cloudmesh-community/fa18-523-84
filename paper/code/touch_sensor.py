@@ -8,7 +8,7 @@ import sys
 
 class touch_sensor(object):
 	"""docstring for touch_sensor"""
-	def __init__(self, pin=7, callback_action, pin_setup='BOARD'):
+	def __init__(self, callback_action, pin=7, pin_setup='BOARD'):
 		self.pin = pin
 		self.callback_action = callback_action
 		if pin_setup == 'BCM':
@@ -34,7 +34,7 @@ if __name__ == '__main__':
 		def touch_print(text):
 			print(text)
 
-		touch_sensor(pin=13, callback_action=touch_print('Hey!'))
+		touch_sensor(callback_action=touch_print('Hey!'), pin=13)
 		while True:
 			time.sleep(1)		
 	except KeyboardInterrupt:
