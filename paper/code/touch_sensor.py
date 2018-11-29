@@ -11,7 +11,7 @@ class touch_sensor(object):
 	def __init__(self, function, *args, pin=7, pin_setup='BOARD'):
 		self.pin = pin
 		self.function = function()
-		self.*args = *args
+		self.args = *args
 		if pin_setup == 'BCM':
 			GPIO.setmode(GPIO.BCM)
 		else:
@@ -23,7 +23,7 @@ class touch_sensor(object):
 		
 	def callback(self):
 		if GPIO.input(self.pin) == 1:
-			self.function(self.*args)
+			self.function(self.args)
 		else:
 			pass
 		
