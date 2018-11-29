@@ -22,8 +22,7 @@ class ds18b20(object):
 		f.close()
 		return lines
 
-
-	def read_temp(self):
+	def get(self):
 		lines = self.read_temp_raw()
 		while lines[0].strip()[-3:] != 'YES':
 			time.sleep(0.2)
@@ -38,7 +37,7 @@ class ds18b20(object):
 if __name__ == '__main__':
 	try:
 		while True:
-			print(ds18b20().read_temp())
+			print(ds18b20().get())
 			time.sleep(1)
 	except KeyboardInterrupt:
 		print('\n\n*** Stopping Program ***')
