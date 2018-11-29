@@ -33,7 +33,7 @@ if __name__ == '__main__':
 		def touch_print(text):
 			print(text)
 
-		touch_sensor(touch_print(), text='Hey!', pin=13)
+		touch_sensor(touch_print(), 'Hey!', pin=13)
 		while True:
 			time.sleep(1)		
 	except KeyboardInterrupt:
