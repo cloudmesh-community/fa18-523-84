@@ -1,6 +1,8 @@
 Sensors :hand: fa18-523-84
 =======
 
+This section contains the wiring diagrams and associated classes for sensors that can be used with the Raspberry Pi.  In addition to the individual sensors an example project is also included.
+
 DS18B20 Temperature Sensor
 --------------------------
 
@@ -101,6 +103,11 @@ The default pins are defined in variants/nodemcu/pins_arduino.h as GPIO
 You can also choose the pins yourself using the I2C constructor
 Wire.begin(int sda, int scl);
 
+
+Project: Smart Thermostat :o:
+-----------------------------
+
+As an example we will combine some of the sensors discussed in this section to create a smart thermostat.  
 
 ## Sources for this section:
 
