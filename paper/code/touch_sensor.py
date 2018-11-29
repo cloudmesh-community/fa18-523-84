@@ -3,7 +3,8 @@
 
 import RPi.GPIO as GPIO
 import time
-
+import os
+import sys
 
 class touch_sensor(object):
 	"""docstring for touch_sensor"""
