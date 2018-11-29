@@ -10,7 +10,6 @@ class touch_sensor(object):
 	"""docstring for touch_sensor"""
 	def __init__(self, function, *args, pin=7, pin_setup='BOARD'):
 		self.pin = pin
-		self.function = function(*args)
 		if pin_setup == 'BCM':
 			GPIO.setmode(GPIO.BCM)
 		else:
@@ -18,11 +17,11 @@ class touch_sensor(object):
 		GPIO.setwarnings(False)
 		GPIO.setup(self.pin,GPIO.IN)
 		GPIO.remove_event_detect(self.pin)
-		GPIO.add_event_detect(self.pin, GPIO.RISING, callback=callback)
+		GPIO.add_event_detect(self.pin, GPIO.RISING, callback=callback(function, *args))
 		
-	def callback(self):
+	def callback(self, function, *args):
 		if GPIO.input(self.pin) == 1:
-			self.function
+			function(*args)
 		else:
 			pass
 		
@@ -34,7 +33,7 @@ if __name__ == '__main__':
 		def touch_print(text):
 			print(text)
 
-		touch_sensor(touch_print(), 'Hey!', pin=13)
+		touch_sensor(touch_print(), text='Hey!', pin=13)
 		while True:
 			time.sleep(1)		
 	except KeyboardInterrupt:
