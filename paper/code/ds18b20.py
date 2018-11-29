@@ -35,7 +35,7 @@ class ds18b20(object):
 			return temp_c, temp_f
 		
 	def __str__(self):
-		c, f= temperature.get()
+		c, f = self.get()
 		return "Celcius: {}, Farenhiet: {}".format(c, f)
 
 if __name__ == '__main__':
