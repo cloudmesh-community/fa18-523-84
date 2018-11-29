@@ -3,6 +3,8 @@
 
 import RPi.GPIO as GPIO
 import time
+import sys
+import os
 
 class READ_LIGHT_SENSOR(object):
 	"""Pin numbers for READ_LIGHT_SENSOR are based on BOARD numbers by default.
