@@ -15,7 +15,7 @@ class READ_DHT11(object):
 		self.pin = pin
 		self.sensor = Adafruit_DHT.DHT11
 
-	def return_data(self, temp_measure='celcius'):
+	def get(self, temp_measure='celcius'):
 		humid, temp = Adafruit_DHT.read_retry(self.sensor, self.pin)
 		if humid is not None and temp is not None and temp_measure == 'celcius':
 			return humid, temp
@@ -29,7 +29,8 @@ class READ_DHT11(object):
 
 # loop to read temp and humidity
 
+DHT11 = READ_DHT11(pin=22)
 while True:
-	humid, temp = READ_DHT11(pin=22).return_data(temp_measure='farenhiet')
+	humid, temp = DHT11.get(temp_measure='farenhiet')
 	print('Temp: '+str(temp)+u'\u00b0'+'F  Humidity:'+str(humid)+'%')
 	time.sleep(1)
