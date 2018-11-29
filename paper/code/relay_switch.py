@@ -1,54 +1,49 @@
 # Code modified from source: https://tutorials-raspberrypi.com/raspberry-pi-control-relay-switch-via-gpio/
-# Actual pins in example: relay 1 = 16; relay 2 = 18
+# Actual pins in example: 16 & 18
 
 import RPi.GPIO as GPIO
 import time
-
 
 class relay_switch(object):
 	"""docstring for relay_switch
 	currently set up for a 2 channel relay
 	"""
-	def __init__(self, pin=8, pin2=None, pin_setup='BOARD'):
+	def __init__(self, pin=8, pin_setup='BOARD'):
 		self.pin = pin
-		self.pin2 = pin2
 		if pin_setup == 'BCM':
 			GPIO.setmode(GPIO.BCM)
 		else:
 			GPIO.setmode(GPIO.BOARD)
 		GPIO.setwarnings(False)
 		GPIO.setup(self.pin, GPIO.OUT)
-		if self.pin2 is not None:
-			GPIO.setup(self.pin2, GPIO.OUT)
-		else:
-			pass
 		
-	def relay_on(self, relay_num=1):
-		if relay_num == 1:
-			GPIO.output(self.pin, GPIO.LOW)
-		elif relay_num == 2:
-			GPIO.output(self.pin2, GPIO.LOW)
-		else:
-			return
+	def on(self):
+		GPIO.output(self.pin, GPIO.LOW)
 
-	def relay_off(self, relay_num=1):
-		if relay_num == 1:
-			GPIO.output(self.pin, GPIO.HIGH)
-		elif relay_num == 2:
-			GPIO.output(self.pin2, GPIO.HIGH)
-		else:
-			return
+	def off(self):
+		GPIO.output(self.pin, GPIO.HIGH)
+		
 
 # Create loop to flash LEDs
-relay = relay_switch(pin=16, pin2=18)
-counter = 15
-while counter > 0:
-	relay.relay_on(relay_num=1)
-	time.sleep(0.5)
-	relay.relay_on(relay_num=2)
-	time.sleep(0.5)
-	relay.relay_off(relay_num=1)
-	time.sleep(0.5)
-	relay.relay_off(relay_num=2)
-	time.sleep(0.5)
-	counter -= 1
+
+if __name__ == '__main__':
+	try:
+		r1 = relay_switch(pin=16)
+		r2 = relay_switch(pin=18)
+		counter = 15
+		while counter > 0:
+			r1.on()
+			time.sleep(0.5)
+			r2.on()
+			time.sleep(0.5)
+			r1.off()
+			time.sleep(0.5)
+			r2.off()
+			time.sleep(0.5)
+			counter -= 1
+	except KeyboardInterrupt:
+		print('\n\n *** Stopping Program ***')
+		try:
+			sys.exit(0)
+		except SystemExit:
+			os._exit(0)
