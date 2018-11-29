@@ -8,6 +8,7 @@ import time
 class ds18b20(object):
 	"""docstring for ds18b20
 	DS18B20 sensor should be plugged into GPIO4
+	Returns temp in celcius then farenhiet
 	"""
 	def __init__(self):
 		os.system('modprobe w1-gpio')
@@ -34,9 +35,6 @@ class ds18b20(object):
 			temp_f = temp_c * 9.0 / 5.0 + 32.0
 			return temp_c, temp_f
 		
-	def __str__(self):
-		c, f = self.get()
-		return "Celcius: {}, Farenhiet: {}".format(c, f)
 
 if __name__ == '__main__':
 	try:
