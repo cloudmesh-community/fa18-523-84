@@ -6,6 +6,7 @@
 #  https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/thermostat_setup.sh
 
 import sys
+import os
 import time
 import Adafruit_DHT
 
@@ -29,8 +30,16 @@ class READ_DHT11(object):
 
 # loop to read temp and humidity
 
-DHT11 = READ_DHT11(pin=22)
-while True:
-	humid, temp = DHT11.get(temp_measure='farenhiet')
-	print('Temp: '+str(temp)+u'\u00b0'+'F  Humidity:'+str(humid)+'%')
-	time.sleep(1)
+if __name__ == '__main__':
+	try:
+		DHT11 = READ_DHT11(pin=22)
+		while True:
+			humid, temp = DHT11.get(temp_measure='farenhiet')
+			print('Temp: '+str(temp)+u'\u00b0'+'F  Humidity:'+str(humid)+'%') # \u00b0 = the degrees symbol
+			time.sleep(1)
+	except KeyboardInterrupt:
+		print('Stopping Program')
+		try:
+			sys.exit(0)
+		except SystemExit:
+			os._exit(0)
