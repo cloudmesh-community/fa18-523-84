@@ -1,6 +1,7 @@
 # Source: http://www.circuitbasics.com/raspberry-pi-ds18b20-temperature-sensor-tutorial/ 
 
 import os
+import sys
 import glob
 import time
 
@@ -33,7 +34,14 @@ class ds18b20(object):
 	        temp_c = float(temp_string) / 1000.0
 	        temp_f = temp_c * 9.0 / 5.0 + 32.0
 	        return temp_c, temp_f
-  
-while True:
-  print(ds18b20().read_temp())  
-  time.sleep(1)
+  	
+if __name__ == '__main__':
+    try:
+        print(ds18b20().read_temp())  
+  	time.sleep(1)
+    except KeyboardInterrupt:
+        print('Stopping Program')
+        try:
+            sys.exit(0)
+        except SystemExit:
+            os._exit(0)
