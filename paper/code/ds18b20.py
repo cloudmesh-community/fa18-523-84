@@ -37,8 +37,8 @@ class ds18b20(object):
   	
 if __name__ == '__main__':
     try:
-        print(ds18b20().read_temp())  
-  	time.sleep(1)
+	print(ds18b20().read_temp())  
+	time.sleep(1)
     except KeyboardInterrupt:
         print('Stopping Program')
         try:
