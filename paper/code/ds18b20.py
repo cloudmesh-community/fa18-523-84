@@ -41,7 +41,7 @@ if __name__ == '__main__':
 			print(ds18b20().read_temp())
 			time.sleep(1)
 	except KeyboardInterrupt:
-		print('Stopping Program')
+		print(' *** Stopping Program ***')
 		try:
 			sys.exit(0)
 		except SystemExit:
