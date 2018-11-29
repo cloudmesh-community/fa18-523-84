@@ -36,8 +36,9 @@ class ds18b20(object):
 
 if __name__ == '__main__':
 	try:
+		temperature = ds18b20()
 		while True:
-			print(ds18b20().get())
+			print(temperature.get())
 			time.sleep(1)
 	except KeyboardInterrupt:
 		print('\n\n*** Stopping Program ***')
