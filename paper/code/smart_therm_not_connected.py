@@ -108,12 +108,16 @@ def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, sys_off=False, fa
 		if indoor_temp > desired_temp + tolarance and indoor_temp < outdoor_temp:
 			r3.on()
 			r2.on()
+			r1.off()
 			return 'AC ON'
 		elif indoor_temp < desired_temp - tolarance and indoor_temp > outdoor_temp:
 			r3.on()
 			r1.on()
+			r2.off()
 			return 'HEAT ON'
 		elif fan_on == True:
+			r1.off()
+			r2.off()
 			r3.on()
 			return 'FAN ON'
 		else:
