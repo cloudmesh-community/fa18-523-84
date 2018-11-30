@@ -51,12 +51,12 @@ RELAY_PIN_1 = 16
 RELAY_PIN_2 = 18
 TOUCH_PIN = 13
 LIGHT_PIN = 11
-TEMP_HUMID_PIN = 4 #This is the GPIO pin. Other pins set using BOARD
+TEMP_HUMID_PIN = 22 #This is the GPIO pin. Other pins set using BOARD
 #################
 
 lcd = LCD.LCD_Display(rs=37,e=35,data_pins=[33,31,29,23])
 light = light_sensor.READ_LIGHT_SENSOR(pin=LIGHT_PIN)
-temp_humid = temp_humid.READ_DHT11(pin=TEMP_HUMID_PIN)
+temp_humid = temp_humid.READ_DHT11(pin=TEMP_HUMID_PIN, )
 r1 = relay_switch.relay_switch(pin=RELAY_PIN_1)
 r2 = relay_switch.relay_switch(pin=RELAY_PIN_2)
 
@@ -153,7 +153,7 @@ if __name__ == '__main__':
 			# Environment data variables
 			condition = curr_weather[1]
 			out_temp_f = curr_weather[2]
-			in_humid, in_temp_f = temp_humid.get()
+			in_humid, in_temp_f = temp_humid.get(temp_measure='farenhiet')
 
 			status = ''
 			# Adjust thermostat based on variables
