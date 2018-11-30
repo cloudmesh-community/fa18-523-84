@@ -160,7 +160,7 @@ if __name__ == '__main__':
 			
 			# Adjust thermostat based on variables
 			if in_temp_f is not None or out_temp_f is not None:
-				output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=69.0,fan_on=True,tolarance=set_tolarance())
+				output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=69.0,fan_on=False,tolarance=set_tolarance())
 				if output == status:
 					pass
 				else:
