@@ -59,8 +59,7 @@ light = light_sensor.READ_LIGHT_SENSOR(pin=LIGHT_PIN)
 temp_humid = temp_humid.READ_DHT11(pin=TEMP_HUMID_PIN, )
 r1 = relay_switch.relay_switch(pin=RELAY_PIN_1)
 r2 = relay_switch.relay_switch(pin=RELAY_PIN_2)
-
-display_num = 1 # Sets the starting display.  Number will change with button press
+touch = touch_sensor.touch_sensor(change_display, pin=TOUCH_PIN)
 
 def change_display():
 	global display_num
@@ -74,8 +73,6 @@ def change_display():
 			display_num = 1
 		else:
 			display_num = 0
-
-touch = touch_sensor.touch_sensor(change_display, pin=TOUCH_PIN)
 
 
 ######################
@@ -138,6 +135,8 @@ def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, sys_off=False, fa
 
 if __name__ == '__main__':
 	try:
+		status = ''
+		display_num = 1 # Sets the starting display.  Number will change with button press
 		while True:
 			curr_weather = get_current_weather(g)
 
@@ -155,7 +154,7 @@ if __name__ == '__main__':
 			out_temp_f = curr_weather[2]
 			in_humid, in_temp_f = temp_humid.get(temp_measure='farenhiet')
 
-			status = ''
+			
 			# Adjust thermostat based on variables
 			if in_temp_f is not None or out_temp_f is not None:
 				output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=69.0,tolarance=set_tolarance())
