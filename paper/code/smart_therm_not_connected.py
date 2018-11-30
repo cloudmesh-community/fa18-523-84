@@ -163,7 +163,7 @@ if __name__ == '__main__':
 					pass
 				else:
 					status = output
-					print('Status: '+status+' Time: '+now)
+					print('Status: '+status+' Time: '+str(now))
 			else:
 				pass
 
