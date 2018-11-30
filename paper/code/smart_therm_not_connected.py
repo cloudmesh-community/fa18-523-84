@@ -59,7 +59,6 @@ light = light_sensor.READ_LIGHT_SENSOR(pin=LIGHT_PIN)
 temp_humid = temp_humid.READ_DHT11(pin=TEMP_HUMID_PIN, )
 r1 = relay_switch.relay_switch(pin=RELAY_PIN_1)
 r2 = relay_switch.relay_switch(pin=RELAY_PIN_2)
-touch = touch_sensor.touch_sensor(change_display, pin=TOUCH_PIN)
 
 def change_display():
 	global display_num
@@ -68,6 +67,7 @@ def change_display():
 	else:
 		display_num = 1
 
+touch = touch_sensor.touch_sensor(change_display, pin=TOUCH_PIN)
 
 ######################
 # functions to adjust the temperature
