@@ -49,6 +49,7 @@ def get_current_weather(g):
 # HARD CODE PINS FOR SENSORS
 RELAY_PIN_1 = 16
 RELAY_PIN_2 = 18
+RELAY_PIN_3 = 22
 TOUCH_PIN = 13
 LIGHT_PIN = 11
 TEMP_HUMID_PIN = 22 #This is the GPIO pin. Other pins set using BOARD
@@ -59,6 +60,7 @@ light = light_sensor.READ_LIGHT_SENSOR(pin=LIGHT_PIN)
 temp_humid = temp_humid.READ_DHT11(pin=TEMP_HUMID_PIN, )
 r1 = relay_switch.relay_switch(pin=RELAY_PIN_1)
 r2 = relay_switch.relay_switch(pin=RELAY_PIN_2)
+r3 = relay_switch.relay_switch(pin=RELAY_PIN_3)
 
 def change_display():
 	global display_num
@@ -100,26 +102,33 @@ def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, sys_off=False, fa
 	if sys_off == True:
 		r1.off()
 		r2.off()
+		r3.off()
 		return 'ALL OFF'
 	elif sys_off == False and fan_on == True:
 		if indoor_temp > desired_temp + tolarance and indoor_temp < outdoor_temp:
+			r3.on()
 			r2.on()
 			return 'AC ON'
 		elif indoor_temp < desired_temp - tolarance and indoor_temp > outdoor_temp:
+			r3.on()
 			r1.on()
 			return 'HEAT ON'
 		else:
+			r3.on()
 			return 'FAN ON'
 	else:
 		if indoor_temp > desired_temp + tolarance and indoor_temp < outdoor_temp:
+			r3.on()
 			r2.on()
 			return 'AC ON'
 		elif indoor_temp < desired_temp - tolarance and indoor_temp > outdoor_temp:
+			r3.on()
 			r1.on()
 			return 'HEAT ON'
 		else:
 			r1.off()
 			r2.off()
+			r3.off()
 			return 'SYS OFF'
 
 
@@ -151,7 +160,7 @@ if __name__ == '__main__':
 			
 			# Adjust thermostat based on variables
 			if in_temp_f is not None or out_temp_f is not None:
-				output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=69.0,tolarance=set_tolarance())
+				output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=69.0,fan_on=True,tolarance=set_tolarance())
 				if output == status:
 					pass
 				else:
