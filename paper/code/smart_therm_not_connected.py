@@ -54,11 +54,11 @@ LIGHT_PIN = 11
 TEMP_HUMID_PIN = 4 #This is the GPIO pin. Other pins set using BOARD
 #################
 
-LCD = LCD_Display(rs=37,e=35,data_pins=[33,31,29,23])
-light = READ_LIGHT_SENSOR(pin=LIGHT_PIN)
-temp_humid = READ_DHT11(pin=TEMP_HUMID_PIN)
-r1 = relay_switch(pin=RELAY_PIN_1)
-r2 = relay_switch(pin=RELAY_PIN_2)
+lcd = LCD.LCD_Display(rs=37,e=35,data_pins=[33,31,29,23])
+light = light_sensor.READ_LIGHT_SENSOR(pin=LIGHT_PIN)
+temp_humid = temp_humid.READ_DHT11(pin=TEMP_HUMID_PIN)
+r1 = relay_switch.relay_switch(pin=RELAY_PIN_1)
+r2 = relay_switch.relay_switch(pin=RELAY_PIN_2)
 
 display_num = 1 # Sets the starting display.  Number will change with button press
 
@@ -75,7 +75,7 @@ def change_display():
 		else:
 			display_num = 0
 
-touch = touch_sensor(change_display, pin=TOUCH_PIN)
+touch = touch_sensor.touch_sensor(change_display, pin=TOUCH_PIN)
 
 
 ######################
