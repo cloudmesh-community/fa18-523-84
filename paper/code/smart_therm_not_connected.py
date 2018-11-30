@@ -159,7 +159,7 @@ if __name__ == '__main__':
 			if in_temp_f is not None or out_temp_f is not None:
 				output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=69.0,tolarance=set_tolarance())
 				if output == status:
-					break
+					pass
 				else:
 					status = output
 					print('Status: '+status+' Time: '+str(now))
