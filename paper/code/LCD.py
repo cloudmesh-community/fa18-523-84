@@ -15,11 +15,12 @@ class LCD_Display(object):
 			self.lcd = CharLCD(cols=cols, rows=rows, pin_rs=rs, pin_e=e, pins_data=data_pins, numbering_mode=GPIO.BOARD)
 		
 
-	def display_string(self, string, clear='N'):
+	def display_string(self, string, clear='N', pos=(0,0)):
 		if clear == 'Y':
 			self.lcd.clear()
 		else:
 			pass
+		self.lcd.cursor_pos = pos
 		self.lcd.write_string(string)
 
 if __name__ == '__main__':
