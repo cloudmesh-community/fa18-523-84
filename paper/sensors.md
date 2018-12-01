@@ -124,6 +124,8 @@ Once you have the necessary components you will need to connect the wires as sho
 
 [Smart Thermostat Code](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/smart_therm_not_connected.py)
 
+To run this process in the background use: ```nohup long-running-command &``` To stop the process use ```top``` to find the PID and then use ```kill PID``` to kill the process.
+
 ## Sources for this section:
 
 need to integrate into https://github.com/cloudmesh-community/book/blob/master/chapters/SECTION/SECTION-REFERENCES.md
