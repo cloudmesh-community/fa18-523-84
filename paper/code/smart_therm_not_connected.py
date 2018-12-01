@@ -18,6 +18,7 @@ import light_sensor
 import relay_switch
 import temp_humid
 import touch_sensor
+import ds18b20
 
 ######################
 # function to collect Weather Data
@@ -61,6 +62,7 @@ temp_humid = temp_humid.READ_DHT11(pin=TEMP_HUMID_PIN)
 r1 = relay_switch.relay_switch(pin=RELAY_PIN_1)
 r2 = relay_switch.relay_switch(pin=RELAY_PIN_2)
 r3 = relay_switch.relay_switch(pin=RELAY_PIN_3)
+temperature = ds18b20.ds18b20() #DS18B20 is more accurate for temp
 
 def change_display():
 	global display_num
@@ -155,8 +157,8 @@ if __name__ == '__main__':
 			# Environment data variables
 			condition = curr_weather[1]
 			out_temp_f = curr_weather[2]
-			in_humid, in_temp_f = temp_humid.get(temp_measure='farenhiet')
-
+			in_humid = temp_humid.get(temp_measure='farenhiet')[0]
+			in_temp_f = temperature.get()[1]
 			
 			# Adjust thermostat based on variables
 			if in_temp_f is not None or out_temp_f is not None:
