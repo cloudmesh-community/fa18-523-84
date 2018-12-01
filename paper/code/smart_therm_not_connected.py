@@ -23,7 +23,6 @@ def exit_handler(self):
 			raise
 
 atexit.register(exit_handler)
-sys.stdout.flush() #used to ensure the ability to print to nohup.out
 
 #Import custom classes for sensors
 import LCD 
@@ -191,6 +190,7 @@ if __name__ == '__main__':
 				else:
 					status = output
 					print('Status: '+status+' Time: '+str(now))
+					sys.stdout.flush() #used to ensure the ability to print to nohup.out
 			else:
 				pass
 
@@ -207,6 +207,7 @@ if __name__ == '__main__':
 		r2.off()
 		r3.off()
 		print('\n\n *** Stopping program & shutting off system ***')
+		sys.stdout.flush() #used to ensure the ability to print to nohup.out
 		try:
 			r1.off()
 			r2.off()
