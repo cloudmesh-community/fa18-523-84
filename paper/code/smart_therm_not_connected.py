@@ -13,7 +13,7 @@ import geocoder
 import pandas as pd
 import atexit
 
-def exit_handler(self):
+def exit_handler():
 		try:
 			r1.off()
 			r2.off()
