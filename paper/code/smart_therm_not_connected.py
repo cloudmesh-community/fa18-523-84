@@ -11,8 +11,19 @@ import timezonefinder
 import pyowm
 import geocoder
 import pandas as pd
+import atexit
 
-sys.stdout.flush()
+def exit_handler(self):
+		try:
+			r1.off()
+			r2.off()
+			r3.off()
+			print('\n\n *** Stopping program & shutting off system ***')
+		except:
+			raise
+
+atexit.register(exit_handler)
+sys.stdout.flush() #used to ensure the ability to print to nohup.out
 
 #Import custom classes for sensors
 import LCD 
@@ -134,6 +145,11 @@ def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, sys_off=False, fa
 			r2.off()
 			r3.on()
 			return 'FAN ON'
+		else:
+			r1.off()
+			r2.off()
+			r3.off()
+			return 'SYS OFF'
 	else:
 		r1.off()
 		r2.off()
@@ -192,6 +208,12 @@ if __name__ == '__main__':
 		r3.off()
 		print('\n\n *** Stopping program & shutting off system ***')
 		try:
+			r1.off()
+			r2.off()
+			r3.off()
 			sys.exit(0)
 		except SystemExit:
+			r1.off()
+			r2.off()
+			r3.off()
 			os._exit(0)
