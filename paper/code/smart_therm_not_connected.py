@@ -81,7 +81,7 @@ touch = touch_sensor.touch_sensor(change_display, pin=TOUCH_PIN)
 #   timezone offset: https://stackoverflow.com/questions/15742045/getting-time-zone-from-lat-long-coordinates
 ######################
 
-def set_tolarance(start='08:00:00', end='22:30:00', main=1, secondary=5):
+def set_tolarance(start='06:00:00', end='23:00:00', main=1, secondary=5):
 	start = datetime.datetime.strptime(start, '%H:%M:%S')
 	end = datetime.datetime.strptime(end, '%H:%M:%S')
 	#Adjust timezone
