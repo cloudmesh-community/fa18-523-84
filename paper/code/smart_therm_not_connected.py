@@ -144,7 +144,7 @@ def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, sys_off=False, fa
 		r3.on()
 		return 'FAN ON'
 	else:
-		pass
+		return 'NO CHANGE'
 
 
 ######################
@@ -176,7 +176,7 @@ if __name__ == '__main__':
 			# Adjust thermostat based on variables
 			if in_temp_f is not None or out_temp_f is not None:
 				output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=69.0,fan_on=False,tolarance=set_tolarance())
-				if output == status:
+				if output == status or output == 'NO CHANGE':
 					pass
 				else:
 					status = output
