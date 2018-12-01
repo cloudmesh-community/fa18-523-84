@@ -12,6 +12,8 @@ import pyowm
 import geocoder
 import pandas as pd
 
+sys.stdout.flush()
+
 #Import custom classes for sensors
 import LCD 
 import light_sensor
@@ -62,7 +64,7 @@ temp_humid = temp_humid.READ_DHT11(pin=TEMP_HUMID_PIN)
 r1 = relay_switch.relay_switch(pin=RELAY_PIN_1)
 r2 = relay_switch.relay_switch(pin=RELAY_PIN_2)
 r3 = relay_switch.relay_switch(pin=RELAY_PIN_3)
-temperature = ds18b20.ds18b20() #DS18B20 is more accurate for temp
+temperature = ds18b20.ds18b20()
 
 def change_display():
 	global display_num
@@ -105,28 +107,33 @@ def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, sys_off=False, fa
 		r1.off()
 		r2.off()
 		r3.off()
-		return 'ALL OFF'
+		return 'SYS OFF'
 	elif sys_off == False:
 		if indoor_temp > desired_temp + tolarance and indoor_temp < outdoor_temp:
 			r3.on()
 			r2.on()
 			r1.off()
 			return 'AC ON'
+		elif indoor_temp < desired_temp and indoor_temp < outdoor_temp:
+			r3.off()
+			r2.off()
+			r1.off()
+			return 'SYS OFF'
 		elif indoor_temp < desired_temp - tolarance and indoor_temp > outdoor_temp:
 			r3.on()
 			r1.on()
 			r2.off()
 			return 'HEAT ON'
+		elif indoor_temp > desired_temp and indoor_temp > outdoor_temp:
+			r3.off()
+			r1.off()
+			r2.off()
+			return 'SYS OFF'
 		elif fan_on == True:
 			r1.off()
 			r2.off()
 			r3.on()
 			return 'FAN ON'
-		else:
-			r1.off()
-			r2.off()
-			r3.off()
-			return 'SYS OFF'
 	else:
 		r1.off()
 		r2.off()
