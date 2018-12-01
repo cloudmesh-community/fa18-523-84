@@ -25,7 +25,7 @@ def exit_handler(self):
 atexit.register(exit_handler)
 
 #Import custom classes for sensors
-import LCD 
+import LCD
 import light_sensor
 import relay_switch
 import temp_humid
@@ -144,10 +144,7 @@ def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, sys_off=False, fa
 		r3.on()
 		return 'FAN ON'
 	else:
-		r1.off()
-		r2.off()
-		r3.off()
-		return 'SYS OFF'	
+		pass
 
 
 ######################
