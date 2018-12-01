@@ -1,10 +1,8 @@
-Sensors :hand: fa18-523-84
-=======
+# Sensors :hand: fa18-523-84
 
 This section contains the wiring diagrams and associated classes for sensors that can be used with the Raspberry Pi.  In addition to the individual sensors an example project is also included.  Before getting started with sensors for the Raspberry Pi you will need to ensure that the Pi is set up with python3 and has the latest version of Raspbian installed.  Instructions for setting up the Raspberry Pi can be found [here.](https://github.com/cloudmesh-community/book/blob/master/chapters/iot/pi.md)  
 
-DS18B20 Temperature Sensor
---------------------------
+### DS18B20 Temperature Sensor
 
 The DS18B20 is a thermoresistive temperature sensor and can be found in many of the sensor kits referenced in this book.  To set up the DS18B20 connect the jumper wires as shown in +@fig:ds18b20_setup.  If you have an individual sensor instead of a sensor module you will need to use a 4.7k ohm resistor as shown in the diagram.  The resistor allows the one wire interface to work properly and should be used to avoid damage to the sensor [@DS18B20_resistor].  If you have a DS18B20 module it may already include a resistor and you will not need to add another.  Be sure to check before setting up your sensor. 
 
@@ -19,8 +17,7 @@ Once the set up is complete you can use the DS18B20 code provided to output the 
 
 [DS18B20 Class](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/ds18b20.py)
 
-Temperature and Humidity Sensor Module
---------------------------------------
+### Temperature and Humidity Sensor Module
 
 The temperature and humidity sensor used in this example is the DHT11 sensor which can be purchased as a part of the [Kookye Smart Home Sensor kit](https://www.amazon.com/gp/product/B01J9GD3DG/ref=oh_aui_detailpage_o03_s01?ie=UTF8&psc=1) or the [Elegoo Uno Kit.](https://www.amazon.com/ELEGOO-Project-Starter-Tutorial-Arduino/dp/B01D8KOZF4/ref=sr_1_6?s=electronics&ie=UTF8&qid=1542065611&sr=1-6&keywords=dht11+temperature+and+humidity+module).  The humidity compontent of the DHT11 works by measuring the conductivity between two electrodes. Between these electrodes there is a substrate that holds moisture and as the moisture changes the conductivity changes [@How_DHT11_Works]. The temperature sensor of the DHT11 works in the same way as the DS18B20.
 
@@ -42,8 +39,7 @@ Once you have set up the Adafruit_DHT module you can use the python class to dis
 
 [Temperature & Humididy Sensor Class](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/temp_humid.py)
 
-Photosensetive Light Sensor Module
-----------------------------------
+### Photosensetive Light Sensor Module
 
 The light sensor used in this example can be purchased [individually](https://www.amazon.com/Gowoops-Digital-Intensity-Detection-Photosensitive/dp/B01N1FKS4L/ref=sr_1_3?ie=UTF8&qid=1543528066&sr=8-3&keywords=arduino+light+sensor+module) or as part of a sensor kit.  To set up the light sensor module connect the wires to the Raspberry Pi as shown in +@fig:light_setup.  The sensor shown in this example has three pins.  However, some sensor modules may have four pins.  In most cases the extra pin is not necessary.
 
@@ -53,8 +49,7 @@ Once you have set up the light sensor you can use the light_sensor class to retr
 
 [Light Sensor Class](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/light_sensor.py)
 
-Capacitive Touch Sensor Module
-------------------------------
+### Capacitive Touch Sensor Module
 
 In this example we are using a [momentary capacitive touch sensor](https://www.adafruit.com/product/1374).  The sensor kits mentioned in this book will also contain this sensor.  To set up the touch sensor connect the wires to the Raspberrry Pi as shown in +@fig:touch_setup.  
 
@@ -64,8 +59,7 @@ Once you have set up the sensor you can use the touch_sensor class to execute an
 
 [Touch Sensor Class](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/touch_sensor.py)
 
-Relay Module
-----------------------
+### Relay Module
 
 The relay module can be used as a switch to complete a circut.  The module can be purchased as an individual component or may be included on a board with 2, 4 or more relay switches.  In this example we will be using a two channel relay module. To set up the relay module connect the wires to the Raspberrry Pi as shown in +@fig:relay_setup.  
 
@@ -75,8 +69,7 @@ Once the module is set up you can use the relay_switch class to turn the relays 
 
 [Relay Class](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/relay_switch.py)
 
-16 x 2 LCD Screen
------------------
+### 16 x 2 LCD Screen
 
 The 16x2 LCD screen can be used as a display for the Raspberry Pi.  To set up the LCD screen connect the wires as shown in +@fig:LCD_setup.  You will also need two potentiometers in order to adjust the contrast and the brightness.
 
@@ -86,8 +79,7 @@ Once everything is correctly wired up the LCD class can be used to print text to
 
 [LCD Class](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/code/LCD.py)
 
-Compass :o:
------------
+### Compass :o:
 
 TODO: which compass sensor
 
@@ -104,8 +96,7 @@ You can also choose the pins yourself using the I2C constructor
 Wire.begin(int sda, int scl);
 
 
-Project: Smart Thermostat :o:
------------------------------
+## Project: Smart Thermostat :o:
 
 In this example we will combine some of the sensors discussed in this section to create a smart thermostat.
 
