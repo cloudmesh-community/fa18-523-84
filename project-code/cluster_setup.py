@@ -15,4 +15,8 @@ for key, value in workers.items():
 	#print('password changed')
 	#c.run('sudo hostnamectl set-hostname '+key)
 	#print('hostname changed')
+	c.run('sudo apt-get update')
+	c.run('sudo apt-get upgrade -y')
+	c.run('sudo apt-get dist-upgrade -y')
+	print('upgrades complete')
 	
