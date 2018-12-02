@@ -1,5 +1,8 @@
 #shutdown cluster
 
+#DOES NOT WORK AT THE MOMENT
+#ERROR WITH FABRIC SHUTDOWN AND REBOOT http://www.fabfile.org/upgrading.html#task-functions-decorators
+
 from fabric import Connection
 
 parent_node = '10.0.0.31' #wlan0 = 10.0.0.31 | eth0 = 169.254.156.125
@@ -10,5 +13,5 @@ for key, value in workers.items():
 	print(key+': '+value)
 	c = Connection(value)
 	c.connect_kwargs.password = 'Weather_Center01' #change back to raspberry
-	result = c.run('sudo shutdown -h now') #uname -s
+	c.run('sudo shutdown -h now') #uname -s
 	print("{}: {}".format(value, result.stdout.strip()))
