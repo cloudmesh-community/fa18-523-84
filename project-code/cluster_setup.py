@@ -18,7 +18,7 @@ for key, value in workers.items():
 	#print('INFO: password changed')
 	print('INFO: changing hostname')
 	#c.run('sudo hostnamectl set-hostname '+key)
-	c.run(echo $(hostname -I | cut -d\  -f1) $(hostname) | sudo tee -a /etc/hosts)
+	c.run('echo $(hostname -I | cut -d\  -f1) $(hostname) | sudo tee -a /etc/hosts')
 	print('INFO: hostname changed')
 	
 	'''
