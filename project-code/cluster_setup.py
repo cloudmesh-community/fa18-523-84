@@ -12,14 +12,19 @@ for key, value in workers.items():
 	c = Connection(value, connect_timeout=60)
 	c.connect_kwargs.password = 'Weather_Center01' #change back to raspberry
 	
+	result = c.run(hostname)
+	print("{}: {}".format(value, result.stdout.strip()))
+	
 	#change password and hostname
-	#print('INFO: changing password')
-	#c.run('echo pi:Weather_Center01 | sudo chpasswd') #uname -s
-	#print('INFO: password changed')
+	'''
+	print('INFO: changing password')
+	c.run('echo pi:Weather_Center01 | sudo chpasswd') #uname -s
+	print('INFO: password changed')
 	print('INFO: changing hostname')
-	#c.run('sudo hostnamectl set-hostname '+key)
+	c.run('sudo hostnamectl set-hostname '+key)
 	c.run('echo $(hostname -I | cut -d\  -f1) $(hostname) | sudo tee -a /etc/hosts')
 	print('INFO: hostname changed')
+	'''
 	
 	'''
 	#update nodes
