@@ -84,12 +84,8 @@ def change_display():
 	global out_temp_f
 	global condition
 	if display_num == 1:
-		lcd.display_string('In Temp: ' + str(round(in_temp_f,1)) + 'F', pos=(0,0), clear='Y')
-		lcd.display_string('In Humid: ' + str(in_humid) + '%', pos=(1,0), clear='N')
 		display_num = 0
 	else:
-		lcd.display_string('Out Temp: ' + str(round(out_temp_f,1)) + 'F', pos=(0,0), clear='Y')
-		lcd.display_string(str(condition[0:15]), pos=(1,0), clear='N')
 		display_num = 1
 
 touch = touch_sensor.touch_sensor(change_display, pin=TOUCH_PIN)
