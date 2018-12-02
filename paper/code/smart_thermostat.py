@@ -209,7 +209,6 @@ if __name__ == '__main__':
 			dt = datetime.datetime.utcnow()
 			timezone.localize(dt)
 			now = datetime.datetime.utcnow() + timezone.utcoffset(dt)
-			timeStampVal = curr_weather[0] + timezone.utcoffset(dt)
 
 			try:
 				curr_weather = get_current_weather(g)
@@ -217,6 +216,7 @@ if __name__ == '__main__':
 				curr_weather = [now,'ERROR',desired_temp]
 			
 			# Environment data variables
+			timeStampVal = curr_weather[0] + timezone.utcoffset(dt)
 			condition = curr_weather[1]
 			out_temp_f = curr_weather[2]
 			in_humid = temp_humid.get(temp_measure='farenhiet')[0]
