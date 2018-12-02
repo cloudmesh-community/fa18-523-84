@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #install python packages
+sudo apt-get install python3-pip
 
 # code for humidity sensor on git hub
 # Source: https://stackoverflow.com/questions/28913592/python-gpio-code-for-dht-11-temperature-sensor-fails-in-pi-2
@@ -20,10 +21,10 @@ sudo easy_install3 cassandra-driver
 echo "All python dependencies have been successfully installed."
 
 #install cassandra
-mkdir ~/cassandra
-cd cassandra
+#mkdir ~/cassandra
+#cd cassandra
 # https://academy.datastax.com/all-downloads?field_download_driver_category_tid=910
-wget ""
+#wget ""
 
 
 
