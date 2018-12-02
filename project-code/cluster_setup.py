@@ -2,11 +2,16 @@
 
 from fabric import Connection
 
-workers = {'w1': '169.254.62.205', 'w2': '169.254.122.189', 'w3': '169.254.159.1', 'w4': '169.254.111.219'}
+workers = {'PiCluster_w01': '169.254.62.205', 
+	   'PiCluster_w02': '169.254.122.189', 
+	   'PiCluster_w03': '169.254.159.1', 
+	   'PiCluster_w04': '169.254.111.219'}
 
 for key, value in workers.items():
 	print(key+': '+value)
 	c = Connection(value)
-	c.connect_kwargs.password = 'raspberry'
-	result = c.run('echo pi:Weather_Center01 | sudo chpasswd') #uname -s
-	print("{}: {}".format(value, result.stdout.strip()))
+	c.connect_kwargs.password = 'Weather_Center01'
+	#c.run('echo pi:Weather_Center01 | sudo chpasswd') #uname -s
+	#print('password changed')
+	c.run('sudo hostnamectl set-hostname '+key)
+	print('hostname changed')
