@@ -1,6 +1,7 @@
 #Initial Cluster Setup
 
 from fabric import Connection
+from fabric import operations
 
 workers = {'PiCluster_w01': '169.254.62.205', 
 	   'PiCluster_w02': '169.254.122.189', 
@@ -15,4 +16,4 @@ for key, value in workers.items():
 	#print('password changed')
 	#c.run('sudo hostnamectl set-hostname '+key)
 	#print('hostname changed')
-	c.reboot()
+	operations.reboot()
