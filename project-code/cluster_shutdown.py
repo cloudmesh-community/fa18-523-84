@@ -10,5 +10,5 @@ for key, value in workers.items():
 	print(key+': '+value)
 	c = Connection(value)
 	c.connect_kwargs.password = 'raspberry'
-	result = c.run('uname -s')
+	result = c.run('sudo shutdown -h now') #uname -s
 	print("{}: {}".format(value, result.stdout.strip()))
