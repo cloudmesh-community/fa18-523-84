@@ -153,11 +153,10 @@ def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, sys_off=False, fa
 
 if __name__ == '__main__':
 	try:
+		desired_temp = 69.0
 		status = ''
 		display_num = 1 # Sets the starting display.  Number will change with button press
 		while True:
-			curr_weather = get_current_weather(g)
-
 			# Automatic timezone adjustment code modified from: https://stackoverflow.com/questions/15742045/getting-time-zone-from-lat-long-coordinates
 			tf = timezonefinder.TimezoneFinder()
 			timezone_str = tf.certain_timezone_at(lat=g.latlng[0], lng=g.latlng[1])
@@ -167,6 +166,11 @@ if __name__ == '__main__':
 			now = datetime.datetime.utcnow() + timezone.utcoffset(dt)
 			timeStampVal = curr_weather[0] + timezone.utcoffset(dt)
 
+			try:
+				curr_weather = get_current_weather(g)
+			except:
+				curr_weather = [now,'ERROR',desired_temp]
+			
 			# Environment data variables
 			condition = curr_weather[1]
 			out_temp_f = curr_weather[2]
@@ -175,7 +179,7 @@ if __name__ == '__main__':
 			
 			# Adjust thermostat based on variables
 			if in_temp_f is not None or out_temp_f is not None:
-				output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=69.0,fan_on=False,tolarance=set_tolarance())
+				output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=desired_temp,fan_on=False,tolarance=set_tolarance())
 				if output == status or output == 'NO CHANGE':
 					pass
 				else:
