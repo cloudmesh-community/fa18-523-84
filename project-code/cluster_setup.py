@@ -15,6 +15,8 @@ for key, value in workers.items():
 	#print('password changed')
 	#c.run('sudo hostnamectl set-hostname '+key)
 	#print('hostname changed')
-	c.run('sudo reboot')
-	c.close()
-	print('rebooting '+key)
+	try:
+		c.run('sudo reboot')
+	except:
+		c.close()
+		print('rebooting '+key)
