@@ -17,5 +17,5 @@ for key, value in workers.items():
 	#print('hostname changed')
 	try:
 		c.run('sudo reboot')
-	except invoke.exceptions.UnexpectedExit:
+	except UnexpectedExit:
 		pass
