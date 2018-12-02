@@ -1,7 +1,7 @@
 #shutdown cluster
 
-#DOES NOT WORK AT THE MOMENT
 #ERROR WITH FABRIC SHUTDOWN AND REBOOT http://www.fabfile.org/upgrading.html#task-functions-decorators
+#Work around is to schedule shutdown for 1min later.
 
 from fabric import Connection
 
@@ -13,5 +13,5 @@ for key, value in workers.items():
 	print(key+': '+value)
 	c = Connection(value)
 	c.connect_kwargs.password = 'Weather_Center01' #change back to raspberry
-	c.run('sudo shutdown -h now') #uname -s
+	result = c.run('sudo shutdown -h 1') #uname -s
 	print("{}: {}".format(value, result.stdout.strip()))
