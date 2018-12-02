@@ -12,7 +12,7 @@ for key, value in workers.items():
 	c = Connection(value, connect_timeout=60)
 	c.connect_kwargs.password = 'Weather_Center01' #change back to raspberry
 	
-	result = c.run(hostname)
+	result = c.run('hostname')
 	print("{}: {}".format(value, result.stdout.strip()))
 	
 	#change password and hostname
