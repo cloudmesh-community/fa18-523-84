@@ -15,4 +15,4 @@ for key, value in workers.items():
 	#print('password changed')
 	#c.run('sudo hostnamectl set-hostname '+key)
 	#print('hostname changed')
-	c.run('sudo shutdown -r +0')
+	c.run('sudo reboot')
