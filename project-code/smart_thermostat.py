@@ -1,22 +1,37 @@
-
 # I523 Course Project
 # Smart Thermostat
 
 #Import packages
 import os
-import glob
+import sys
 import time
+import datetime
+import pytz
+import timezonefinder
 import pyowm
 import geocoder
 import pandas as pd
-import datetime
-import sys
-import Adafruit_DHT
-import pytz
-import timezonefinder
 from cassandra.cluster import Cluster
-from RPLCD import CharLCD
-from RPi import GPIO
+import atexit
+
+def exit_handler():
+		try:
+			r1.off()
+			r2.off()
+			r3.off()
+			print('\n\n *** Stopping program & shutting off system ***')
+		except:
+			raise
+
+atexit.register(exit_handler)
+
+#Import custom classes for sensors
+import LCD
+import light_sensor
+import relay_switch
+import temp_humid
+import touch_sensor
+import ds18b20
 
 ######################
 # function to collect Weather Data
@@ -37,27 +52,47 @@ def get_current_weather(g):
 
 
 ######################
-# functions to get temperature data and LCD setup
+# Classes to use sensors
 # Sources for this section:
-#   code in this section copied from:  http://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-the-raspberry-pi/ 
+#   LCD + DHT11:  http://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-the-raspberry-pi/
+#   GPIO: https://tutorials-raspberrypi.com/raspberry-pi-control-relay-switch-via-gpio/
+#   Touch_Callback: https://sourceforge.net/p/raspberry-gpio-python/wiki/Inputs/
 ######################
 
-GPIO.setwarnings(False)
+#################
+# HARD CODE PINS FOR SENSORS
+RELAY_PIN_1 = 16
+RELAY_PIN_2 = 18
+RELAY_PIN_3 = 22
+TOUCH_PIN = 13
+LIGHT_PIN = 11
+TEMP_HUMID_PIN = 22 #This is the GPIO pin. Other pins set using BOARD
+#################
 
-lcd = CharLCD(cols=16,rows=2,pin_rs=37,pin_e=35,pins_data=[33,31,29,23],numbering_mode=GPIO.BOARD)
-sensor = Adafruit_DHT.DHT11
-pin = 4
+lcd = LCD.LCD_Display(rs=37,e=35,data_pins=[33,31,29,23])
+light = light_sensor.READ_LIGHT_SENSOR(pin=LIGHT_PIN)
+temp_humid = temp_humid.READ_DHT11(pin=TEMP_HUMID_PIN)
+r1 = relay_switch.relay_switch(pin=RELAY_PIN_1)
+r2 = relay_switch.relay_switch(pin=RELAY_PIN_2)
+r3 = relay_switch.relay_switch(pin=RELAY_PIN_3)
+temperature = ds18b20.ds18b20()
 
+def change_display():
+	global display_num
+	global in_temp_f
+	global in_humid
+	global out_temp_f
+	global condition
+	if display_num == 1:
+		lcd.display_string('In Temp: ' + str(round(in_temp_f,1)) + 'F', pos=(0,0), clear='Y')
+		lcd.display_string('In Humid: ' + str(in_humid) + '%', pos=(1,0), clear='N')
+		display_num = 0
+	else:
+		lcd.display_string('Out Temp: ' + str(round(out_temp_f,1)) + 'F', pos=(0,0), clear='Y')
+		lcd.display_string(str(condition[0:15]), pos=(1,0), clear='N')
+		display_num = 1
 
-def read_temp_humid():
-	try:
-		humid, temp_c = Adafruit_DHT.read_retry(sensor, pin)
-		temp_f = temp_c * 9.0 / 5.0 + 32.0
-		return humid, temp_f
-	except:
-		return 0,0
-
-
+touch = touch_sensor.touch_sensor(change_display, pin=TOUCH_PIN)
 
 ######################
 # functions to send data to database
@@ -88,62 +123,149 @@ def cassandra_query(keyspace, query, params=(), return_data=False, contact_point
 	except:
 		print('Data not loaded. Check for Error')
 
+######################
+# functions to adjust the temperature
+# Sources for this section:
+#   timezone offset: https://stackoverflow.com/questions/15742045/getting-time-zone-from-lat-long-coordinates
+######################
+
+def set_tolarance(start='06:00:00', end='23:00:00', main=1, secondary=5):
+	start = datetime.datetime.strptime(start, '%H:%M:%S')
+	end = datetime.datetime.strptime(end, '%H:%M:%S')
+	#Adjust timezone
+	tf = timezonefinder.TimezoneFinder()
+	timezone_str = tf.certain_timezone_at(lat=g.latlng[0], lng=g.latlng[1])
+	timezone = pytz.timezone(timezone_str)
+	dt = datetime.datetime.utcnow()
+	timezone.localize(dt)
+	now = datetime.datetime.utcnow() + timezone.utcoffset(dt)
+
+	# compare current time to start and end points
+	if now > start and now < end:
+		if light.get() == 0:  # Check if the lights are on.  Indicates if someone is active.
+			return main
+		else:
+			return secondary
+	else:
+		return main
+
+
+def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, sys_off=False, fan_on=False, tolarance=2):
+	"""
+	r1 = heat
+	r2 = AC
+	r3 = fan
+	Note: the fan should always turn on with either heat or AC
+	"""
+	if sys_off == True:
+		r1.off()
+		r2.off()
+		r3.off()
+		return 'SYS OFF'
+	elif indoor_temp >= desired_temp + tolarance and indoor_temp < outdoor_temp:
+		r3.on()
+		r2.on()
+		r1.off()
+		return 'AC ON'
+	elif indoor_temp < desired_temp and indoor_temp < outdoor_temp:
+		r3.off()
+		r2.off()
+		r1.off()
+		return 'SYS OFF'
+	elif indoor_temp <= desired_temp - tolarance and indoor_temp > outdoor_temp:
+		r3.on()
+		r1.on()
+		r2.off()
+		return 'HEAT ON'
+	elif indoor_temp > desired_temp and indoor_temp > outdoor_temp:
+		r3.off()
+		r1.off()
+		r2.off()
+		return 'SYS OFF'
+	elif fan_on == True:
+		r1.off()
+		r2.off()
+		r3.on()
+		return 'FAN ON'
+	else:
+		return 'NO CHANGE'
+
 
 ######################
 # Output
 ######################
 
-#g = geocoder.ip('me')
-#print(g.geojson)
-
-while True:
-	delay = 40
-	display_num = 1
-	while delay > 0:
-
-		try:
-			curr_weather = get_current_weather(g)
-
+if __name__ == '__main__':
+	try:
+		fan = False
+		desired_temp = 69.0
+		status = ''
+		display_num = 1 # Sets the starting display.  Number will change with button press
+		while True:
 			# Automatic timezone adjustment code modified from: https://stackoverflow.com/questions/15742045/getting-time-zone-from-lat-long-coordinates
 			tf = timezonefinder.TimezoneFinder()
 			timezone_str = tf.certain_timezone_at(lat=g.latlng[0], lng=g.latlng[1])
 			timezone = pytz.timezone(timezone_str)
 			dt = datetime.datetime.utcnow()
+			timezone.localize(dt)
 			now = datetime.datetime.utcnow() + timezone.utcoffset(dt)
-			timeStampVal = curr_weather[0] + timezone.utcoffset(dt) 
+			timeStampVal = curr_weather[0] + timezone.utcoffset(dt)
+
+			try:
+				curr_weather = get_current_weather(g)
+			except:
+				curr_weather = [now,'ERROR',desired_temp]
 			
 			# Environment data variables
 			condition = curr_weather[1]
 			out_temp_f = curr_weather[2]
-			in_humid, in_temp_f = read_temp_humid()
+			in_humid = temp_humid.get(temp_measure='farenhiet')[0]
+			in_temp_f = temperature.get()[1]
+			
+			# Adjust thermostat based on variables
+			if in_temp_f is not None or out_temp_f is not None:
+				output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=desired_temp,fan_on=fan,tolarance=set_tolarance(main=1.5,secondary=4))
+				if output == status or output == 'NO CHANGE':
+					pass
+				else:
+					status = output
+					print('Status: '+status+' Time: '+str(now))
+					sys.stdout.flush() #used to ensure the ability to print to nohup.out
+			else:
+				pass
 
+			# Update display based on latest data
+			if display_num == 1:
+				lcd.display_string('In Temp: ' + str(round(in_temp_f,1)) + 'F', pos=(0,0), clear='Y')
+				lcd.display_string('In Humid: ' + str(in_humid) + '%', pos=(1,0), clear='N')
+			else:
+				lcd.display_string('Out Temp: ' + str(round(out_temp_f,1)) + 'F', pos=(0,0), clear='Y')
+				lcd.display_string(str(condition[0:15]), pos=(1,0), clear='N')
+
+			# Load data to database
 			insert_data = '''
-		            INSERT INTO temp_data (indoor_time, outdoor_time, out_condition, out_temp_f, in_temp_f, humidity)
-	        	    VALUES (%s,%s,%s,%s,%s,%s)
+		            INSERT INTO temp_data (indoor_time, outdoor_time, out_condition, out_temp_f, in_temp_f, humidity, sys_status)
+	        	    VALUES (%s,%s,%s,%s,%s,%s,%s)
 		            '''
 
-			params = (now,str(timeStampVal),condition,out_temp_f,in_temp_f,in_humid)
+			params = (now,str(timeStampVal),condition,out_temp_f,in_temp_f,in_humid,status)
 
-			cassandra_query('environment_data', insert_data, params)
-
-			if display_num == 1:
-				lcd.clear()
-				lcd.cursor_pos = (0,0)
-				lcd.write_string('In Temp: ' + str(round(in_temp_f,1)) + 'F')
-				lcd.cursor_pos = (1,0)
-				lcd.write_string('Out Temp: ' + str(round(out_temp_f,1)) + 'F')
-				display_num = 0
-			else:
-				lcd.clear()
-				lcd.cursor_pos = (0,0)
-				lcd.write_string('In Humid: ' + str(in_humid) + '%')
-				lcd.cursor_pos = (1,0)
-				lcd.write_string('Out Temp: ' + str(round(out_temp_f,1)) + 'F')
-				display_num = 1
+			#cassandra_query('environment_data', insert_data, params)
 
 			time.sleep(15)
-			delay = delay - 1
-
-		except:
-			print('Error, no data loaded. Time: '+str(datetime.datetime.utcnow()-datetime.timedelta(hours=4)))
-	print(str(now)+' | '+str(in_temp_f)+' | '+str(out_temp_f)+' | '+str(timeStampVal))
+	except KeyboardInterrupt:
+		r1.off()
+		r2.off()
+		r3.off()
+		print('\n\n *** Stopping program & shutting off system ***')
+		sys.stdout.flush() #used to ensure the ability to print to nohup.out
+		try:
+			r1.off()
+			r2.off()
+			r3.off()
+			sys.exit(0)
+		except SystemExit:
+			r1.off()
+			r2.off()
+			r3.off()
+			os._exit(0)
