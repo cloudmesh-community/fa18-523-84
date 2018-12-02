@@ -9,13 +9,10 @@ workers = {'PiCluster_w01': '169.254.62.205',
 
 for key, value in workers.items():
 	print(key+': '+value)
-	c = Connection(value)
+	c = Connection(value, connect_timeout=60)
 	c.connect_kwargs.password = 'Weather_Center01' #change back to raspberry
 	#c.run('echo pi:Weather_Center01 | sudo chpasswd') #uname -s
 	#print('password changed')
 	#c.run('sudo hostnamectl set-hostname '+key)
 	#print('hostname changed')
-	try:
-		c.run('sudo reboot')
-	except UnexpectedExit:
-		pass
+	c.run('sudo reboot')
