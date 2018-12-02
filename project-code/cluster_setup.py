@@ -15,8 +15,8 @@ for key, value in workers.items():
 	result = c.run('hostname')
 	print("{}: {}".format(value, result.stdout.strip()))
 	
-	#change password and hostname
 	'''
+	#change password and hostname
 	print('INFO: changing password')
 	c.run('echo pi:Weather_Center01 | sudo chpasswd') #uname -s
 	print('INFO: password changed')
