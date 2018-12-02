@@ -17,4 +17,4 @@ for key, value in workers.items():
 	#print('hostname changed')
 	c.run('sudo reboot')
 	c.close()
-	print('rebooting '+key')
+	print('rebooting '+key)
