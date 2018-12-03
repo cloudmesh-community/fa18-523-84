@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Info Search for Higher Education Institutions in Indiana</title>
+    <link rel="stylesheet" media="screen" href ="static/bootstrap.min.css">
+    <link rel="stylesheet" href="static/bootstrap-theme.min.css">
+    <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+
+    <style type="text/css">
+    
+      body {padding-top: 70px;}
+
+      table.dataframe, .dataframe th, .dataframe td {
+        border: none;
+        border-bottom: 2px solid #C8C8C8;
+        border-collapse: collapse;
+        text-align:left;
+        padding: 10px;
+        margin-bottom: 40px;
+        font-size: 0.9em;
+        
+      }
+
+      .centerText{ 
+        text-align:center;
+        padding: 0px;
+      }
+
+      img {
+        max-width: 100%;
+      }
+
+      img.align-self {
+        align-self: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .result th {
+        background-color: #00A1E0;
+        color: white;
+      }
+
+      tr:nth-child(odd)   td { background-color:#eee; }
+      tr:nth-child(even)  td { background-color:#fff; }
+      tr:hover            td { background-color: #ffff99;}
+    </style>
+
+  </head>
+
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+
+      <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home<span class="sr-only">(current)</span></a></li>
+          <li><a href="http://127.0.0.1:5000/LongTermIncome">Key Metrics by Institution</a></li>
+          <li><a href="http://127.0.0.1:5000/compare">Compare Schools to the State Average</a></li>
+          <li><a href="http://127.0.0.1:5000/what_school">What School is Right for Me?</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <body>
+    <div class="container">
+      <h2>Info Search for Higher Education Institutions in Indiana</h2>
+      <br>
+        <p>
+          Welcome to the Info search page for Colleges and Universities located in Indiana.  There are many great institutions throughout the state and the aim of this website is to help you navigate your options.   
+          First please take a moment to tell us a bit about yourself.  This will help to see what schools may be a good fit based on SAT scores and admission rates.  
+          The "Key Metrics by Institution" page will allow you to either search for a specific school, school system or the entire list of schools.  The "Compare Schools to the State Average" page is a great place to see
+          how schools that you are interested in compare to the state average.  Lastly, the "What School is Right for Me?" page will show you how your scores match up against the average for each school.
+        </p>
+        <div>
+          <h3 class="centerText">Location of Indiana Universities</h3>
+          <img src= {{ url }} alt="Chart" height="300" width="300" class="align-self">
+        </div>
+      <h4>Please tell us a bit about yourself so that we can help find the right school for you!</h4>
+      <br>
+      <form  action="" method="post" role="form">
+        <div class="form-group">
+            <label for="name">Student Name:</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Please enter your name">
+            <br>
+            <label for="score">SAT Score:</label>
+            <input type="text" class="form-control" id="score" name="score" placeholder="Please enter your score on the SAT">
+            <br>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+      </form>
+      <br>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+     
+            {% for message in messages %}
+                {% if "Error" not in message[1]: %}
+                    <div class="alert alert-info">
+                    <strong>Success! </strong> {{ message[1] }}
+                    </div>
+                {% endif %}
+     
+                {% if "Error" in message[1]: %}
+                    <div class="alert alert-warning">
+                    {{ message[1] }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+                {% endif %}
+            {% endwith %}
+      <br>
+      <br>
+      <br>
+    </div>
+  </body>
+
+
+
+</html>
