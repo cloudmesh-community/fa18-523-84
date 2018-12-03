@@ -32,3 +32,6 @@ pip3 install geocoder
 echo "All python dependencies have been successfully installed."
 
 ```
+
+Source for issues with router blocking SSH connections after a period of time: https://raspberrypi.stackexchange.com/questions/62341/ssh-over-wifi-not-working
+
