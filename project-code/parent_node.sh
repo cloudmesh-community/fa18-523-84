@@ -9,6 +9,8 @@ echo "INFO: updates complete"
 
 #install nmap for networking
 sudo apt-get install nmap
+#install and set up apache web server
+#sources: https://www.youtube.com/watch?v=iVGtJOC71Fw
 sudo apt-get install apache2
 sudo apt-get remove libapache2-mod-python libapache2-mod-wsgi
 sudo apt-get install libapache2-mod-wsgi-py3
