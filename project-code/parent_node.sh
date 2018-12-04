@@ -35,5 +35,7 @@ sudo apt-get purge openjdk*
 sudo apt-get install openjdk-8-jdk -y
 java -version
 sudo apt-get install ntp -y
-
+# THIS SECTION NEEDS YOUR USERNAME AND DOWNLOAD KEY
+curl --user datastax_username:downloadkey -L 
+https://downloads.datastax.com/enterprise/dse-5.1.11-bin.tar.gz | tar xz
 
