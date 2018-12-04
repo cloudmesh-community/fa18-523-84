@@ -38,8 +38,8 @@ for key, value in workers.items():
 	'''
 	
 	#Install packages and programs
-	c.run('sudo apt-get install python3-pip')
-	c.run('sudo apt-get install python3-pandas')
+	c.run('sudo apt-get install python3-pip -y')
+	c.run('sudo apt-get install python3-pandas -y')
 	print('INFO: python packages installed')
 	
 	#reboot each node
