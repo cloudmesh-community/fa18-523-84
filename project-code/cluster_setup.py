@@ -3,11 +3,12 @@
 from fabric import Connection
 
 #parent node eth0: 10.0.0.42  wlan0:10.0.0.31
+#'PiCluster_w02': '10.0.0.37',
+#'PiCluster_w04': '10.0.0.40'
 
 workers = {'PiCluster_w01': '10.0.0.36', 
-	   #'PiCluster_w02': '10.0.0.37', 
-	   'PiCluster_w03': '10.0.0.41', 
-	   #'PiCluster_w04': '10.0.0.40'}
+	   'PiCluster_w03': '10.0.0.41'
+	   }
 
 for key, value in workers.items():
 	#print(key+': '+value)
