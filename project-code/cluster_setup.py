@@ -61,8 +61,11 @@ for key, value in workers.items():
 	print('\n\nINFO: installing cassandra\n\n')
 	c.run('sudo apt-get purge openjdk*')
 	c.run('sudo apt-get install openjdk-8-jdk -y')
-	c.run('wget "https://www-us.apache.org/dist/cassandra/3.11.3/apache-cassandra-3.11.3-bin.tar.gz"')
-	c.run('tar -xvf apache-cassandra-3.11.3-bin.tar.gz')
+	try:
+		c.run('wget "https://www-us.apache.org/dist/cassandra/3.11.3/apache-cassandra-3.11.3-bin.tar.gz"')
+		c.run('tar -xvf apache-cassandra-3.11.3-bin.tar.gz')
+	except:
+		print('ERROR: cassandra was not installed')
 	print('\n\nINFO: cassandra installation successful\n\n')
 	    
 	#reboot each node
