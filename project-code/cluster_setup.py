@@ -59,7 +59,7 @@ for key, value in workers.items():
 	#Install Cassandra on each node
 	#source: https://cassandra.apache.org/doc/latest/getting_started/installing.html#installation-from-binary-tarball-files
 	print('\n\nINFO: installing cassandra\n\n')
-	c.run('sudo apt-get purge openjdk*')
+	c.run('sudo apt-get purge openjdk* -y')
 	c.run('sudo apt-get install openjdk-8-jdk -y')
 	try:
 		c.run('wget "https://www-us.apache.org/dist/cassandra/3.11.3/apache-cassandra-3.11.3-bin.tar.gz"')
