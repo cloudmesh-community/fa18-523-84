@@ -28,28 +28,30 @@ for key, value in workers.items():
 	print('INFO: hostname changed')
 	'''
 	
-	'''
 	#update nodes
+	print('\n\nINFO: updating node\n\n')
 	print('INFO: running sudo apt-get update')
 	c.run('sudo apt-get update')
 	print('INFO: running apt-get upgrade -y')
 	c.run('sudo apt-get upgrade -y')
 	print('INFO: running sudo apt-get dist-upgrade -y')
 	c.run('sudo apt-get dist-upgrade -y')
-	print('INFO: upgrades complete')
-	'''
+	print('\n\nINFO: updates complete\n\n')
 	
 	#Install packages and programs
+	print('\n\nINFO: installing python packages\n\n')
 	c.run('sudo apt-get install python3-pip -y')
 	c.run('sudo apt-get install python3-pandas -y')
-	print('INFO: python packages installed')
+	print('\n\nINFO: python packages installed\n\n')
 	
 	#Install Cassandra on each node
 	#source: https://cassandra.apache.org/doc/latest/getting_started/installing.html#installation-from-binary-tarball-files
+	print('\n\nINFO: installing cassandra\n\n')
 	c.run('sudo apt-get purge openjdk*')
 	c.run('sudo apt-get install openjdk-8-jdk -y')
 	c.run('wget "https://www-us.apache.org/dist/cassandra/3.11.3/apache-cassandra-3.11.3-bin.tar.gz"')
 	c.run('tar -xvf apache-cassandra-3.11.3-bin.tar.gz')
+	print('\n\nINFO: cassandra installation successful\n\n')
 	    
 	#reboot each node
 	#c.run('sudo shutdown -r 1') #reboot in 60 sec to avoid issues with ssh connection
