@@ -3,9 +3,10 @@
 from fabric import Connection
 
 #PiCluster_p01 eth0: 10.0.0.42  wlan0:10.0.0.31
+#cassandra seeds: 10.0.0.42, 10.0.0.40
 
 workers = {
-	#'PiCluster_w01': '10.0.0.36',
+	'PiCluster_w01': '10.0.0.36',
 	'PiCluster_w02': '10.0.0.37',
 	'PiCluster_w03': '10.0.0.41',
 	'PiCluster_w04': '10.0.0.40'
@@ -71,7 +72,6 @@ for key, value in workers.items():
 	except:
 		print('ERROR: cassandra was not installed')
 	print('\n\nINFO: cassandra installation successful\n\n')
-	'''
 	
 	c.run('cd git-repos/fa18-523-84/project-code && git pull')
 	c.run('sudo cp ~/git-repos/fa18-523-84/project-code/cassandra_custom.yaml ~/apache-cassandra-3.11.3/conf/cassandra_custom.yaml')
@@ -80,20 +80,14 @@ for key, value in workers.items():
 	c.run('sudo mv ~/apache-cassandra-3.11.3/conf/cassandra_custom.yaml ~/apache-cassandra-3.11.3/conf/cassandra.yaml')
 	
 	print('\n\nINFO: cassandra configuration successful\n\n')
+	'''
 	
 	#reboot each node
 	#c.run('sudo shutdown -r 1') #reboot in 60 sec to avoid issues with ssh connection
 	
 	
 '''
-Addiitonal cassandra config
-cd git-repos/fa18-523-84/project-code
-git pull
-sudo cp cassandra_custom.yaml ~/apache-cassandra-3.11.3/conf/cassandra_custom.yaml
-cd ~/apache-cassandra-3.11.3/conf
-sudo mv cassandra.yaml ~/
-sudo mv cassandra-topology.properties ~/
-sudo mv cassandra_custom.yaml cassandra.yaml
+Addiitonal manual cassandra config
 sudo nano cassandra.yaml #change the listen_address
 '''
 	
