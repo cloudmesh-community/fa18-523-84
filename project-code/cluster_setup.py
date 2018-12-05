@@ -48,8 +48,7 @@ for key, value in workers.items():
 	except:
 		print('ERROR: directory already exists')
 	try:
-		c.run('cd git-repos')
-		c.run('git clone https://github.com/cloudmesh-community/fa18-523-84.git')
+		c.run('cd ~/git-repos && git clone https://github.com/cloudmesh-community/fa18-523-84.git')
 	except:
 		print('ERROR: can not clone repo')
 	print('\n\nINFO: git setup complete\n\n')
