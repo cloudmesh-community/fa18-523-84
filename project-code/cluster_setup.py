@@ -83,8 +83,8 @@ for key, value in workers.items():
 	'''
 	
 	#Only run if all yaml files have been updated
-	print('\n\nINFO: starting cassandra daemon\n\n')
-	c.run('cd apache-cassandra-3.11.3 && bin/cassandra')
+	#print('\n\nINFO: starting cassandra daemon\n\n')
+	#c.run('cd apache-cassandra-3.11.3 && bin/cassandra')
 	
 	#reboot each node
 	#c.run('sudo shutdown -r 1') #reboot in 60 sec to avoid issues with ssh connection
@@ -98,5 +98,9 @@ sudo nano cassandra.yaml
 then start seed nodes first
 cd apache-cassandra-3.11.3
 bin/cassandra
+
+Cassandra sources:
+https://docs.datastax.com/en/cassandra/3.0/cassandra/initialize/initSingleDS.html
+https://cassandra.apache.org/doc/latest/configuration/cassandra_config_file.html
 '''
 	
