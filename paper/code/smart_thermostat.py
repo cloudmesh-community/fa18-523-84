@@ -225,7 +225,7 @@ if __name__ == '__main__':
 					pass
 				else:
 					status = output
-					print('Status: '+status+' Time: '+str(now))
+					print('Status: '+status+' Indoor Temp: '+str(in_temp_f)+' Time: '+str(now))
 					sys.stdout.flush() #used to ensure the ability to print to nohup.out
 			else:
 				pass
