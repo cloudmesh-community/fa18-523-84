@@ -102,5 +102,6 @@ bin/cassandra
 Cassandra sources:
 https://docs.datastax.com/en/cassandra/3.0/cassandra/initialize/initSingleDS.html
 https://cassandra.apache.org/doc/latest/configuration/cassandra_config_file.html
+https://stackoverflow.com/questions/29323709/unable-to-start-cassandra-node-already-exists
 '''
 	
