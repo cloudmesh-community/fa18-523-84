@@ -4,12 +4,12 @@ from fabric import Connection
 
 #PiCluster_p01 eth0: 10.0.0.42  wlan0:10.0.0.31
 #cassandra seeds: 10.0.0.42, 10.0.0.40
+#'PiCluster_w04': '10.0.0.40'
 
 workers = {
 	'PiCluster_w01': '10.0.0.36',
 	'PiCluster_w02': '10.0.0.37',
-	'PiCluster_w03': '10.0.0.41',
-	'PiCluster_w04': '10.0.0.40'
+	'PiCluster_w03': '10.0.0.41'
 	}
 
 for key, value in workers.items():
@@ -82,12 +82,21 @@ for key, value in workers.items():
 	print('\n\nINFO: cassandra configuration successful\n\n')
 	'''
 	
+	#Only run if all yaml files have been updated
+	print('\n\nINFO: starting cassandra daemon\n\n')
+	c.run('cd apache-cassandra-3.11.3 && bin/cassandra')
+	
 	#reboot each node
 	#c.run('sudo shutdown -r 1') #reboot in 60 sec to avoid issues with ssh connection
 	
 	
 '''
 Addiitonal manual cassandra config
-sudo nano cassandra.yaml #change the listen_address
+first change the listen_address on each node
+sudo nano cassandra.yaml
+
+then start seed nodes first
+cd apache-cassandra-3.11.3
+bin/cassandra
 '''
 	
