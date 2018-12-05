@@ -78,6 +78,10 @@ temperature = ds18b20.ds18b20()
 
 def change_display():
 	global display_num
+	global in_temp_f
+	global in_humid
+	global out_temp_f
+	global condition
 	if display_num == 1:
 		display_num = 0
 	else:
@@ -113,6 +117,12 @@ def set_tolarance(start='06:00:00', end='23:00:00', main=1, secondary=5):
 
 
 def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, sys_off=False, fan_on=False, tolarance=2):
+	"""
+	r1 = heat
+	r2 = AC
+	r3 = fan
+	Note: the fan should always turn on with either heat or AC
+	"""
 	if sys_off == True:
 		r1.off()
 		r2.off()
@@ -153,6 +163,7 @@ def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, sys_off=False, fa
 
 if __name__ == '__main__':
 	try:
+		fan = False
 		desired_temp = 69.0
 		status = ''
 		display_num = 1 # Sets the starting display.  Number will change with button press
@@ -164,7 +175,6 @@ if __name__ == '__main__':
 			dt = datetime.datetime.utcnow()
 			timezone.localize(dt)
 			now = datetime.datetime.utcnow() + timezone.utcoffset(dt)
-			timeStampVal = curr_weather[0] + timezone.utcoffset(dt)
 
 			try:
 				curr_weather = get_current_weather(g)
@@ -172,6 +182,7 @@ if __name__ == '__main__':
 				curr_weather = [now,'ERROR',desired_temp]
 			
 			# Environment data variables
+			timeStampVal = curr_weather[0] + timezone.utcoffset(dt)
 			condition = curr_weather[1]
 			out_temp_f = curr_weather[2]
 			in_humid = temp_humid.get(temp_measure='farenhiet')[0]
@@ -179,7 +190,7 @@ if __name__ == '__main__':
 			
 			# Adjust thermostat based on variables
 			if in_temp_f is not None or out_temp_f is not None:
-				output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=desired_temp,fan_on=False,tolarance=set_tolarance(main=1.5,secondary=4))
+				output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=desired_temp,fan_on=fan,tolarance=set_tolarance(main=1.5,secondary=4))
 				if output == status or output == 'NO CHANGE':
 					pass
 				else:
@@ -189,6 +200,7 @@ if __name__ == '__main__':
 			else:
 				pass
 
+			# Update display based on latest data
 			if display_num == 1:
 				lcd.display_string('In Temp: ' + str(round(in_temp_f,1)) + 'F', pos=(0,0), clear='Y')
 				lcd.display_string('In Humid: ' + str(in_humid) + '%', pos=(1,0), clear='N')
