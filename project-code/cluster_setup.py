@@ -2,10 +2,12 @@
 
 from fabric import Connection
 
-workers = {'PiCluster_w01': '169.254.62.205', 
-	   'PiCluster_w02': '169.254.122.189', 
-	   'PiCluster_w03': '169.254.159.1', 
-	   'PiCluster_w04': '169.254.111.219'}
+#parent node eth0: 10.0.0.42  wlan0:10.0.0.31
+
+workers = {'PiCluster_w01': '10.0.0.36', 
+	   'PiCluster_w02': '10.0.0.37', 
+	   'PiCluster_w03': '10.0.0.41', 
+	   'PiCluster_w04': '10.0.0.40'}
 
 for key, value in workers.items():
 	#print(key+': '+value)
@@ -42,6 +44,13 @@ for key, value in workers.items():
 	c.run('sudo apt-get install python3-pandas -y')
 	print('INFO: python packages installed')
 	
+	#Install Cassandra on each node
+	#source: https://cassandra.apache.org/doc/latest/getting_started/installing.html#installation-from-binary-tarball-files
+	c.run('sudo apt-get purge openjdk*')
+	c.run('sudo apt-get install openjdk-8-jdk -y')
+	c.run('wget "https://www-us.apache.org/dist/cassandra/3.11.3/apache-cassandra-3.11.3-bin.tar.gz"')
+	c.run('tar -xvf apache-cassandra-3.11.3-bin.tar.gz')
+	    
 	#reboot each node
 	#c.run('sudo shutdown -r 1') #reboot in 60 sec to avoid issues with ssh connection
 	
