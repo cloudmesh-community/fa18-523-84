@@ -74,13 +74,11 @@ for key, value in workers.items():
 	print('\n\nINFO: cassandra installation successful\n\n')
 	'''
 	
-	c.run('cd git-repos/fa18-523-84/project-code')
-	c.run('git pull')
-	c.run('sudo cp cassandra_custom.yaml ~/apache-cassandra-3.11.3/conf/cassandra_custom.yaml')
-	c.run('cd ~/apache-cassandra-3.11.3/conf')
-	c.run('sudo mv cassandra.yaml ~/')
-	c.run('sudo mv cassandra-topology.properties ~/')
-	c.run('sudo mv cassandra_custom.yaml cassandra.yaml')
+	c.run('cd git-repos/fa18-523-84/project-code && git pull')
+	c.run('sudo cp ~/git-repos/fa18-523-84/project-code/cassandra_custom.yaml ~/apache-cassandra-3.11.3/conf/cassandra_custom.yaml')
+	c.run('sudo mv ~/apache-cassandra-3.11.3/conf/cassandra.yaml ~/')
+	c.run('sudo mv ~/apache-cassandra-3.11.3/conf/cassandra-topology.properties ~/')
+	c.run('sudo mv ~/apache-cassandra-3.11.3/conf/cassandra_custom.yaml ~/apache-cassandra-3.11.3/conf/cassandra.yaml')
 	
 	print('\n\nINFO: cassandra configuration successful\n\n')
 	
