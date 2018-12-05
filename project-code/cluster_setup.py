@@ -5,9 +5,9 @@ from fabric import Connection
 #parent node eth0: 10.0.0.42  wlan0:10.0.0.31
 
 workers = {'PiCluster_w01': '10.0.0.36', 
-	   'PiCluster_w02': '10.0.0.37', 
+	   #'PiCluster_w02': '10.0.0.37', 
 	   'PiCluster_w03': '10.0.0.41', 
-	   'PiCluster_w04': '10.0.0.40'}
+	   #'PiCluster_w04': '10.0.0.40'}
 
 for key, value in workers.items():
 	#print(key+': '+value)
@@ -43,10 +43,13 @@ for key, value in workers.items():
 	c.run('sudo apt-get install git -y')
 	try:
 		c.run('sudo mkdir git-repos')
+	except:
+		print('ERROR: directory already exists')
+	try:
 		c.run('cd git-repos')
 		c.run('git clone https://github.com/cloudmesh-community/fa18-523-84.git')
 	except:
-		print('ERROR: could not clone git repos')
+		print('ERROR: can not clone repo')
 	print('\n\nINFO: git setup complete\n\n')
 	
 	#Install packages and programs
