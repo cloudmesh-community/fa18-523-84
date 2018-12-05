@@ -92,7 +92,7 @@ for key, value in workers.items():
 	
 '''
 Addiitonal manual cassandra config
-first change the listen_address on each node
+first change the listen_address and the rpc_address on each node
 sudo nano cassandra.yaml
 
 then start seed nodes first
