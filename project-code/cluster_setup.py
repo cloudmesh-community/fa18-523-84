@@ -50,7 +50,7 @@ for key, value in workers.items():
 	print('\n\nINFO: installing python packages\n\n')
 	c.run('sudo apt-get install python3-pip -y')
 	c.run('sudo apt-get install python3-pandas -y')
-	c.run('sudo easy_install3 cassandra-driver')
+	#c.run('sudo easy_install3 cassandra-driver')
 	print('\n\nINFO: python packages installed\n\n')
 	
 	#Install Cassandra on each node
