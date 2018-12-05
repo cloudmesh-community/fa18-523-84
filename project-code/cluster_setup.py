@@ -2,13 +2,14 @@
 
 from fabric import Connection
 
-#parent node eth0: 10.0.0.42  wlan0:10.0.0.31
-#'PiCluster_w02': '10.0.0.37',
-#'PiCluster_w04': '10.0.0.40'
+#PiCluster_p01 eth0: 10.0.0.42  wlan0:10.0.0.31
 
-workers = {'PiCluster_w01': '10.0.0.36', 
-	   'PiCluster_w03': '10.0.0.41'
-	   }
+workers = {
+	'PiCluster_w01': '10.0.0.36',
+	'PiCluster_w02': '10.0.0.37',
+	'PiCluster_w03': '10.0.0.41',
+	'PiCluster_w04': '10.0.0.40'
+	}
 
 for key, value in workers.items():
 	#print(key+': '+value)
@@ -28,7 +29,7 @@ for key, value in workers.items():
 	c.run('echo $(hostname -I | cut -d\  -f1) $(hostname) | sudo tee -a /etc/hosts')
 	print('INFO: hostname changed')
 	'''
-	
+	'''
 	#update nodes
 	print('\n\nINFO: updating node\n\n')
 	print('INFO: running sudo apt-get update')
@@ -38,7 +39,7 @@ for key, value in workers.items():
 	print('INFO: running sudo apt-get dist-upgrade -y')
 	c.run('sudo apt-get dist-upgrade -y')
 	print('\n\nINFO: updates complete\n\n')
-	
+
 	#install git
 	print('\n\nINFO: installing git and adding git repos\n\n')
 	c.run('sudo apt-get install git -y')
@@ -71,7 +72,8 @@ for key, value in workers.items():
 	except:
 		print('ERROR: cassandra was not installed')
 	print('\n\nINFO: cassandra installation successful\n\n')
-	    
+	'''
+	
 	#reboot each node
 	#c.run('sudo shutdown -r 1') #reboot in 60 sec to avoid issues with ssh connection
 	
