@@ -40,7 +40,7 @@ for key, value in workers.items():
 	
 	#install git
 	print('\n\nINFO: installing git and adding git repos\n\n')
-	c.run('sudo apt-get install python3-pip')
+	c.run('sudo apt-get install git -y')
 	c.run('sudo mkdir git-repos')
 	c.run('cd git-repos')
 	c.run('git clone https://github.com/cloudmesh-community/fa18-523-84.git')
