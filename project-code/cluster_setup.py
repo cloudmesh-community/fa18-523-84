@@ -38,10 +38,19 @@ for key, value in workers.items():
 	c.run('sudo apt-get dist-upgrade -y')
 	print('\n\nINFO: updates complete\n\n')
 	
+	#install git
+	print('\n\nINFO: installing git and adding git repos\n\n')
+	c.run('sudo apt-get install python3-pip')
+	c.run('sudo mkdir git-repos')
+	c.run('cd git-repos')
+	c.run('git clone https://github.com/cloudmesh-community/fa18-523-84.git')
+	print('\n\nINFO: git setup complete\n\n')
+	
 	#Install packages and programs
 	print('\n\nINFO: installing python packages\n\n')
 	c.run('sudo apt-get install python3-pip -y')
 	c.run('sudo apt-get install python3-pandas -y')
+	c.run('sudo easy_install3 cassandra-driver')
 	print('\n\nINFO: python packages installed\n\n')
 	
 	#Install Cassandra on each node
