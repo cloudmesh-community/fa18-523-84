@@ -264,7 +264,7 @@ if __name__ == '__main__':
 
 			# Load data to database
 			insert_data = '''
-		            INSERT INTO therm_data (indoor_time, outdoor_time, out_condition, out_temp_f, in_temp_f, humidity, sys_status)
+		            INSERT INTO therm_data (indoor_time, outdoor_time, out_condition, out_temp_f, in_temp_f, humidity, status)
 	        	    VALUES (%s,%s,%s,%s,%s,%s,%s)
 		            '''
 
