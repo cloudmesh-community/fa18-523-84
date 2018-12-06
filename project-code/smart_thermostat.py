@@ -157,34 +157,40 @@ def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, sys_off=False, fa
 		r1.off()
 		r2.off()
 		r3.off()
-		return 'SYS OFF'
+		status = 'SYS OFF'
+		return status
 	elif indoor_temp >= desired_temp + tolarance and indoor_temp < outdoor_temp:
 		r3.on()
 		r2.on()
 		r1.off()
-		return 'AC ON'
+		status = 'AC ON'
+		return status
 	elif indoor_temp < desired_temp and indoor_temp < outdoor_temp:
 		r3.off()
 		r2.off()
 		r1.off()
-		return 'SYS OFF'
+		status = 'SYS OFF'
+		return status
 	elif indoor_temp <= desired_temp - tolarance and indoor_temp > outdoor_temp:
 		r3.on()
 		r1.on()
 		r2.off()
-		return 'HEAT ON'
+		status = 'HEAT ON'
+		return status
 	elif indoor_temp > desired_temp and indoor_temp > outdoor_temp:
 		r3.off()
 		r1.off()
 		r2.off()
-		return 'SYS OFF'
+		status = 'SYS OFF'
+		return status
 	elif fan_on == True:
 		r1.off()
 		r2.off()
 		r3.on()
-		return 'FAN ON'
+		status = 'FAN ON'
+		return status
 	else:
-		return 'NO CHANGE'
+		return status
 
 
 ######################
@@ -193,8 +199,6 @@ def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, sys_off=False, fa
 
 if __name__ == '__main__':
 	try:
-		fan = False
-		desired_temp = 69.0
 		status = ''
 		display_num = 1 # Sets the starting display.  Number will change with button press
 		while True:
@@ -211,6 +215,24 @@ if __name__ == '__main__':
 			except:
 				curr_weather = [now,'ERROR',desired_temp]
 			
+			#get current status from status table
+			status = 'SELECT * FROM therm_status'
+			try:
+				status_df = cassandra_query('smart_therm', status, return_data=True, contact_points=['10.0.0.42'], port=9042)
+				desired_temp = status_df.iloc[0]['desired_temp']
+				fan = status_df.iloc[0]['fan_on']
+				sys_off = status_df.iloc[0]['sys_off']
+				main = current_vars_df.iloc[0]['main']
+				secondary = current_vars_df.iloc[0]['secondary']
+			except:
+				print('ERROR: using default settings')
+				desired_temp = 69.0
+				fan = False
+				sys_off = False
+				main = 1.5
+				secondary = 4
+
+
 			# Environment data variables
 			timeStampVal = curr_weather[0] + timezone.utcoffset(dt)
 			condition = curr_weather[1]
@@ -220,13 +242,13 @@ if __name__ == '__main__':
 			
 			# Adjust thermostat based on variables
 			if in_temp_f is not None or out_temp_f is not None:
-				output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=desired_temp,fan_on=fan,tolarance=set_tolarance(main=1.5,secondary=4))
+				output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=desired_temp,fan_on=fan,sys_off=sys_off,tolarance=set_tolarance(main=main,secondary=secondary))
 				if output == status or output == 'NO CHANGE':
 					pass
 				else:
 					status = output
-					print('Status: '+status+' Indoor Temp: '+str(in_temp_f)+' Time: '+str(now))
-					sys.stdout.flush() #used to ensure the ability to print to nohup.out
+					#print('Status: '+status+' Indoor Temp: '+str(in_temp_f)+' Time: '+str(now))
+					#sys.stdout.flush() #used to ensure the ability to print to nohup.out
 			else:
 				pass
 
@@ -240,13 +262,13 @@ if __name__ == '__main__':
 
 			# Load data to database
 			insert_data = '''
-		            INSERT INTO temp_data (indoor_time, outdoor_time, out_condition, out_temp_f, in_temp_f, humidity, sys_status)
+		            INSERT INTO therm_data (indoor_time, outdoor_time, out_condition, out_temp_f, in_temp_f, humidity, sys_status)
 	        	    VALUES (%s,%s,%s,%s,%s,%s,%s)
 		            '''
 
 			params = (now,str(timeStampVal),condition,out_temp_f,in_temp_f,in_humid,status)
 
-			#cassandra_query('environment_data', insert_data, params)
+			cassandra_query('smart_therm', insert_data, params, contact_points=['10.0.0.42'], port=9042)
 
 			time.sleep(15)
 	except KeyboardInterrupt:
