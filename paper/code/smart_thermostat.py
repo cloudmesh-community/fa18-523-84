@@ -225,7 +225,7 @@ if __name__ == '__main__':
 				main = current_vars_df.iloc[0]['main']
 				secondary = current_vars_df.iloc[0]['secondary']
 			except:
-				print('ERROR: using default settings')
+				raise
 				desired_temp = 69.0
 				fan = False
 				sys_off = False
