@@ -117,7 +117,8 @@ def cassandra_query(keyspace, query, params=(), return_data=False, contact_point
 			session.execute( query, params )
 			cluster.shutdown()
 	except:
-		print('Data not loaded. Check for Error')
+		raise
+		#print('Data not loaded. Check for Error')
 
 ######################
 # functions to adjust the temperature
@@ -222,10 +223,11 @@ if __name__ == '__main__':
 				desired_temp = status_df.iloc[0]['desired_temp']
 				fan = status_df.iloc[0]['fan_on']
 				sys_off = status_df.iloc[0]['sys_off']
-				main = current_vars_df.iloc[0]['main']
-				secondary = current_vars_df.iloc[0]['secondary']
+				main = status_df.iloc[0]['main']
+				secondary = status_df.iloc[0]['secondary']
 			except:
 				raise
+				#print('ERROR: using default settings')
 				desired_temp = 69.0
 				fan = False
 				sys_off = False
