@@ -79,10 +79,6 @@ temperature = ds18b20.ds18b20()
 
 def change_display():
 	global display_num
-	global in_temp_f
-	global in_humid
-	global out_temp_f
-	global condition
 	if display_num == 1:
 		display_num = 0
 	else:
@@ -154,6 +150,7 @@ def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, sys_off=False, fa
 	r3 = fan
 	Note: the fan should always turn on with either heat or AC
 	"""
+	global status
 	if sys_off == True:
 		r1.off()
 		r2.off()
