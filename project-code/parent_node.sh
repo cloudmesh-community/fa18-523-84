@@ -22,9 +22,10 @@ echo "INFO: tools and dependancies installed"
 sudo apt-get install python3-pip
 sudo apt-get install python3-pandas
 sudo easy_install3 cassandra-driver
-pip3 install fabric
-pip3 install flask
-pip3 install wtforms
+sudo pip3 install fabric
+sudo pip3 install flask
+sudo pip3 install wtforms
+sudo pip3 install altair
 
 echo "INFO: python packages successfully installed"
 
@@ -34,8 +35,5 @@ sudo apt install software-properties-common -y
 sudo apt-get purge openjdk*
 sudo apt-get install openjdk-8-jdk -y
 java -version
-sudo apt-get install ntp -y
-# THIS SECTION NEEDS YOUR USERNAME AND DOWNLOAD KEY
-curl --user datastax_username:downloadkey -L 
-https://downloads.datastax.com/enterprise/dse-5.1.11-bin.tar.gz | tar xz
+
 
