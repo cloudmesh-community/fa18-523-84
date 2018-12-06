@@ -196,7 +196,7 @@ def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, status, sys_off=F
 
 if __name__ == '__main__':
 	try:
-		status = ''
+		status = 'SYS OFF'
 		display_num = 1 # Sets the starting display.  Number will change with button press
 		while True:
 			# Automatic timezone adjustment code modified from: https://stackoverflow.com/questions/15742045/getting-time-zone-from-lat-long-coordinates
