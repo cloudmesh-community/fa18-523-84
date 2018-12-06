@@ -53,13 +53,26 @@
     <div class="container">
       <h1 class="centerText">Smart Thermostat Control Center</h1>
       <br>
+      <h4 class="centerText">
+        Settings last updated by {{ username }} at {{ update_time }}
+      </h4>
       <p class="centerText">
-        Text about how to update settings and what the chart shows.
+        System Status: {{ sys_off }} <br />
+        Fan: {{ fan_on }} <br />
+        Temp: {{ desired_temp }}
       </p>
       <br>
       <div>
         <h2 class="centerText">Current System Statistics</h2>
-        <img src= {{ url }} alt="Chart" height="600" width="800" class="align-self">
+        <p class="centerText">
+        System Status: {{ status }} <br />
+        Indoor Temp: {{ in_temp_f }} <br />
+        Indoor Humidity: {{ humid }} <br />
+        Outdoor Temp: {{ out_temp_f }} <br /> 
+        Conditions: {{ condition }} <br />
+        </p>
+        <img src= {{ img1 }} alt="Chart" height="200" width="600" class="align-self">
+        <img src= {{ img2 }} alt="Chart" height="100" width="600" class="align-self">
       </div>
       <h2>Change Thermostat Settings</h2>
       <br>
