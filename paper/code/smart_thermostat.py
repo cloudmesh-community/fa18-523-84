@@ -143,14 +143,13 @@ def set_tolarance(start='06:00:00', end='23:00:00', main=1, secondary=5):
 		return main
 
 
-def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, sys_off=False, fan_on=False, tolarance=2):
+def thermostat_adjust(indoor_temp, outdoor_temp, desired_temp, status, sys_off=False, fan_on=False, tolarance=2):
 	"""
 	r1 = heat
 	r2 = AC
 	r3 = fan
 	Note: the fan should always turn on with either heat or AC
 	"""
-	global status
 	if sys_off == True:
 		r1.off()
 		r2.off()
@@ -214,9 +213,9 @@ if __name__ == '__main__':
 				curr_weather = [now,'ERROR',desired_temp]
 			
 			#get current status from status table
-			status_query = 'SELECT * FROM therm_status'
+			status = 'SELECT * FROM therm_status'
 			try:
-				status_df = cassandra_query('smart_therm', status_query, return_data=True, contact_points=['10.0.0.42'], port=9042)
+				status_df = cassandra_query('smart_therm', status, return_data=True, contact_points=['10.0.0.42'], port=9042)
 				desired_temp = status_df.iloc[0]['desired_temp']
 				fan = status_df.iloc[0]['fan_on']
 				sys_off = status_df.iloc[0]['sys_off']
@@ -241,7 +240,7 @@ if __name__ == '__main__':
 			
 			# Adjust thermostat based on variables
 			if in_temp_f is not None or out_temp_f is not None:
-				output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=desired_temp,fan_on=fan,sys_off=sys_off,tolarance=set_tolarance(main=main,secondary=secondary))
+				output = thermostat_adjust(in_temp_f,out_temp_f,desired_temp=desired_temp,status=status,fan_on=fan,sys_off=sys_off,tolarance=set_tolarance(main=main,secondary=secondary))
 				if output == status or output == 'NO CHANGE':
 					pass
 				else:
