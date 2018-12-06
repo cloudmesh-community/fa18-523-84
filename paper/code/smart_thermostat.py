@@ -213,9 +213,9 @@ if __name__ == '__main__':
 				curr_weather = [now,'ERROR',desired_temp]
 			
 			#get current status from status table
-			status = 'SELECT * FROM therm_status'
+			status_query = 'SELECT * FROM therm_status'
 			try:
-				status_df = cassandra_query('smart_therm', status, return_data=True, contact_points=['10.0.0.42'], port=9042)
+				status_df = cassandra_query('smart_therm', status_query, return_data=True, contact_points=['10.0.0.42'], port=9042)
 				desired_temp = status_df.iloc[0]['desired_temp']
 				fan = status_df.iloc[0]['fan_on']
 				sys_off = status_df.iloc[0]['sys_off']
