@@ -16,6 +16,7 @@ sudo apt-get remove libapache2-mod-python libapache2-mod-wsgi -y
 sudo apt-get install libapache2-mod-wsgi-py3 -y
 sudo a2enmod wsgi -y
 sudo apt-get install chromium-chromedriver -y
+sudo apt install libatlas3-base
 
 echo "INFO: tools and dependancies installed"
 
