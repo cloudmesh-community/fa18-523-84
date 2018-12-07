@@ -13,8 +13,13 @@ import datetime
 import pytz
 import timezonefinder
 import geocoder
-import altair as alt
-import selenium
+from bokeh.plotting import figure, show
+from bokeh.models import DatetimeTickFormatter
+from bokeh.resources import CDN
+from bokeh.embed import json_item
+from bokeh.sampledata.iris import flowers
+from jinja2 import Template
+import json
 
 relativePath = os.getcwd()
 
@@ -67,9 +72,135 @@ def add_header(r):
 	r.headers['Cache-Control'] = 'public, max-age=0'
 	return r
 
-@app.route("/", methods=['GET', 'POST'])
-def index():
+page = Template("""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Smart Thermostat Control Center</title>
+  <link rel="stylesheet" media="screen" href ="static/bootstrap.min.css">
+  <link rel="stylesheet" href="static/bootstrap-theme.min.css">
+  {{ resources }}
+  <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+
+    <style type="text/css">
+    
+      body {padding-top: 70px;}
+
+      table.dataframe, .dataframe th, .dataframe td {
+        border: none;
+        border-bottom: 2px solid #C8C8C8;
+        border-collapse: collapse;
+        text-align:left;
+        padding: 10px;
+        margin-bottom: 40px;
+        font-size: 0.9em;
+        
+      }
+
+      .centerText{ 
+        text-align:center;
+        padding: 0px;
+      }
+
+      img {
+        max-width: 100%;
+      }
+
+      img.align-self {
+        align-self: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .result th {
+        background-color: #00A1E0;
+        color: white;
+      }
+
+      tr:nth-child(odd)   td { background-color:#eee; }
+      tr:nth-child(even)  td { background-color:#fff; }
+      tr:hover            td { background-color: #ffff99;}
+    </style>
+</head>
+<body>
+    <div class="container">
+      <h1 class="centerText">Smart Thermostat Control Center</h1>
+      <br>
+      <h4 class="centerText">
+        Settings last updated by {{ username }} at {{ update_time }} <br />
+        {{ message }}
+      </h4>
+      <p class="centerText">
+        System Status: {{ sys_off }} <br />
+        Fan: {{ fan_on }} <br />
+        Temp: {{ desired_temp }}
+      </p>
+      <br>
+      <div>
+        <h2 class="centerText">Current System Statistics</h2>
+        <p class="centerText">
+        System Status: {{ status }} <br />
+        Indoor Temp: {{ in_temp_f }} <br />
+        Indoor Humidity: {{ humid }} <br />
+        Outdoor Temp: {{ out_temp_f }} <br /> 
+        Conditions: {{ condition }} <br />
+        </p>
+    </div>
+	<div id="myplot" class="centerText">
+		<script>
+		fetch('/plot')
+			.then(function(response) { return response.json(); })
+			.then(function(item) { Bokeh.embed.embed_item(item); })
+		</script>
+	</div>
+	<h2>Change Thermostat Settings</h2>
+      <br>
+      <form  action="" method="post" role="form">
+        <div class="form-group">
+            <label for="user">Username:</label>
+            <input type="text" class="form-control" id="user" name="user" placeholder="Please enter your username">
+        </div>
+        <div class="dropdown">
+          <label for="system">System Status:</label>
+          <select name= "system" method="GET" id="system" action="/">
+              <option selected>On</option>
+              <option>Off</option>
+          </select>
+        </div>
+        <div class="dropdown">
+          <label for="fan">Fan Status:</label>
+          <select name= "fan" method="GET" id="fan" action="/">
+              <option selected>Off</option>
+              <option>On</option>
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="desired_temp">Desired Temperature:</label>
+            <input type="text" class="form-control" id="desired_temp" name="desired_temp" placeholder="Please enter your desired temperature">
+            <br>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+      </form>
+      <br>
+    </div>
+</body>
+""")
+
+colormap = {'setosa': 'red', 'versicolor': 'green', 'virginica': 'blue'}
+colors = [colormap[x] for x in flowers['species']]
+
+def make_plot(x, y):
+    p = figure(title = "Iris Morphology", sizing_mode="fixed", plot_width=400, plot_height=400)
+    p.xaxis.axis_label = x
+    p.yaxis.axis_label = y
+    p.circle(flowers[x], flowers[y], color=colors, fill_alpha=0.2, size=10)
+    return p
+
+@app.route('/', methods=['GET', 'POST'])
+def root():
 	form = ReusableForm(request.form)
+	message = ''
 
 	#get current status from status table
 	status = 'SELECT * FROM therm_status'
@@ -87,9 +218,6 @@ def index():
 
 	get_data = 'SELECT * FROM therm_data WHERE indoor_time = '+str(max_time_unix)
 	data_df = cassandra_query('smart_therm', get_data, return_data=True, contact_points=['10.0.0.42'], port=9042)
-
-	chart_data = 'SELECT * FROM therm_data WHERE indoor_time >= '+str(trailing30_unix)+'ALLOW FILTERING'
-	chart_df = cassandra_query('smart_therm', chart_data, return_data=True, contact_points=['10.0.0.42'], port=9042)
 
 	############################
 	# Variables from data tables
@@ -109,23 +237,6 @@ def index():
 	sys_off = status_df.iloc[0]['sys_off']
 	username = status_df.iloc[0]['username']
 	update_time = status_df.iloc[0]['update_time']
-
-	#############################
-	# chart code
-
-	chart_df['system_status'] = np.where(chart_df['status']=='SYS OFF', 0, 1)
-	df2 = pd.melt(chart_df, id_vars=['indoor_time'], value_vars=['in_temp_f','out_temp_f'])
-
-	alt.Chart(df2).mark_area(opacity=0.6).encode(
-		x="indoor_time:T",
-		y=alt.Y("value:Q", stack=None),
-		color='variable:N'
-	).properties(height=200, width=600).save(relativePath+'\\static\\images\\chart1.png')
-
-	alt.Chart(chart_df).mark_area().encode(
-	    alt.X('indoor_time:T'),
-	    alt.Y('system_status:Q', scale=alt.Scale(domain=(0, 2)))
-	).properties(height=100, width=600).save(relativePath+'\\static\\images\\chart2.png')
 
 	#print(form.errors)
 	if request.method == 'POST':
@@ -169,15 +280,41 @@ def index():
 				username = new_user
 
 			update_status = 'UPDATE therm_status SET desired_temp='+str(desired_temp)+', fan_on=\''+fan_on+'\', sys_off=\''+sys_off+'\', update_time=\''+str(now_unix)+'\', username=\''+username+'\' WHERE key = 1'
-			print(update_status)
 			cassandra_query('smart_therm', update_status, return_data=False, contact_points=['10.0.0.42'], port=9042)
 
-			flash('Updated Thermostat Settings')
-			return render_template('homepage.html', img1='/static/images/chart1.png', img2='/static/images/chart2.png', form=form, username=username, update_time=update_time, humid=humid, in_temp_f=in_temp_f, out_temp_f=out_temp_f, condition=condition, status=status, fan_on=fan_on, sys_off=sys_off, desired_temp=desired_temp)
+			message = 'SUCCESS: Updated Thermostat Settings'
+			return page.render(resources=CDN.render(), message=message, form=form, username=username, update_time=update_time, humid=humid, in_temp_f=in_temp_f, out_temp_f=out_temp_f, condition=condition, status=status, fan_on=fan_on, sys_off=sys_off, desired_temp=desired_temp)
 		else:
-			flash('Error: All the form fields are required. ')
+			message = 'ERROR: fill out all fields'
+			return page.render(resources=CDN.render(), message=message, form=form, username=username, update_time=update_time, humid=humid, in_temp_f=in_temp_f, out_temp_f=out_temp_f, condition=condition, status=status, fan_on=fan_on, sys_off=sys_off, desired_temp=desired_temp)
 
-	return render_template('homepage.html', img1='/static/images/chart1.png', img2='/static/images/chart2.png', form=form, username=username, update_time=update_time, humid=humid, in_temp_f=in_temp_f, out_temp_f=out_temp_f, condition=condition, status=status, fan_on=fan_on, sys_off=sys_off, desired_temp=desired_temp)
+	return page.render(resources=CDN.render(), message=message, form=form, username=username, update_time=update_time, humid=humid, in_temp_f=in_temp_f, out_temp_f=out_temp_f, condition=condition, status=status, fan_on=fan_on, sys_off=sys_off, desired_temp=desired_temp)
+
+@app.route('/plot')
+def plot():
+	#get most recent readings. need to get max date key first and convert to unix
+	get_max = 'SELECT max(indoor_time) AS max_time FROM therm_data'
+	max_df = cassandra_query('smart_therm', get_max, return_data=True, contact_points=['10.0.0.42'], port=9042)
+	max_time = max_df.iloc[0]['max_time']
+	max_time_unix = max_time.value // 10 ** 6
+
+	#get unix date from 30 days ago to show the chart
+	trailing30 = max_df.iloc[0]['max_time'] - pd.to_timedelta(30, unit='d')
+	trailing30_unix = trailing30.value // 10 ** 6
+
+	chart_data = 'SELECT * FROM therm_data WHERE indoor_time >= '+str(trailing30_unix)+'ALLOW FILTERING'
+	chart_df = cassandra_query('smart_therm', chart_data, return_data=True, contact_points=['10.0.0.42'], port=9042)
+
+	#############################
+	# chart code
+
+	chart_df['system_status'] = np.where(chart_df['status']=='SYS OFF', 0, 1)
+	chart_df = chart_df.sort_values(by=['indoor_time'])
+
+	p = figure(plot_width=800, plot_height=250, x_axis_type="datetime")
+	p.line(chart_df['indoor_time'], chart_df['in_temp_f'], color='navy', alpha=1)
+
+	return json.dumps(json_item(p, "myplot"))
 
 
 if __name__ == '__main__':
