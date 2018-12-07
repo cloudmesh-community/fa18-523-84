@@ -14,6 +14,7 @@ import pytz
 import timezonefinder
 import geocoder
 import altair as alt
+import selenium
 
 relativePath = os.getcwd()
 
