@@ -25,7 +25,10 @@ sudo easy_install3 cassandra-driver
 sudo pip3 install fabric
 sudo pip3 install flask
 sudo pip3 install wtforms
+sudo pip3 install timezonefinder
+sudo pip3 install geocoder
 sudo pip3 install altair
+sudo pip3 install selenium
 
 echo "INFO: python packages successfully installed"
 
@@ -36,4 +39,4 @@ sudo apt-get purge openjdk*
 sudo apt-get install openjdk-8-jdk -y
 java -version
 
-
+#/home/pi/.local/lib/python3.5/site-packages
