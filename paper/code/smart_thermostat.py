@@ -223,7 +223,8 @@ if __name__ == '__main__':
 				secondary = status_df.iloc[0]['secondary']
 			except:
 				raise
-				#print('ERROR: using default settings')
+				print('ERROR: using default settings')
+				sys.stdout.flush() #used to ensure the ability to print to nohup.out
 				desired_temp = 69.0
 				fan = False
 				sys_off = False
@@ -266,7 +267,11 @@ if __name__ == '__main__':
 
 			params = (now,str(timeStampVal),condition,out_temp_f,in_temp_f,in_humid,status)
 
-			cassandra_query('smart_therm', insert_data, params, contact_points=['10.0.0.42'], port=9042)
+			try:
+				cassandra_query('smart_therm', insert_data, params, contact_points=['10.0.0.42'], port=9042)
+			except:
+				print('ERROR: data not loaded to cassandra database  '+str(now))
+				sys.stdout.flush() #used to ensure the ability to print to nohup.out
 
 			time.sleep(15)
 	except KeyboardInterrupt:
