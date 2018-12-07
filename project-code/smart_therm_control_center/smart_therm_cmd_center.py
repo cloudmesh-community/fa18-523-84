@@ -313,7 +313,8 @@ def plot():
 
 	p = figure(plot_width=800, plot_height=250, x_axis_type="datetime")
 	p.line(chart_df['indoor_time'], chart_df['in_temp_f'], color='navy', alpha=1)
-
+	p.line(chart_df['indoor_time'], chart_df['out_temp_f'], color='orange', alpha=1)
+	
 	return json.dumps(json_item(p, "myplot"))
 
 
