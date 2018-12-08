@@ -15,7 +15,7 @@ sudo apt-get install apache2 -y
 sudo apt-get remove libapache2-mod-python libapache2-mod-wsgi -y
 sudo apt-get install libapache2-mod-wsgi-py3 -y
 sudo a2enmod wsgi
-sudo apt install libatlas3-base
+sudo apt install libatlas3-base #used for numpy issue source = https://www.raspberrypi.org/forums/viewtopic.php?t=207058
 
 echo "INFO: tools and dependancies installed"
 
