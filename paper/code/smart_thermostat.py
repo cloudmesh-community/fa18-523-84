@@ -33,6 +33,12 @@ import temp_humid
 import touch_sensor
 import ds18b20
 
+#########
+#update this with the ip of your cassandra seeds
+cassandra_contact_points = ['10.0.0.42']
+#########
+
+
 ######################
 # function to collect Weather Data
 # Sources for this section:
@@ -123,8 +129,8 @@ def cassandra_query(keyspace, query, params=(), return_data=False, contact_point
 ######################
 
 def set_tolarance(start='06:00:00', end='23:00:00', main=1, secondary=5):
-	start = datetime.datetime.strptime(start, '%H:%M:%S')
-	end = datetime.datetime.strptime(end, '%H:%M:%S')
+	start = datetime.datetime.strptime(start, '%H:%M:%S').hour
+	end = datetime.datetime.strptime(end, '%H:%M:%S').hour
 	#Adjust timezone
 	tf = timezonefinder.TimezoneFinder()
 	timezone_str = tf.certain_timezone_at(lat=g.latlng[0], lng=g.latlng[1])
@@ -132,9 +138,10 @@ def set_tolarance(start='06:00:00', end='23:00:00', main=1, secondary=5):
 	dt = datetime.datetime.utcnow()
 	timezone.localize(dt)
 	now = datetime.datetime.utcnow() + timezone.utcoffset(dt)
+	now = now.hour
 
 	# compare current time to start and end points
-	if now > start and now < end:
+	if now <= start and now >= end:
 		if light.get() == 0:  # Check if the lights are on.  Indicates if someone is active.
 			return main
 		else:
@@ -215,7 +222,7 @@ if __name__ == '__main__':
 			#get current status from status table
 			status_query = 'SELECT * FROM therm_status'
 			try:
-				status_df = cassandra_query('smart_therm', status_query, return_data=True, contact_points=['10.0.0.42'], port=9042)
+				status_df = cassandra_query('smart_therm', status_query, return_data=True, contact_points=cassandra_contact_points, port=9042)
 				desired_temp = status_df.iloc[0]['desired_temp']
 				fan = status_df.iloc[0]['fan_on']
 				sys_off = status_df.iloc[0]['sys_off']
@@ -268,7 +275,7 @@ if __name__ == '__main__':
 			params = (now,str(timeStampVal),condition,out_temp_f,in_temp_f,in_humid,status)
 
 			try:
-				cassandra_query('smart_therm', insert_data, params, contact_points=['10.0.0.42'], port=9042)
+				cassandra_query('smart_therm', insert_data, params, contact_points=cassandra_contact_points, port=9042)
 			except:
 				print('ERROR: data not loaded to cassandra database  '+str(now))
 				sys.stdout.flush() #used to ensure the ability to print to nohup.out
