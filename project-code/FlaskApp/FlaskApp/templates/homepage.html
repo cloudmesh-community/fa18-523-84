@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Smart Thermostat Control Center</title>
+    <link rel="stylesheet" media="screen" href ="static/bootstrap.min.css">
+    <link rel="stylesheet" href="static/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-1.0.2.min.css" type="text/css" /> 
+    <link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-widgets-1.0.2.min.css" type="text/css" /> 
+    <link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-tables-1.0.2.min.css" type="text/css" /> 
+    <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-1.0.2.min.js"></script> 
+    <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-widgets-1.0.2.min.js"></script> 
+    <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-tables-1.0.2.min.js"></script> 
+    <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-gl-1.0.2.min.js"></script> 
+    <script type="text/javascript"> Bokeh.set_log_level("info"); </script>
+    <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+
+    <style type="text/css">
+    
+      body {padding-top: 70px;}
+
+      table.dataframe, .dataframe th, .dataframe td {
+        border: none;
+        border-bottom: 2px solid #C8C8C8;
+        border-collapse: collapse;
+        text-align:left;
+        padding: 10px;
+        margin-bottom: 40px;
+        font-size: 0.9em;
+        
+      }
+
+      .centerText{ 
+        text-align:center;
+        padding: 0px;
+      }
+
+      img {
+        max-width: 100%;
+      }
+
+      img.align-self {
+        align-self: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .result th {
+        background-color: #00A1E0;
+        color: white;
+      }
+
+      tr:nth-child(odd)   td { background-color:#eee; }
+      tr:nth-child(even)  td { background-color:#fff; }
+      tr:hover            td { background-color: #ffff99;}
+    </style>
+
+  </head>
+
+  <body>
+    <div class="container">
+      <h1 class="centerText">Smart Thermostat Control Center</h1>
+      <br>
+      <h4 class="centerText">
+        Settings last updated by {{ username }} at {{ update_time }}
+      </h4>
+      <p class="centerText">
+        System Status: {{ sys_off }} <br />
+        Fan: {{ fan_on }} <br />
+        Temp: {{ desired_temp }}
+      </p>
+      <br>
+      <div>
+        <h2 class="centerText">Current System Statistics</h2>
+        <p class="centerText">
+        System Status: {{ status }} <br />
+        Indoor Temp: {{ in_temp_f }} <br />
+        Indoor Humidity: {{ humid }} <br />
+        Outdoor Temp: {{ out_temp_f }} <br /> 
+        Conditions: {{ condition }} <br />
+        </p>
+        <script>
+        fetch('/plot')
+            .then(function(response) { return response.json(); })
+            .then(function(item) { Bokeh.embed.embed_item(item); })
+        </script>
+      </div>
+      <h2>Change Thermostat Settings</h2>
+      <br>
+      <form  action="" method="post" role="form">
+        <div class="form-group">
+            <label for="user">Username:</label>
+            <input type="text" class="form-control" id="user" name="user" placeholder="Please enter your username">
+        </div>
+        <div class="dropdown">
+          <label for="system">System Status:</label>
+          <select name= "system" method="GET" id="system" action="/">
+              <option selected>On</option>
+              <option>Off</option>
+          </select>
+        </div>
+        <div class="dropdown">
+          <label for="fan">Fan Status:</label>
+          <select name= "fan" method="GET" id="fan" action="/">
+              <option selected>Off</option>
+              <option>On</option>
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="desired_temp">Desired Temperature:</label>
+            <input type="text" class="form-control" id="desired_temp" name="desired_temp" placeholder="Please enter your desired temperature">
+            <br>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+      </form>
+      <br>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+     
+            {% for message in messages %}
+                {% if "Error" not in message[1]: %}
+                    <div class="alert alert-info">
+                    <strong>Success! </strong> {{ message[1] }}
+                    </div>
+                {% endif %}
+     
+                {% if "Error" in message[1]: %}
+                    <div class="alert alert-warning">
+                    {{ message[1] }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+                {% endif %}
+            {% endwith %}
+      <br>
+      <br>
+      <br>
+    </div>
+  </body>
+
+
+
+</html>
