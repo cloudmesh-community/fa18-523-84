@@ -8,7 +8,6 @@ from wtforms import Form, TextField, TextAreaField, validators, StringField, Sub
 import sys
 import os
 from cassandra.cluster import Cluster
-from cassandra.auth import PlainTextAuthProvider
 import pandas as pd
 import numpy as np
 import time
