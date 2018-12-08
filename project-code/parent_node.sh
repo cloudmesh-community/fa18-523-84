@@ -71,3 +71,4 @@ sudo /etc/init.d/apache2 restart
 
 echo "INFO: apache webserver has been configured"
 
+echo "INFO: parent node setup complete"
