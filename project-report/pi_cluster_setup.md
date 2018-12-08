@@ -10,9 +10,9 @@ TODO: See where this fits into the Pi book...
   
 ## Setting up a Small Pi Cluster by Hand 
 
-:warning: (Step 1 should probably be moved to book/chapters/pi/setup-ultimate.md)
+:warning: Step 1 should probably be moved to book/chapters/pi/setup-ultimate.md.  Keeping this here until it can be combined with the other sections on initial cluster setup.
 
-### Step 1: Burning OS image to SD cards
+### Burning OS image to SD cards
 
 The first step in setting up the raspberry pi cluster is to burn the OS image to the SD cards.  In this example we are using [SanDisk 32GB microSD cards.](https://www.amazon.com/Sandisk-Ultra-Micro-UHS-I-Adapter/dp/B073JWXGNT/ref=sr_1_5?s=pc&ie=UTF8&qid=1542828848&sr=1-5&keywords=32+gb+micro+sd+card)  If your computer does not have an SD card reader you may need to [purchase one](https://www.amazon.com/Anker-Portable-Reader-RS-MMC-Micro/dp/B006T9B6R2/ref=sr_1_3?s=electronics&ie=UTF8&qid=1542828941&sr=1-3&keywords=sd+card+reader) for this step.  The first part of this step is to download the required software / files.
 
@@ -28,9 +28,9 @@ While the SD card is formatting you will want to extract the Raspbian Lite image
 
 ![Etcher](images/etcher.png){#fig:etcher}
 
-Before pluging the SD card into the Raspberry Pi we will want to add a file to the boot partition.  Open notepad or another editor and save a blank file as "ssh" with no file extension.  When the raspberry pi boots up it will see this file and enable SSH connections.  At this point we will also edit the **config.txt** file.  In the file we need to uncomment this line: ```hdmi_force_hotplug=1```.  This will ensure that your monitor will work correctly should you need to plug it in to trouble shoot during the next step.
+Before pluging the SD card into the Raspberry Pi we will want to add a file to the boot partition.  Open notepad or another editor and save a blank file as "ssh" with no file extension.  When the raspberry pi boots up it will see this file and enable SSH connections.  At this point we will also edit the **config.txt** file.  In the file we need to uncomment this line: ```hdmi_force_hotplug=1```.  This will ensure that your monitor will work correctly should you need to plug it in to a monitor to trouble shoot during the next steps.
 
-**Optional:** For this example we will be connecting the parent node of our cluster to a WiFi network.  This can be done automatically by adding a file to the boot partition of the SD card (same location as the ssh file).  To do this open up a text editor and add the following code to the file [@Headless setup].
+**Optional:** For this example we will be connecting the cluster to a router through an ethernet connection.  However, you could also configure the parent node to connect to WiFi and then share an internet connection with the worker nodes.  This can be done by setting up a [WiFi to Ethernet bridge.](https://www.raspberrypi.org/forums/viewtopic.php?t=132674) If you will be setting up the parent node or any of the other nodes to work with WiFi you can do this by automatically by adding a file to the boot partition of the SD card (same location as the ssh file).  To do this open up a text editor and add the following code to the file [@Headless setup].  Once WiFi is enabled you will need to follow the steps included in the [WiFi to Ethernet bridge tutorial.](https://www.raspberrypi.org/forums/viewtopic.php?t=132674)
 
 ```
 country=US
@@ -49,9 +49,9 @@ Once the code has been added save the file as **wpa_supplicant.conf** in the boo
 
 Another great resource for the initial set is a [youtube video](https://www.youtube.com/watch?v=H2rTecSO0gk) put together by Davy Wybiral [@Youtube Cluster Setup].
 
-Once you have completed the initial setup and are connected to the network ensure you are able to SSH to the parent node and the worker nodes.  Use ```ifconfig``` in the terminal to get the IP address for the nodes and you can use a tool such as [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) to connect.  You will need to keep track of the ip addresses for the next step so it is a good idea to write them down.
+Once you have completed the initial setup and are connected to the network ensure you are able to SSH to the parent node and the worker nodes.  Use ```ifconfig``` in the terminal to get the IP address for the nodes and you can use a tool such as [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) to connect.  You can also scan your network with a tool such as ```nmap``` to get the ip addresses connected to your network.  **You will need to keep track of the ip addresses of each node for use in the next steps so it is a good idea to write them down.**
 
-### Step 2: Setting up the parent node
+### Step 1: Setting up the parent node
 
 To get started we need to set up the parent node.  This node will be hosting a web page which allows users on the network to view and change the settings of the smart thermostat.  This node will also be part of the cassandra cluster.
 
@@ -105,7 +105,7 @@ Now run the parent_node shell script to set up the necessary dependencies for th
  ./parent_node.sh
  ```
  
-### Step 3: Configure the worker nodes
+### Step 2: Configure the worker nodes
  
 To set up the worker nodes in the cluster you will need to run the [cluster_setup.py](https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/cluster_setup.py) script from a machine on your network.  Before running the script you will need to update the workers dictionary at the beginning of the script.  You can also change the password that is set for each of the nodes.  If you have already setup the password for each of the nodes then you will comment these lines out of the code. When this script completes it will reboot each node.
 
@@ -146,7 +146,7 @@ Once you have updated all of the cassandra.yaml files we can start the cassandra
 
 ![nodetool_status](images/nodetool_status.JPG){#fig:nodetool_status}
 
-### Step 4: Final Configuration and Starting the Connected Smart Thermostat
+### Step 3: Final Configuration and Starting the Connected Smart Thermostat
 
 The next step is to set up the cassandra keyspace that will be used by the smart thermostat and the web interface.  The [cassandra_keyspace_setup.py](https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/cassandra_keyspace_setup.py) script will set up the "smart_therm" keyspace and will create two tables in this keyspace. The therm_data table will be used to collect data from the thermostat and display the most recent readings and a trend of the temperature in a chart on the website.  The therm_status table has one record for each device key and is updated when the user enters new settings from the web app.  Before running this script be sure to update the contact points with the seed node ip addresses that were set in the cassandra.yaml file.  If you would like to confirm that the set up happened correctly you can run ```cd ~/apache-cassandra-3.11.3 && bin/cqlsh [replace with seed ip address]```.  Once in the cqlsh shell you can enter ```use smart_therm``` and ```describe keyspace``` to see if the tables are set up.
 
@@ -156,7 +156,9 @@ At this point everything should be working appropriately.  You should now be abl
 
 ![Webpage Example](images/therm_website2.png){#fig:therm_website}
 
-## Sources (will be integrated in jabref)
+## Sources:
+
+Additional sources included in the code needed for this project.
 
 * OS Install guide: https://www.raspberrypi.org/documentation/installation/installing-images/README.md
 * Youtube Cluster Setup: https://www.youtube.com/watch?v=H2rTecSO0gk
