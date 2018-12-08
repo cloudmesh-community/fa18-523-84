@@ -24,6 +24,7 @@ from jinja2 import Template
 import json
 
 relativePath = os.getcwd()
+cassandra_contact_points = ['10.0.0.42']
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -206,11 +207,11 @@ def root():
 
 	#get current status from status table
 	status = 'SELECT * FROM therm_status'
-	status_df = cassandra_query('smart_therm', status, return_data=True, contact_points=['10.0.0.42'], port=9042)
+	status_df = cassandra_query('smart_therm', status, return_data=True, contact_points=cassandra_contact_points, port=9042)
 
 	#get most recent readings. need to get max date key first and convert to unix
 	get_max = 'SELECT max(indoor_time) AS max_time FROM therm_data'
-	max_df = cassandra_query('smart_therm', get_max, return_data=True, contact_points=['10.0.0.42'], port=9042)
+	max_df = cassandra_query('smart_therm', get_max, return_data=True, contact_points=cassandra_contact_points, port=9042)
 	max_time = max_df.iloc[0]['max_time']
 	max_time_unix = max_time.value // 10 ** 6
 
@@ -219,7 +220,7 @@ def root():
 	trailing30_unix = trailing30.value // 10 ** 6
 
 	get_data = 'SELECT * FROM therm_data WHERE indoor_time = '+str(max_time_unix)
-	data_df = cassandra_query('smart_therm', get_data, return_data=True, contact_points=['10.0.0.42'], port=9042)
+	data_df = cassandra_query('smart_therm', get_data, return_data=True, contact_points=cassandra_contact_points, port=9042)
 
 	############################
 	# Variables from data tables
@@ -282,7 +283,7 @@ def root():
 				username = new_user
 
 			update_status = 'UPDATE therm_status SET desired_temp='+str(desired_temp)+', fan_on=\''+fan_on+'\', sys_off=\''+sys_off+'\', update_time=\''+str(now_unix)+'\', username=\''+username+'\' WHERE key = 1'
-			cassandra_query('smart_therm', update_status, return_data=False, contact_points=['10.0.0.42'], port=9042)
+			cassandra_query('smart_therm', update_status, return_data=False, contact_points=cassandra_contact_points, port=9042)
 
 			message = 'SUCCESS: Updated Thermostat Settings'
 			return page.render(resources=CDN.render(), message=message, form=form, username=username, update_time=update_time, humid=humid, in_temp_f=in_temp_f, out_temp_f=out_temp_f, condition=condition, status=status, fan_on=fan_on, sys_off=sys_off, desired_temp=desired_temp)
@@ -296,7 +297,7 @@ def root():
 def plot():
 	#get most recent readings. need to get max date key first and convert to unix
 	get_max = 'SELECT max(indoor_time) AS max_time FROM therm_data'
-	max_df = cassandra_query('smart_therm', get_max, return_data=True, contact_points=['10.0.0.42'], port=9042)
+	max_df = cassandra_query('smart_therm', get_max, return_data=True, contact_points=cassandra_contact_points, port=9042)
 	max_time = max_df.iloc[0]['max_time']
 	max_time_unix = max_time.value // 10 ** 6
 
@@ -305,7 +306,7 @@ def plot():
 	trailing30_unix = trailing30.value // 10 ** 6
 
 	chart_data = 'SELECT * FROM therm_data WHERE indoor_time >= '+str(trailing30_unix)+'ALLOW FILTERING'
-	chart_df = cassandra_query('smart_therm', chart_data, return_data=True, contact_points=['10.0.0.42'], port=9042)
+	chart_df = cassandra_query('smart_therm', chart_data, return_data=True, contact_points=cassandra_contact_points, port=9042)
 
 	#############################
 	# chart code
