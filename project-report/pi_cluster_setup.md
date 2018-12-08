@@ -154,7 +154,7 @@ Now that we have finished setting up the webserver and the cassandra database we
 
 At this point everything should be working appropriately.  You should now be able to navigate to the ServerName address that you defined when setting up the apache webserver.  This should take you to a site that looks like what is shown in +@fig:therm_website.  You can now view your settings, the current statistics and also change the settings of your smart thermostat.
 
-![Webpage Example](images/therm_website.png){#fig:therm_website}
+![Webpage Example](images/therm_website2.png){#fig:therm_website}
 
 ## Sources (will be integrated in jabref)
 
