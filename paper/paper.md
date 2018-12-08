@@ -1,12 +1,10 @@
-# Smart Home IoT Sensors for Raspberry Pi :wave: :exclamation: fa18-523-84
+# Smart Home IoT Sensors for Raspberry Pi :smiley: fa18-523-84
 
 | Adam Hilgenkamp  
 | ahilgenk@iu.edu  
 | Indiana University - Bloomington  
 | hid: fa18-523-84  
 | github: [:cloud:](https://github.com/cloudmesh-community/fa18-523-84/blob/master/paper/paper.md)  
-
-:o: incomplete
 
 ---
 
