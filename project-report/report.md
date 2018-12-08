@@ -1,4 +1,4 @@
-# An Exploration of the Internet of Things :hand: fa18-523-84
+# Raspberry Pi IoT Thermostat with Cassandra and Apache Webserver :hand: fa18-523-84
 
 | Adam Hilgenkamp 
 | ahilgenk@iu.edu 
