@@ -8,7 +8,7 @@ TODO: See where this fits into the Pi book...
   * [Set up small cluster by hand](https://github.com/cloudmesh-community/book/blob/master/chapters/pi/setup-ultimate.md)
   * [Smart Thermostat Project (not IoT connected)](https://github.com/ahilgenkamp/book/blob/master/chapters/iot/sensors.md)
   
-## Setting up a Small Pi Cluster by Hand 
+### Setting up a Small Pi Cluster by Hand 
 
 :warning: Step 1 should probably be moved to book/chapters/pi/setup-ultimate.md.  Keeping this here until it can be combined with the other sections on initial cluster setup.
 
@@ -51,7 +51,7 @@ Another great resource for the initial set is a [youtube video](https://www.yout
 
 Once you have completed the initial setup and are connected to the network ensure you are able to SSH to the parent node and the worker nodes.  Use ```ifconfig``` in the terminal to get the IP address for the nodes and you can use a tool such as [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) to connect.  You can also scan your network with a tool such as ```nmap``` to get the ip addresses connected to your network.  **You will need to keep track of the ip addresses of each node for use in the next steps so it is a good idea to write them down.**
 
-### Step 1: Setting up the parent node
+## Step 1: Setting up the parent node
 
 To get started we need to set up the parent node.  This node will be hosting a web page which allows users on the network to view and change the settings of the smart thermostat.  This node will also be part of the cassandra cluster.
 
@@ -105,7 +105,7 @@ Now run the parent_node shell script to set up the necessary dependencies for th
  ./parent_node.sh
  ```
  
-### Step 2: Configure the worker nodes
+## Step 2: Configure the worker nodes
  
 To set up the worker nodes in the cluster you will need to run the [cluster_setup.py](https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/cluster_setup.py) script from a machine on your network.  Before running the script you will need to update the workers dictionary at the beginning of the script.  You can also change the password that is set for each of the nodes.  If you have already setup the password for each of the nodes then you will comment these lines out of the code. When this script completes it will reboot each node.
 
@@ -146,7 +146,7 @@ Once you have updated all of the cassandra.yaml files we can start the cassandra
 
 ![nodetool_status](images/nodetool_status.JPG){#fig:nodetool_status}
 
-### Step 3: Final Configuration and Starting the Connected Smart Thermostat
+## Step 3: Final Configuration and Starting the Connected Smart Thermostat
 
 The next step is to set up the cassandra keyspace that will be used by the smart thermostat and the web interface.  The [cassandra_keyspace_setup.py](https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/cassandra_keyspace_setup.py) script will set up the "smart_therm" keyspace and will create two tables in this keyspace. The therm_data table will be used to collect data from the thermostat and display the most recent readings and a trend of the temperature in a chart on the website.  The therm_status table has one record for each device key and is updated when the user enters new settings from the web app.  Before running this script be sure to update the contact points with the seed node ip addresses that were set in the cassandra.yaml file.  If you would like to confirm that the set up happened correctly you can run ```cd ~/apache-cassandra-3.11.3 && bin/cqlsh [replace with seed ip address]```.  Once in the cqlsh shell you can enter ```use smart_therm``` and ```describe keyspace``` to see if the tables are set up.
 
