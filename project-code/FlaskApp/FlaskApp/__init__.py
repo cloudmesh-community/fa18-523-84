@@ -1,4 +1,7 @@
 # Smart Thermostat Control Center
+# Sources: https://github.com/bokeh/bokeh/blob/1.0.2/examples/embed/json_item.py
+# https://bokeh.pydata.org/en/latest/docs/user_guide/plotting.html
+# http://flask.pocoo.org/docs/1.0/
 
 from flask import Flask, render_template, flash, request, make_response, redirect, url_for
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
