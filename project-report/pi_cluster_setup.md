@@ -1,11 +1,12 @@
-# Raspberry Pi IoT Thermostat with Cassandra and Apache Webserver :hand: fa18-523-84
+# Raspberry Pi IoT Thermostat with Cassandra and Apache Webserver :smiley: fa18-523-84
 
 TODO: See where this fits into the Pi book...
 
-## Prerequsites:
+## Prerequisites:
 
   * [Assembling the Pi Cluster](https://github.com/cloudmesh-community/book/blob/master/chapters/pi/case.md#build-your-own-5-node-pi-cluster)
   * [Set up small cluster by hand](https://github.com/cloudmesh-community/book/blob/master/chapters/pi/setup-ultimate.md)
+  * [Smart Thermostat Project (not IoT connected)](https://github.com/ahilgenkamp/book/blob/master/chapters/iot/sensors.md)
   
 ## Setting up a Small Pi Cluster by Hand 
 
@@ -29,7 +30,7 @@ While the SD card is formatting you will want to extract the Raspbian Lite image
 
 Before pluging the SD card into the Raspberry Pi we will want to add a file to the boot partition.  Open notepad or another editor and save a blank file as "ssh" with no file extension.  When the raspberry pi boots up it will see this file and enable SSH connections.  At this point we will also edit the **config.txt** file.  In the file we need to uncomment this line: ```hdmi_force_hotplug=1```.  This will ensure that your monitor will work correctly should you need to plug it in to trouble shoot during the next step.
 
-**Optional:** For this example we will be connnecting the parent node of our cluster to a WiFi network.  This can be done automatically by adding a file to the boot partition of the SD card (same location as the ssh file).  To do this open up a text editor and add the following code to the file [@Headless setup].
+**Optional:** For this example we will be connecting the parent node of our cluster to a WiFi network.  This can be done automatically by adding a file to the boot partition of the SD card (same location as the ssh file).  To do this open up a text editor and add the following code to the file [@Headless setup].
 
 ```
 country=US
@@ -56,7 +57,7 @@ To get started we need to set up the parent node.  This node will be hosting a w
 
 **Initial Configuration:**
 
-First, SSH into the parent node. We are using the first Raspberry Pi in the cluser but this can be any node. The reason is that the "parent" will also host the website as well as be a part of the cassandra cluster. If you have not changed the password when initially setting up the Raspberry Pi you should change it before going any further. This can be done by selecting the change password option after running ```sudo raspi-config```.  Once the password is updated we will update the hostname. This can be done in the "Network Options" section by selecting "Hostname" +@fig:raspi-config.  In this example we rename our parent node to **PiCluster_p01**.
+First, SSH into the parent node. We are using the first Raspberry Pi in the cluster but this can be any node. The reason is that the "parent" will also host the website as well as be a part of the cassandra cluster. If you have not changed the password when initially setting up the Raspberry Pi you should change it before going any further. This can be done by selecting the change password option after running ```sudo raspi-config```.  Once the password is updated we will update the hostname. This can be done in the "Network Options" section by selecting "Hostname" +@fig:raspi-config.  In this example we rename our parent node to **PiCluster_p01**.
 
 ![raspi-config](images/raspi-config.png){#fig:raspi-config}
 
@@ -96,7 +97,7 @@ The last manual update is to edit the [__init__.py](https://github.com/cloudmesh
 
 ```cassandra_contact_points = ['10.0.0.42']```
 
-Now run the parent_node shell script to set up the necessary dependancies for the parent node (running this step can take some time).  This step will upgrade the node, install the necessary python modules, complete the setup for cassandra and will configure the apache webserver.
+Now run the parent_node shell script to set up the necessary dependencies for the parent node (running this step can take some time).  This step will upgrade the node, install the necessary python modules, complete the setup for cassandra and will configure the apache webserver.
 
  ```bash
  cd ~/git-repos/fa18-523-84/project-code
@@ -106,7 +107,7 @@ Now run the parent_node shell script to set up the necessary dependancies for th
  
 ### Step 3: Configure the worker nodes
  
-To set up the worker nodes in the cluster you will need to run the [cluster_setup.py](https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/cluster_setup.py) script from a machiene on your network.  Before running the script you will need to update the workers dictionary at the beginning of the script.  You can also change the password that is set for each of the nodes.  If you have already setup the password for each of the nodes then you will comment these lines out of the code. When this script completes it will reboot each node.
+To set up the worker nodes in the cluster you will need to run the [cluster_setup.py](https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/cluster_setup.py) script from a machine on your network.  Before running the script you will need to update the workers dictionary at the beginning of the script.  You can also change the password that is set for each of the nodes.  If you have already setup the password for each of the nodes then you will comment these lines out of the code. When this script completes it will reboot each node.
 
 ```python
 workers = {
@@ -147,11 +148,11 @@ Once you have updated all of the cassandra.yaml files we can start the cassandra
 
 ### Step 4: Final Configuration and Starting the Connected Smart Thermostat
 
-The next step is to set up the cassandra keyspace that will be used by the smart thermostat and the web interface.  The [cassandra_keyspace_setup.py](https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/cassandra_keyspace_setup.py) script will set up the "smart_therm" keyspace and will create two tables in this keyspace. The therm_data table will be used to collect data from the thermostat and display the most recent readings and a trend of the temperature in a chart on the website.  The therm_status table has one record for each device key and is updated when the user enters new settings from the web app.  Before running this script be sure to update the contact points with the seed node ip addresses that were set in the cassandra.yaml file.  If you would like to confirm that the set up happended correctly you can run ```cd ~/apache-cassandra-3.11.3 && bin/cqlsh [replace with seed ip address]```.  Once in the cqlsh shell you can enter ```use smart_therm``` and ```describe keyspace``` to see if the tables are set up.
+The next step is to set up the cassandra keyspace that will be used by the smart thermostat and the web interface.  The [cassandra_keyspace_setup.py](https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/cassandra_keyspace_setup.py) script will set up the "smart_therm" keyspace and will create two tables in this keyspace. The therm_data table will be used to collect data from the thermostat and display the most recent readings and a trend of the temperature in a chart on the website.  The therm_status table has one record for each device key and is updated when the user enters new settings from the web app.  Before running this script be sure to update the contact points with the seed node ip addresses that were set in the cassandra.yaml file.  If you would like to confirm that the set up happened correctly you can run ```cd ~/apache-cassandra-3.11.3 && bin/cqlsh [replace with seed ip address]```.  Once in the cqlsh shell you can enter ```use smart_therm``` and ```describe keyspace``` to see if the tables are set up.
 
 Now that we have finished setting up the webserver and the cassandra database we will want to start the smart_thermostat.py script on the Raspberry Pi being used as the smart thermostat that was put together in the [smart thermostat project](https://github.com/cloudmesh-community/book/blob/master/chapters/iot/sensors.md) found in this book.  To start the connected smart thermostat make sure that your clone of the git repository is up to date.  Then run ```cd ~/git-repos/fa18-523-84/paper/code``` to navigate to the directory where the code is located.  Once there run ```nohup python3 smart_thermostat.py &``` which will run the smart thermostat code in the background.  This allows you to close the SSH connection.
 
-At this point everything should be working appropreately.  You should now be able to navigate to the ServerName address that you defined when setting up the apache webserver.  This should take you to a site that looks like what is shown in +@fig:therm_website.  You can now view your settings, the current statistics and also change the settings of your smart thermostat.
+At this point everything should be working appropriately.  You should now be able to navigate to the ServerName address that you defined when setting up the apache webserver.  This should take you to a site that looks like what is shown in +@fig:therm_website.  You can now view your settings, the current statistics and also change the settings of your smart thermostat.
 
 ![Webpage Example](images/therm_website.png){#fig:therm_website}
 
