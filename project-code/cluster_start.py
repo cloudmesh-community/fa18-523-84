@@ -15,7 +15,7 @@ workers = {
 for key, value in workers.items():
 	#print(key+': '+value)
 	c = Connection(value, connect_timeout=60)
-	c.connect_kwargs.password = 'raspberry'
+	c.connect_kwargs.password = 'raspberry' #update with the password you have set
 	
 	result = c.run('uname -s')
 	print("{}: {}".format(value, result.stdout.strip()))
