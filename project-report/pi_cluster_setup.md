@@ -1,4 +1,4 @@
-# Raspberry Pi Cassandra Cluster :hand: fa18-523-84
+# Raspberry Pi Cassandra Cluster and Apache Webserver :hand: fa18-523-84
 
 TODO: See where this fits into the Pi book...
 
@@ -9,7 +9,7 @@ TODO: See where this fits into the Pi book...
   
 ## Setting up a Small Pi Cluster by Hand 
 
-:warning: (Should probably be moved to book/chapters/pi/setup-ultimate.md)
+:warning: (Step 1 should probably be moved to book/chapters/pi/setup-ultimate.md)
 
 ### Step 1: Burning OS image to SD cards
 
@@ -48,40 +48,65 @@ Once the code has been added save the file as **wpa_supplicant.conf** in the boo
 
 Another great resource for the initial set is a [youtube video](https://www.youtube.com/watch?v=H2rTecSO0gk) put together by Davy Wybiral [@Youtube Cluster Setup].
 
+Once you have completed the initial setup and are connected to the network ensure you are able to SSH to the parent node and the worker nodes.  Use ```ifconfig``` in the terminal to get the IP address for the nodes and you can use a tool such as [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) to connect.  You will need to keep track of the ip addresses for the next step so it is a good idea to write them down.
+
 ### Step 2: Setting up the parent node
 
-To get started we need to set up the parent node.  This node can be connected to WiFi or Ethernet but in this example we will be setting up the parent node to connect to WiFi and then to interact with the other nodes using a network switch.
+To get started we need to set up the parent node.  This node will be hosting a web page which allows users on the network to view and change the settings of the smart thermostat.  This node will also be part of the cassandra cluster.
 
-**Connect to WiFi:**
+**Initial Configuration:**
 
-First we need to connect the parent node to WiFi (you may need to connect a monitor and keyboard for this step).  You may have been able to do a headless setup of the WiFi in step 1, but if not you can set up WiFi by using the ```sudo raspi-config``` command.  Before connecting we will want to ensure that the password is changed.  This can be done by selecting the change password option.  Once the password is updated navigate to "Network Options" and then select "Wi-fi" and enter the ssid and password of the WiFi network you want to connect to.  It is also a good idea to change the hostname so that it is easy to determine which node we are connected to.  You can also do this in the "Network Options" section by selecting "Hostname" +@fig:raspi-config.  In this example we rename our parent node to **PiCluster001**.
+First, SSH into the parent node. We are using the first Raspberry Pi in the cluser but this can be any node. The reason is that the "parent" will also host the website as well as be a part of the cassandra cluster. If you have not changed the password when initially setting up the Raspberry Pi you should change it before going any further. This can be done by selecting the change password option after running ```sudo raspi-config```.  Once the password is updated we will update the hostname. This can be done in the "Network Options" section by selecting "Hostname" +@fig:raspi-config.  In this example we rename our parent node to **PiCluster_p01**.
 
 ![raspi-config](images/raspi-config.png){#fig:raspi-config}
-
-Once you are connected to WiFi ensure you are able to SSH to the parent node.  Use ```ifconfig``` in the terminal to get the IP address for the parent node and you can use a tool such as [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) to connect.
 
 **Install git:**
 
  1. To install git run the following command: ```sudo apt-get update and sudo apt-get install git```
  2. Once you have configured git you will need to clone the following repository in order to use the setup scripts and application code.
   * First create a directory to store git repositories: ```mkdir git-repos```
-  * Then run ```git clone https://github.com/cloudmesh-community/fa18-523-84.git``` to clone the repository.
+  * Then run ```cd git-repos && git clone https://github.com/cloudmesh-community/fa18-523-84.git``` to clone the repository.
  3. **Optional:** Set up git to link with your account
   * Run ```git config --global user.email "you@example.com"``` to add your user email.
   * Run ```git config --global user.name "Your Name"``` to add your username.
  
-**Final Setup Steps:**
- * Run the shell script to set up the necessary dependancies for the parent node (running this step can take some time).  
+**Run Shell Script:**
+ 
+Before we run the shell script we will need to update some of the files contained in the git-repo that you have cloned in the previous step. The first file is the [cassandra_custom.yaml](https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/cassandra_custom.yaml) file.  The sections listed below need to be updated with the ip addresses that you noted when setting up the Pi's.  The other settings can remain as is.  More information about configuration options can be found on the [apache cassandra site.](https://cassandra.apache.org/doc/latest/configuration/cassandra_config_file.html)
+
+```
+seed_provider:
+    # Addresses of hosts that are deemed contact points. 
+    # Cassandra nodes use this list of hosts to find each other and learn
+    # the topology of the ring.  You must change this if you are running
+    # multiple nodes!
+    - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+      parameters:
+          # seeds is actually a comma-delimited list of addresses.
+          # Ex: "<ip1>,<ip2>,<ip3>"
+          - seeds: "10.0.0.42,10.0.0.40" #one address should be the parent node and the other should be another node in the cluster
+          
+listen_address: 10.0.0.42 #should be the ip address of the parent node
+rpc_address: 10.0.0.42 #should be the ip address of the parent node
+```
+
+Next we need to update the [Flask_App.conf](https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/FlaskApp.conf) file.  In this file you will need to up date the ServerName with the ip address of the parent node and the ServerAdmin with your email address.  Also update the last Allow from variable for each directory to allow ip addresses from your local network.
+
+The last manual update is to edit the [__init__.py](https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/FlaskApp/FlaskApp/__init__.py) file.  You will need to update the variable at the beginning of the file with the ip address of one or both of the cassandra seed nodes that you have set up in the previous step.
+
+```cassandra_contact_points = ['10.0.0.42']```
+
+Now run the parent_node shell script to set up the necessary dependancies for the parent node (running this step can take some time).  This step will upgrade the node, install the necessary python modules, complete the setup for cassandra and will configure the apache webserver.
+
  ```
  cd ~/git-repos/fa18-523-84/project-code
  chmod u+x parent_node.sh
  ./parent_node.sh
  ```
  
- ### Step 3: Setting up the worker nodes
+### Step 3: Configure the worker nodes
  
- Find the IP addresses for each of the worker nodes.  ```arp -a```  if that command does not work we will need to plug the monitor in to view the IP address.
- * Once we have the IP addresses we can finish setting up the nodes using the fabric code.  (need to finish writing the script for this.)
+
 
 
 
