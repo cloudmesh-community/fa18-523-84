@@ -1,4 +1,4 @@
-# Raspberry Pi Cassandra Cluster and Apache Webserver :hand: fa18-523-84
+# Connected Raspberry Pi IoT Thermostat with Cassandra and Apache Webserver :hand: fa18-523-84
 
 TODO: See where this fits into the Pi book...
 
@@ -74,7 +74,7 @@ First, SSH into the parent node. We are using the first Raspberry Pi in the clus
  
 Before we run the shell script we will need to update some of the files contained in the git-repo that you have cloned in the previous step. The first file is the [cassandra_custom.yaml](https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/cassandra_custom.yaml) file.  The sections listed below need to be updated with the ip addresses that you noted when setting up the Pi's.  The other settings can remain as is.  More information about configuration options can be found on the [apache cassandra site.](https://cassandra.apache.org/doc/latest/configuration/cassandra_config_file.html)
 
-```
+```yaml
 seed_provider:
     # Addresses of hosts that are deemed contact points. 
     # Cassandra nodes use this list of hosts to find each other and learn
@@ -98,7 +98,7 @@ The last manual update is to edit the [__init__.py](https://github.com/cloudmesh
 
 Now run the parent_node shell script to set up the necessary dependancies for the parent node (running this step can take some time).  This step will upgrade the node, install the necessary python modules, complete the setup for cassandra and will configure the apache webserver.
 
- ```
+ ```bash
  cd ~/git-repos/fa18-523-84/project-code
  chmod u+x parent_node.sh
  ./parent_node.sh
@@ -106,7 +106,46 @@ Now run the parent_node shell script to set up the necessary dependancies for th
  
 ### Step 3: Configure the worker nodes
  
+To set up the worker nodes in the cluster you will need to run the [cluster_setup.py](https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/cluster_setup.py) script from a machiene on your network.  Before running the script you will need to update the workers dictionary at the beginning of the script.  You can also change the password that is set for each of the nodes.  If you have already setup the password for each of the nodes then you will comment these lines out of the code. When this script completes it will reboot each node.
 
+```python
+workers = {
+	'PiCluster_w01': '10.0.0.36',
+	'PiCluster_w02': '10.0.0.37',
+	'PiCluster_w03': '10.0.0.41',
+	'PiCluster_w04': '10.0.0.40'
+	}
+ 
+for key, value in workers.items():
+	#print(key+': '+value)
+	c = Connection(value, connect_timeout=60)
+	c.connect_kwargs.password = 'raspberry'
+	
+	result = c.run('uname -s')
+	print("{}: {}".format(value, result.stdout.strip()))
+	
+	#change password and hostname
+	print('INFO: changing password')
+	c.run('echo pi:Weather_Center01 | sudo chpasswd') #change password to your choice
+	print('INFO: password changed')
+```
+
+After the setup has completed for each of the nodes you will need to ssh into each node individually to update the cassandra.yaml file with the ip address of that node.  You will just need to update the listen_address and the rpc_address.
+
+```bash
+sudo nano ~/apache-cassandra-3.11.3/conf/cassandra.yaml
+```
+
+```yaml
+listen_address: 10.0.0.42 #should be the ip address of the node
+rpc_address: 10.0.0.42 #should be the ip address of the node
+```
+
+Once you have updated all of the cassandra.yaml files we can start the cassandra cluster.  They should automatically join the cassandra instance running on the parent node creating a single rack datacenter.  This means that the data can be replicated across nodes preventing a single point of failure and faster read / write operations.  To start the rest of the nodes in the cluster you will first need to update the [cluster_start.py](https://github.com/cloudmesh-community/fa18-523-84/blob/master/project-code/cluster_start.py) script with the ip addresses of each of the nodes.  Once the script has been updated you can run it to start cassandra on each of the nodes.  Once the script has finished running SSH into the parent node and run ```cd ~/apache-cassandra-3.11.3 && bin/nodetool status``` to check the status of each node.  You should see something similar to +@fig:nodetool_status.
+
+![nodetool_status](images/nodetool_status.JPG){#fig:nodetool_status}
+
+### Step 4: Final Configuration and Starting the Connected Smart Thermostat
 
 
 
