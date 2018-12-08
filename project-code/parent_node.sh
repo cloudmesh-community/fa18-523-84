@@ -48,13 +48,12 @@ sudo mv ~/apache-cassandra-3.11.3/conf/cassandra-topology.properties ~/
 sudo mv ~/apache-cassandra-3.11.3/conf/cassandra_custom.yaml ~/apache-cassandra-3.11.3/conf/cassandra.yaml
 
 
-#Addiitonal manual cassandra config
+#Addiitonal manual cassandra config must be competed before starting cassandra
 #first change the listen_address and the rpc_address on each node
-#sudo nano cassandra.yaml
 
 #then start seed nodes first
-#cd apache-cassandra-3.11.3
-#bin/cassandra
+cd apache-cassandra-3.11.3
+bin/cassandra
 
 #Cassandra sources:
 #https://docs.datastax.com/en/cassandra/3.0/cassandra/initialize/initSingleDS.html
