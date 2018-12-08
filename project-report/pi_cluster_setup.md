@@ -1,4 +1,4 @@
-# Connected Raspberry Pi IoT Thermostat with Cassandra and Apache Webserver :hand: fa18-523-84
+# Raspberry Pi IoT Thermostat with Cassandra and Apache Webserver :hand: fa18-523-84
 
 TODO: See where this fits into the Pi book...
 
