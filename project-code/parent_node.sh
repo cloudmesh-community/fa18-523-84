@@ -14,8 +14,7 @@ sudo apt-get install nmap -y
 sudo apt-get install apache2 -y
 sudo apt-get remove libapache2-mod-python libapache2-mod-wsgi -y
 sudo apt-get install libapache2-mod-wsgi-py3 -y
-sudo a2enmod wsgi -y
-sudo apt-get install chromium-chromedriver -y
+sudo a2enmod wsgi
 sudo apt install libatlas3-base
 
 echo "INFO: tools and dependancies installed"
@@ -23,13 +22,13 @@ echo "INFO: tools and dependancies installed"
 #install python packages
 sudo apt-get install python3-pip
 sudo apt-get install python3-pandas
-sudo easy_install3 cassandra-driver
 sudo pip3 install fabric
 sudo pip3 install flask
 sudo pip3 install wtforms
 sudo pip3 install timezonefinder
 sudo pip3 install geocoder
 sudo pip3 install bokeh
+sudo easy_install3 cassandra-driver #this step takes a long time. I suggest ordering pizza :)
 
 echo "INFO: python packages successfully installed"
 
@@ -40,4 +39,35 @@ sudo apt-get purge openjdk*
 sudo apt-get install openjdk-8-jdk -y
 java -version
 
-#/home/pi/.local/lib/python3.5/site-packages
+wget "https://www-us.apache.org/dist/cassandra/3.11.3/apache-cassandra-3.11.3-bin.tar.gz"
+tar -xvf apache-cassandra-3.11.3-bin.tar.gz
+cd git-repos/fa18-523-84/project-code && git pull
+sudo cp ~/git-repos/fa18-523-84/project-code/cassandra_custom.yaml ~/apache-cassandra-3.11.3/conf/cassandra_custom.yaml
+sudo mv ~/apache-cassandra-3.11.3/conf/cassandra.yaml ~/
+sudo mv ~/apache-cassandra-3.11.3/conf/cassandra-topology.properties ~/
+sudo mv ~/apache-cassandra-3.11.3/conf/cassandra_custom.yaml ~/apache-cassandra-3.11.3/conf/cassandra.yaml
+
+
+#Addiitonal manual cassandra config
+#first change the listen_address and the rpc_address on each node
+#sudo nano cassandra.yaml
+
+#then start seed nodes first
+#cd apache-cassandra-3.11.3
+#bin/cassandra
+
+#Cassandra sources:
+#https://docs.datastax.com/en/cassandra/3.0/cassandra/initialize/initSingleDS.html
+#https://cassandra.apache.org/doc/latest/configuration/cassandra_config_file.html
+#https://stackoverflow.com/questions/29323709/unable-to-start-cassandra-node-already-exists
+
+echo "INFO: cassandra installation complete - THERE ARE STILL MANUAL STEPS TO START CLUSTER"
+
+#setup apache webserver
+sudo cp -r ~/git-repos/fa18-523-84/project-code/FlaskApp ~/var/www/FlaskApp
+sudo cp ~/git-repos/fa18-523-84/project-code/FlaskApp.conf ~/etc/apache2/sites-available/FlaskApp.conf
+sudo a2ensite FlaskApp.conf
+sudo /etc/init.d/apache2 restart
+
+echo "INFO: apache webserver has been configured"
+
